@@ -1,0 +1,6 @@
+﻿values,LowerValue,UpperValue
+poly_degree,2,6
+alpha_sigmoid,0.25,0.75
+offset_sigmoid,-2,3
+sigma_rbf,-6,6
+C,-6,5
