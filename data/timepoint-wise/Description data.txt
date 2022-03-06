@@ -1,0 +1,16 @@
+Description data
+
+Daten haben die gleiche Reihenfolge der Patienten wie die generierten kernel Matrizen 
+Im multitask SVM Ansatz. 
+
+Whole proteome chip: 40 samples per time point and 7455 features.
+Time points:
+III14 == post immunization
+C1 == pre CHMI
+C28 == post CHMI
+
+Selective set of surface proteins:
+40 samples per time point with 1194 features.
+
+Target_label_vec files
+Enthalten pro Datensatz die target_label als .csv files. 
