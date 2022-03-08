@@ -21,6 +21,8 @@ import os.path
 from typing import Any, Dict, Union
 from sklearn.utils import check_X_y
 from sklearn.utils.multiclass import unique_labels
+from sklearn.model_selection._split import BaseCrossValidator
+from sklearn.utils.validation import column_or_1d
 import warnings
 
 
@@ -200,6 +202,90 @@ def is_symmetric_positive_definite(
             raise
 
 
+class CustomPredefinedSplit(BaseCrossValidator):
+    """Predefined split cross-validator
+    Provides train/test indices to split data into train/test sets using a
+    predefined scheme specified by the user with the ``test_fold`` parameter.
+
+    Parameters
+    ----------
+    test_fold : array-like of shape (n_samples,)
+        The entry ``test_fold[i]`` represents the index of the test set that
+        sample ``i`` belongs to. It is possible to exclude sample ``i`` from
+        any test set by setting ``test_fold[i]`` equal to -1.
+    train_fold : array-like of shape (n_samples,)
+        The entry ``train_fold[i]`` represents the index of the train set that
+        sample ``i`` is excluded from. It is possible to include sample ``i``
+        in any test set by setting ``train_fold[i]`` equal to -1.
+    """
+
+    def __init__(self, test_fold, train_fold):
+        self.test_fold = np.array(test_fold, dtype=int)
+        self.test_fold = column_or_1d(self.test_fold)
+        self.train_fold = np.array(train_fold, dtype=int)
+        self.train_fold = column_or_1d(self.train_fold)
+        assert len(self.test_fold) == len(self.train_fold), \
+            "test_fold and train_fold must be of equal length."
+        unique_test_folds = np.unique(self.test_fold)
+        unique_test_folds = unique_test_folds[unique_test_folds != -1]
+        unique_train_folds = np.unique(self.train_fold)
+        unique_train_folds = unique_train_folds[unique_train_folds != -1]
+        assert np.array_equal(unique_test_folds, unique_train_folds), \
+            "test_fold and train fold must have the same fold indices."
+        self.unique_folds = unique_test_folds
+
+    def split(self, X=None, y=None, groups=None):
+        """Generate indices to split data into training and test set.
+        Parameters
+        ----------
+        X : object
+            Always ignored, exists for compatibility.
+        y : object
+            Always ignored, exists for compatibility.
+        groups : object
+            Always ignored, exists for compatibility.
+        Yields
+        ------
+        train : ndarray
+            The training set indices for that split.
+        test : ndarray
+            The testing set indices for that split.
+        """
+        ind = np.arange(len(self.test_fold))
+        for test_index, train_index in self._iter_test_masks():
+            train_index = ind[train_index]
+            test_index = ind[test_index]
+            yield train_index, test_index
+
+    def _iter_test_masks(self):
+        """Generates boolean masks corresponding to test sets."""
+        for f in self.unique_folds:
+            test_index = np.where(self.test_fold == f)[0]
+            test_mask = np.zeros(len(self.test_fold), dtype=bool)
+            test_mask[test_index] = True
+            train_index = np.where(self.train_fold == f)[0]
+            train_mask = np.ones(len(self.train_fold), dtype=bool)
+            train_mask[train_index] = False
+            yield test_mask, train_mask
+
+    def get_n_splits(self, X=None, y=None, groups=None):
+        """Returns the number of splitting iterations in the cross-validator
+        Parameters
+        ----------
+        X : object
+            Always ignored, exists for compatibility.
+        y : object
+            Always ignored, exists for compatibility.
+        groups : object
+            Always ignored, exists for compatibility.
+        Returns
+        -------
+        n_splits : int
+            Returns the number of splitting iterations in the cross-validator.
+        """
+        return len(self.unique_folds)
+
+
 class DataSelector:
 
     def __init__(
@@ -207,12 +293,12 @@ class DataSelector:
         *,
         kernel_directory: str,
         identifier: str,
-        SA: Union[float, str]='X',
-        SO: Union[float, str]='X',
-        R1: Union[float, str]='X',
-        R2: Union[float, str]='X',
-        P1: Union[float, str]='X',
-        P2: Union[float, str]='X',
+        SA: Union[float, str] = 'X',
+        SO: Union[float, str] = 'X',
+        R1: Union[float, str] = 'X',
+        R2: Union[float, str] = 'X',
+        P1: Union[float, str] = 'X',
+        P2: Union[float, str] = 'X',
     ) -> None:
         self.kernel_directory = kernel_directory
         self.identifier = identifier
