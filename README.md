@@ -54,13 +54,13 @@ and the int value of column **TimePointOrder** represents the day of taken blood
 
 You can find the raw data of the underlying Pf-specific proteome
 microarray-based antibody reactivity profile containing all 7,455 Pf-specific
-antigens (features) in /Data and the raw data of the pre-selected
-Pf-specific cell surface proteins (m = 1,199) in ./Data.
+antigens (features) and the raw data of the pre-selected
+Pf-specific cell surface proteins (m = 1,194) in ./data/proteome_data.
 Both files contain the raw data and has to be baseline and log2-fold normalized
-using the Datapreprocessing.py script in ./DataPreprocessing.
+using the Datapreprocessing.py script in ./bin/DataPreprocessing.
 
 ### Preprocessing of the Data
-Datapreprocessing.py has to be executed in the ./DataPreprocessing folder.
+Datapreprocessing.py has to be executed in the ./bin folder.
 ```python
 python Datapreprocessing.py
 ```
@@ -140,13 +140,14 @@ Output:
 | --results_of_multitask-SVM_approach | path | path to the evaluated results from the multitask-SVM approach |
 | --up | int | percentage for the upper quantile | 75 |
 | --lq | int | percentage for the lower quantile | 25 |
+| --Normal_Distribution_Fitting | | apply Normal_Distribution_Fitting | if not specified Normal_Distribution_Fitting is False
 
 Example: example data to run the feature selection method can be found here
 
 ESPY measurement on proteome array data:
 
 ```python
-  python Parser_feature_selection.py --infile /Users/../pre_processed_proteome_data.csv
+  python ESPY.py --infile /Users/../pre_processed_proteome_data.csv
   --results_of_multitask-SVM_approach /Users/../
   --up 75 --lq 25
 ```
@@ -176,7 +177,7 @@ results are saved in: Result_of_feature_distance_at_timePoint_3.csv
 ESPY measurement on simulated data:
 
 ```python
-  python Parser_feature_selection.py --infile /Users/../simulated_data.csv
+  python ESPY.py --infile /Users/../simulated_data.csv
 ```
 Output:
 ```
@@ -188,31 +189,56 @@ value of lower quantile      =  25
 input file:  simulated_data.csv
 ESPY value measurement started on simulated data:
 
-The best parameters are {'C': 100.0, 'gamma': 0.0001} with a mean AUC score of 0.81
-Accuracy score on unseen data:0.82
-AUC score on unseen data:0.8193456614509246
+The best parameters are {'C': 10.0, 'gamma': 0.001} with a mean AUC score of 0.90
+AUC score on unseen data: 0.879800853485064
 
 
-results are saved in: Evaluated_features_on_simulated_data.csv
-
-```
-
-## Apply the normal normal distribution fitting model
-### Arguments
-<span style = "color: orange">Parser_normal_distribution_fitting</span>( path_distances = <span style = "color: lightblue">path_to_the_results_of_feature_evaluation</span>, output_file_name = <span style = "color: lightblue">name_of_output_file</span>)
-
-| Name    | Type    | Description                             | Default   |
-| -----   | -----   | ------------                           | ---  |
-| path_distances | str | path to the results of the feature evaluation | |
-| output_file_name | str | name of output file name, self-defined | "Evaluated_informative_features" |
-
-Example: example data to run the normal distribution fitting method can be found here
+results are saved in: /.../MalariaVaccineEfficacyPrediction/results/simulated_data/Evaluated_features_on_simulated_data.csv
 
 ```
-python Normal_Distribution_Fitting.py
+ESPY measurement on simulated data with Normal_Distribution_Fitting:
+
+```python
+  python ESPY.py --infile /Users/../simulated_data.csv --Normal_Distribution_Fitting
 ```
 Output:
 ```
+The feature selection approach is initialized with the following parameters:
+value of upper quantile      =  75
+value of lower quantile      =  25
+
+
+input file:  simulated_data.csv
+ESPY value measurement started on simulated data:
+
+The best parameters are {'C': 10.0, 'gamma': 0.001} with a mean AUC score of 0.90
+AUC score on unseen data: 0.879800853485064
+
+
+results are saved in: /.../MalariaVaccineEfficacyPrediction/results/simulated_data/Evaluated_features_on_simulated_data.csv
+
+Normal distribution fitting is running to evaluate informative features with p-value < 0.05 on simulated data:
+
+
+Number of evaluated significant features: 50
+
+results are saved in: /.../MalariaVaccineEfficacyPrediction/results/simulated_data/Evaluated_significant_features_on_simulated_data.csv and Evaluated_significant_features.png
+
+```
+
+## Apply SHAP framework on simulated data
+To run the SHAP (SHapley Additive exPlanations) framework from Lundberg et al.
+execute SHAP_evaluation.py in the ./bin folder
+
+Output:
+```
+The best parameters are {'C': 10.0, 'gamma': 0.001} with a mean AUC score of 0.90
+AUC score on unseen data: 0.879800853485064
+
+Evaluation of informative features based on SHAP values started
+
+Evaluation terminated and results are saved in ./results as SHAP_value_simulated_data.png
+
 ```
 
 
