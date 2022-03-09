@@ -18,11 +18,12 @@
 
 import numpy as np
 import os.path
-from typing import Any, Dict, Union
+from typing import Any, Dict, Union, Optional
 from sklearn.utils import check_X_y
 from sklearn.utils.multiclass import unique_labels
 from sklearn.model_selection._split import BaseCrossValidator
 from sklearn.utils.validation import column_or_1d
+from sklearn.model_selection import StratifiedKFold
 import warnings
 
 
@@ -200,6 +201,98 @@ def is_symmetric_positive_definite(
             return False
         else:
             raise
+
+
+def assign_folds(
+    labels: np.ndarray,
+    groups: np.ndarray,
+    delta: int,
+    step: int,
+    n_splits: int = 5,
+    shuffle: bool = True,
+    random_state: Optional[Union[int, np.random.mtrand.RandomState]] = None,
+):
+    """
+    Provides 1-D arrays of train/test indices used in CustomPredefinedSplit
+    to split data into train/test sets.
+    This routine is designed for time-ordered data that consists of samples
+    taken at several timepoints that belong to the same group (e.g. patient).
+    Consider, e.g., 40 patients that underwent antibody measurements against
+    malaria at multiple (3) time-points after vaccination. Thus we have 120
+    samples at 3 timepoints in 40 groups. We now want to split the data
+    into disjunct train/test sets, such that the samples in the test sets
+    are all taken from the same time point, while the samples in the train
+    sets are taken from all timepoints under the constraint that patients
+    (groups) appearing in the respective test set don't appear in the
+    associated train set.
+
+    CAUTION: This routine is only tested for
+
+    Parameters
+    ----------
+    labels : array-like of shape (n_samples,)
+        Target labels. Used for stratification.
+    groups : array-like of shape (n_samples,)
+        Group labels for the samples used while splitting the dataset into
+        train/test set.
+    delta : int
+        Step-width. ``len(labels) % delta = 0`` must be ensured.
+    step : int
+        Step. Used together with ``delta`` to select the interval the test
+        samples are selected from.
+    n_splits : int, default=5
+        Number of folds. Must be at least 2.
+    shuffle : bool, default=True
+        Whether to shuffle each class's samples before splitting into batches.
+        Note that the samples within each split will not be shuffled.
+    random_state : int, RandomState instance or None, default=None
+        When shuffle is True, random_state affects the ordering of the indices,
+        which controls the randomness of each fold for each class. Otherwise,
+        leave random_state as None. Pass an int for reproducible output across
+        multiple function calls.
+
+    Returns
+    -------
+    test_fold : np.ndarray of shape (n_samples,)
+        The entry ``test_fold[i]`` represents the index of the test set that
+        sample ``i`` belongs to. It is possible to exclude sample ``i`` from
+        any test set by setting ``test_fold[i]`` equal to -1.
+    train_fold : np.ndarray of shape (n_samples,)
+        The entry ``train_fold[i]`` represents the index of the train set that
+        sample ``i`` is excluded from. It is possible to include sample ``i``
+        in any test set by setting ``train_fold[i]`` equal to -1.
+    """
+    labels = column_or_1d(labels)
+    groups = column_or_1d(groups)
+    assert len(labels) == len(groups), "labels and groups arrays must be of same length."
+    assert len(labels) % delta == 0, "len(labels) % delta = 0 must be ensured."
+    assert delta + delta * step <= len(labels), \
+        "delta + delta * step <= len(labels) must be ensured"
+    labels_slice = labels[delta * step: delta + delta * step]
+    groups_slice = groups[delta * step: delta + delta * step]
+    skf = StratifiedKFold(n_splits, shuffle=True, random_state=random_state)
+    test_fold = np.array([-1 for i in range(len(labels))])
+    train_fold = np.array([-1 for i in range(len(labels))])
+    for i, (train_index, test_index) in enumerate(
+        skf.split(np.zeros((delta, delta)), labels_slice)
+    ):
+        print("TEST:", test_index + delta * step)
+        exclude_groups = []
+        for j in test_index:
+            test_fold[j + delta * step] = i
+            exclude_groups.append(groups_slice[j])
+        train_fold = np.where(np.isin(groups, exclude_groups), i, train_fold)
+        print('exclude groups:', exclude_groups)
+        print('train_fold:', train_fold)
+    print('test_fold:', test_fold)
+    cps = CustomPredefinedSplit(test_fold, train_fold)
+    for i, (train_index, test_index) in enumerate(cps.split()):
+        print(
+            f"TRAIN (len={len(train_index)}): {train_index} "
+            f"TEST (len={len(test_index)}): {test_index}"
+        )
+    print('')
+    return test_fold, train_fold
 
 
 class CustomPredefinedSplit(BaseCrossValidator):
