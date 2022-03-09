@@ -19,7 +19,7 @@ nicht verwendet werden.
 
 
 Target label:
-Target label enthaelt label und weiter meta Informationen fuer beide Analysen an
+Target label enthaelt label und weitere meta Informationen fuer beide Analysen an
 whole proteome chip und selective an Oeberflaechen proteinen.
 
 Target_label_vec.csv enthaelt den Sample Identifier "Patient", dessen Gruppe "group",
@@ -28,7 +28,19 @@ den Schutzstatus (= target_label) "Protection", die Hoehe der Impfdosis (Dose, 0
 geschuetzt oder nicht "TimePointOrder" (2 = nach Immunisierung, 3 = vor CHMI, 4 = nach CHMI).
 Der Target_label_vec (120 vektor) enthaelt die gleiche Reihenfolge der Samples (Patienten) wie die kernel matrizen.
 
-Kernel matrices:
+
+
+Kernel matrices der jeweiligen tasks (dose, time point und ab_signals):
+sind skaliert und auf pd geprüft nach folgendem Schemata:
+1) make_pd(kernel_matrix) 
+2) scale(kernel_matrix)
+3) make_pd(kernel_matrix
+4) multitask(kernel_matrix) 
+5.1) make_pd(multitask_kernel_matrix)
+5.2) scale(multitask_kernel_mnatrix) and make_pd(multitask_kernel_matrix)
+ 
+Kernel matrixes nach Schemata 1)-5.2) skaliert sind zusätzlich mit "_rescale" beschriftet. 
+
 Kernel matrizen sind wie folgt beschriftet fuer whole proteome chip (m=120 Samples
 d = 7455 features):
 
@@ -60,6 +72,34 @@ Benennung fuer selective Set
  kernel kombination sigmoid fuer timepoint, poly fuer dosage und rbf fuer abSignals an.
 
 - "kernel_matrix_SelectiveSet_SRP" gibt die
+  kernel kombination sigmoid fuer timepoint, rbf fuer dosage und poly fuer abSignals an.
+
+
+Benennung fuer "rescale" Matrizen fuer Whole Chip als auch Selective Set:
+
+- "kernel_matrix_rescale_SRR"  gibt die
+   kernel kombination sigmoid fuer timepoint, rbf fuer dosage und rbf fuer abSignals an.
+
+- "kernel_matrix_rescale_SPP" gibt die
+   kernel kombination sigmoid fuer timepoint, poly fuer dosage und poly fuer abSignals an.
+
+- "kernel_matrix_rescale_SPR" gibt die
+  kernel kombination sigmoid fuer timepoint, poly fuer dosage und rbf fuer abSignals an.
+
+- "kernel_matrix_rescale_SRP" gibt die
+   kernel kombination sigmoid fuer timepoint, rbf fuer dosage und poly fuer abSignals an.
+
+
+- "kernel_matrix_rescale_SelectiveSet_SRR"  gibt die
+  kernel kombination sigmoid fuer timepoint, rbf fuer dosage und rbf fuer abSignals an.
+
+- "kernel_matrix_rescale_SelectiveSet_SPP" gibt die
+  kernel kombination sigmoid fuer timepoint, poly fuer dosage und poly fuer abSignals an.
+
+- "kernel_matrix_rescale_SelectiveSet_SPR" gibt die
+ kernel kombination sigmoid fuer timepoint, poly fuer dosage und rbf fuer abSignals an.
+
+- "kernel_matrix_rescale_SelectiveSet_SRP" gibt die
   kernel kombination sigmoid fuer timepoint, rbf fuer dosage und poly fuer abSignals an.
 
 
@@ -96,3 +136,5 @@ Benennung Parameter Kombination:
    "R1" = sigma/gamma wert fuer rbf kernel fuer dosage, "R2" = sigma/gamma wert fuer rbf kernel fuer abSignals,
    "P1" = degree wert fuer polynomial kernel fuer dosage,  "P2" = degree wert fuer polynomial kernel fuer abSignals.
   'X' ist ein placeholder.
+
+
