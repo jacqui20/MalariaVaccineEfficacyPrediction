@@ -191,7 +191,7 @@ def main(
             ncv.save_json(
                 {key: dict(sorted(value.items())) for key, value in result.items()},
                 rfiledir,
-                '{prefix}_repeated_nested_cv_results',
+                f'{prefix}_repeated_nested_cv_results',
                 timestamp=timestamp
             )
         except TypeError:
@@ -389,12 +389,12 @@ def main(
                     verify_integrity=True
                 )
 
-        filename = "{prefix}_collected_mean_train_test_performance_scores"
+        filename = f"{prefix}_collected_mean_train_test_performance_scores"
         fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
         performance_mean_df.to_csv(fn, sep='\t', na_rep='nan')
         fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)
         performance_mean_df.to_excel(fn, na_rep='nan')
-        filename = "{prefix}_collected_formatted_min_max_train_test_performance_scores"
+        filename = f"{prefix}_collected_formatted_min_max_train_test_performance_scores"
         fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
         performance_min_max_nice_df.to_csv(fn, sep='\t', na_rep='nan')
         fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)
@@ -465,12 +465,12 @@ def main(
                     verify_integrity=True
                 )
 
-        filename = "{prefix}_collected_mean_ncv_performance_scores"
+        filename = f"{prefix}_collected_mean_ncv_performance_scores"
         fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
         performance_mean_df.to_csv(fn, sep='\t', na_rep='nan')
         fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)
         performance_mean_df.to_excel(fn, na_rep='nan')
-        filename = "{prefix}_collected_formatted_min_max_ncv_performance_scores"
+        filename = f"{prefix}_collected_formatted_min_max_ncv_performance_scores"
         fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
         performance_min_max_nice_df.to_csv(fn, sep='\t', na_rep='nan')
         fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)
@@ -481,7 +481,7 @@ def main(
         print('=================================================================================')
         print('')
 
-    filename = "{combination}_collected_key_results"
+    filename = f"{combination}_collected_key_results"
     fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
     pd.DataFrame(key_results).to_csv(fn, sep='\t', na_rep='nan')
     fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)

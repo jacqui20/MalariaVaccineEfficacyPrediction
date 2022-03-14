@@ -173,8 +173,8 @@ cd "$PBS_O_WORKDIR" || { echo "Couldn't cd into ${PBS_O_WORKDIR}"; exit 1; }
 source "${HOME}/miniconda3/etc/profile.d/conda.sh"
 conda activate tbenv_combi
 
-err="runGridSearch_${COMBINATION}_${PBS_JOBNAME}_${PBS_JOBID}.err"
-out="runGridSearch_${COMBINATION}_${PBS_JOBNAME}_${PBS_JOBID}.out"
+err="runRNCV_${COMBINATION}_${PBS_JOBNAME}_${PBS_JOBID}.err"
+out="runRNCV_${COMBINATION}_${PBS_JOBNAME}_${PBS_JOBID}.out"
 
 ########################################## 
 #                                        #
@@ -200,6 +200,6 @@ out="runGridSearch_${COMBINATION}_${PBS_JOBNAME}_${PBS_JOBID}.out"
 ##########################################
 
 cp "${DATA_PATH}/${IDENTIFIER}_${COMBINATION}"*".npy" "$TMPDIR" || { echo "Couldn't copy Kernels to ${TMPDIR}"; exit 1; }
-python -u gridsearch_whole.py --analysis-dir "${ANA_PATH}" --data-dir "${TMPDIR}" --combination "${COMBINATION}" --identifier "${IDENTIFIER}" 1> "${out}" 2> "${err}"
+python -u rncv_whole.py --analysis-dir "${ANA_PATH}" --data-dir "${TMPDIR}" --combination "${COMBINATION}" --identifier "${IDENTIFIER}" 1> "${out}" 2> "${err}"
 
 exit
