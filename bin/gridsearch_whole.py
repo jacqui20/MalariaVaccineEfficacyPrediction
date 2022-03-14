@@ -1,9 +1,9 @@
 '''
-Find the best parameters using x-times repeated NestedGridsearchCV.
+Find the best parameters using 10-times repeated NestedGridsearchCV.
 
-Will save the parameters to a tsv file.
+Will save the results to a various .tsv/.xslx files.
 
-Activate associated environment first: conda activate tbenv_combi
+Activate associated environment first: conda activate tbenv_combi_sklearn102
 '''
 import argparse
 import numpy as np
