@@ -1,0 +1,98 @@
+Description of kernel matrices and kernel parameter grid
+
+Kernel parameter grid:
+Files:
+"kernel_comb_SRR.npy"
+"kernel_comb_SPP.npy"
+"kernel_comb_SPR.npy"
+"kernel_comb_SRP.npy"
+
+Enthalten die kernel parameter Kombination fuer die jeweiligen kernel Funktionen.
+"SA" = alpha value for sigmoid kernel
+"SO" = offset value for sigmoid kernel
+"R1" = sigma/gamma value for rbf kernel for dosage
+"R2" = sigma/gamma value for rbf kernel for abSignals
+"P1" = degree for polynomial kernel for dosage
+"P2" = degree for polynomial kernel for abSignals
+X wird als placeholder verwendet fuer parameter welche in bestimmten kombinationen
+nicht verwendet werden.
+
+
+Target label:
+Target label enthaelt label und weiter meta Informationen fuer beide Analysen an
+whole proteome chip und selective an Oeberflaechen proteinen.
+
+Target_label_vec.csv enthaelt den Sample Identifier "Patient", dessen Gruppe "group",
+den Schutzstatus (= target_label) "Protection", die Hoehe der Impfdosis (Dose, 0 = keine Impfung,
+1 = kleinste Dosis, 2 = mittlere Dosis, 3 = hoechste Dosis) und den Zeitpunkt der Blutentnahme und Testung ob
+geschuetzt oder nicht "TimePointOrder" (2 = nach Immunisierung, 3 = vor CHMI, 4 = nach CHMI).
+Der Target_label_vec (120 vektor) enthaelt die gleiche Reihenfolge der Samples (Patienten) wie die kernel matrizen.
+
+Kernel matrices:
+Kernel matrizen sind wie folgt beschriftet fuer whole proteome chip (m=120 Samples
+d = 7455 features):
+
+Benennung Kernel Kombination:
+Der erste Teil der beschriftung gibt die kernel kombination fuer die Berechnung
+der kernel matrix an:
+
+- "kernel_matrix_SRR"  gibt die
+   kernel kombination sigmoid fuer timepoint, rbf fuer dosage und rbf fuer abSignals an.
+
+- "kernel_matrix_SPP" gibt die
+   kernel kombination sigmoid fuer timepoint, poly fuer dosage und poly fuer abSignals an.
+
+- "kernel_matrix_SPR" gibt die
+  kernel kombination sigmoid fuer timepoint, poly fuer dosage und rbf fuer abSignals an.
+
+- "kernel_matrix_SRP" gibt die
+   kernel kombination sigmoid fuer timepoint, rbf fuer dosage und poly fuer abSignals an.
+
+Benennung fuer selective Set
+
+- "kernel_matrix_SelectiveSet_SRR"  gibt die
+  kernel kombination sigmoid fuer timepoint, rbf fuer dosage und rbf fuer abSignals an.
+
+- "kernel_matrix_SelectiveSet_SPP" gibt die
+  kernel kombination sigmoid fuer timepoint, poly fuer dosage und poly fuer abSignals an.
+
+- "kernel_matrix_SelectiveSet_SPR" gibt die
+ kernel kombination sigmoid fuer timepoint, poly fuer dosage und rbf fuer abSignals an.
+
+- "kernel_matrix_SelectiveSet_SRP" gibt die
+  kernel kombination sigmoid fuer timepoint, rbf fuer dosage und poly fuer abSignals an.
+
+
+Benennung Parameter Kombination:
+
+- fuer Kernel Kombination SRR:
+
+ "SA_0.5_SO_-1.0_R1_0.1_R2_0.1_P1_X_P2_X" gibt die
+ kernel parameter kombination fuer "SA" = alpha wert fuer sigmoid kernel, "SO" = offset wert fuer sigmoid kernel,
+ "R1" = sigma/gamma wert fuer rbf kernel fuer dosage, "R2" = sigma/gamma wert fuer rbf kernel fuer abSignals,
+ "P1" = degree wert fuer polynomial kernel fuer dosage,  "P2" = degree wert fuer polynomial kernel fuer abSignals.
+ 'X' ist ein placeholder.
+
+- fuer Kernel Kombination SPP:
+
+  "SA_0.5_SO_-1.0_R1_X_R2_X_P1_2.0_P2_2.0" gibt die
+   kernel parameter kombination fuer "SA" = alpha wert fuer sigmoid kernel, "SO" = offset wert fuer sigmoid kernel,
+   "R1" = sigma/gamma wert fuer rbf kernel fuer dosage, "R2" = sigma/gamma wert fuer rbf kernel fuer abSignals,
+   "P1" = degree wert fuer polynomial kernel fuer dosage,  "P2" = degree wert fuer polynomial kernel fuer abSignals.
+   'X' ist ein placeholder.
+
+- fuer Kernel Kombination SPR:
+
+  "SA_0.5_SO_-1.0_R1_X_R2_1.0E-0.1_P1_2.0_P2_X" gibt die
+      kernel parameter kombination fuer "SA" = alpha wert fuer sigmoid kernel, "SO" = offset wert fuer sigmoid kernel,
+      "R1" = sigma/gamma wert fuer rbf kernel fuer dosage, "R2" = sigma/gamma wert fuer rbf kernel fuer abSignals,
+      "P1" = degree wert fuer polynomial kernel fuer dosage,  "P2" = degree wert fuer polynomial kernel fuer abSignals.
+      'X' ist ein placeholder.
+
+- fuer Kernel Kombination SRP:
+
+  "SA_0.5_SO_-1.0_R1_1.0E-0.1_R2_X_P1_X_P2_2.0" gibt die
+   kernel parameter kombination fuer "SA" = alpha wert fuer sigmoid kernel, "SO" = offset wert fuer sigmoid kernel,
+   "R1" = sigma/gamma wert fuer rbf kernel fuer dosage, "R2" = sigma/gamma wert fuer rbf kernel fuer abSignals,
+   "P1" = degree wert fuer polynomial kernel fuer dosage,  "P2" = degree wert fuer polynomial kernel fuer abSignals.
+  'X' ist ein placeholder.
