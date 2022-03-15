@@ -28,7 +28,14 @@ den Schutzstatus (= target_label) "Protection", die Hoehe der Impfdosis (Dose, 0
 geschuetzt oder nicht "TimePointOrder" (2 = nach Immunisierung, 3 = vor CHMI, 4 = nach CHMI).
 Der Target_label_vec (120 vektor) enthaelt die gleiche Reihenfolge der Samples (Patienten) wie die kernel matrizen.
 
-Kernel matrices:
+
+
+Kernel matrices der jeweiligen tasks (dose, time point und ab_signals):
+sind skaliert und auf pd geprüft nach folgendem Schemata:
+1) make_pd(kernel_matrix) 
+2) multitask(kernel_matrix) 
+3) scale(multitask_kernel_mnatrix) and make_pd(multitask_kernel_matrix) 
+
 Kernel matrizen sind wie folgt beschriftet fuer whole proteome chip (m=120 Samples
 d = 7455 features):
 
@@ -36,32 +43,31 @@ Benennung Kernel Kombination:
 Der erste Teil der beschriftung gibt die kernel kombination fuer die Berechnung
 der kernel matrix an:
 
-- "kernel_matrix_SRR"  gibt die
+- "kernel_matrix_rescale_SRR"  gibt die
    kernel kombination sigmoid fuer timepoint, rbf fuer dosage und rbf fuer abSignals an.
 
-- "kernel_matrix_SPP" gibt die
+- "kernel_matrix_rescale_SPP" gibt die
    kernel kombination sigmoid fuer timepoint, poly fuer dosage und poly fuer abSignals an.
 
-- "kernel_matrix_SPR" gibt die
+- "kernel_matrix_rescale_SPR" gibt die
   kernel kombination sigmoid fuer timepoint, poly fuer dosage und rbf fuer abSignals an.
 
-- "kernel_matrix_SRP" gibt die
+- "kernel_matrix_rescale_SRP" gibt die
    kernel kombination sigmoid fuer timepoint, rbf fuer dosage und poly fuer abSignals an.
 
 Benennung fuer selective Set
 
-- "kernel_matrix_SelectiveSet_SRR"  gibt die
+- "kernel_matrix_rescale_SelectiveSet_SRR"  gibt die
   kernel kombination sigmoid fuer timepoint, rbf fuer dosage und rbf fuer abSignals an.
 
-- "kernel_matrix_SelectiveSet_SPP" gibt die
+- "kernel_matrix_rescale_SelectiveSet_SPP" gibt die
   kernel kombination sigmoid fuer timepoint, poly fuer dosage und poly fuer abSignals an.
 
-- "kernel_matrix_SelectiveSet_SPR" gibt die
+- "kernel_matrix_rescale_SelectiveSet_SPR" gibt die
  kernel kombination sigmoid fuer timepoint, poly fuer dosage und rbf fuer abSignals an.
 
-- "kernel_matrix_SelectiveSet_SRP" gibt die
+- "kernel_matrix_rescale_SelectiveSet_SRP" gibt die
   kernel kombination sigmoid fuer timepoint, rbf fuer dosage und poly fuer abSignals an.
-
 
 Benennung Parameter Kombination:
 
@@ -96,3 +102,5 @@ Benennung Parameter Kombination:
    "R1" = sigma/gamma wert fuer rbf kernel fuer dosage, "R2" = sigma/gamma wert fuer rbf kernel fuer abSignals,
    "P1" = degree wert fuer polynomial kernel fuer dosage,  "P2" = degree wert fuer polynomial kernel fuer abSignals.
   'X' ist ein placeholder.
+
+
