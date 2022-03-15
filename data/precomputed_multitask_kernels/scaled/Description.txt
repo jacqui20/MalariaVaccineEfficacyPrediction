@@ -33,13 +33,8 @@ Der Target_label_vec (120 vektor) enthaelt die gleiche Reihenfolge der Samples (
 Kernel matrices der jeweiligen tasks (dose, time point und ab_signals):
 sind skaliert und auf pd geprüft nach folgendem Schemata:
 1) make_pd(kernel_matrix) 
-2) scale(kernel_matrix)
-3) make_pd(kernel_matrix
-4) multitask(kernel_matrix) 
-5.1) make_pd(multitask_kernel_matrix)
-5.2) scale(multitask_kernel_mnatrix) and make_pd(multitask_kernel_matrix)
- 
-Kernel matrixes nach Schemata 1)-5.2) skaliert sind zusätzlich mit "_rescale" beschriftet. 
+2) multitask(kernel_matrix) 
+3) scale(multitask_kernel_mnatrix) and make_pd(multitask_kernel_matrix) 
 
 Kernel matrizen sind wie folgt beschriftet fuer whole proteome chip (m=120 Samples
 d = 7455 features):
@@ -47,35 +42,6 @@ d = 7455 features):
 Benennung Kernel Kombination:
 Der erste Teil der beschriftung gibt die kernel kombination fuer die Berechnung
 der kernel matrix an:
-
-- "kernel_matrix_SRR"  gibt die
-   kernel kombination sigmoid fuer timepoint, rbf fuer dosage und rbf fuer abSignals an.
-
-- "kernel_matrix_SPP" gibt die
-   kernel kombination sigmoid fuer timepoint, poly fuer dosage und poly fuer abSignals an.
-
-- "kernel_matrix_SPR" gibt die
-  kernel kombination sigmoid fuer timepoint, poly fuer dosage und rbf fuer abSignals an.
-
-- "kernel_matrix_SRP" gibt die
-   kernel kombination sigmoid fuer timepoint, rbf fuer dosage und poly fuer abSignals an.
-
-Benennung fuer selective Set
-
-- "kernel_matrix_SelectiveSet_SRR"  gibt die
-  kernel kombination sigmoid fuer timepoint, rbf fuer dosage und rbf fuer abSignals an.
-
-- "kernel_matrix_SelectiveSet_SPP" gibt die
-  kernel kombination sigmoid fuer timepoint, poly fuer dosage und poly fuer abSignals an.
-
-- "kernel_matrix_SelectiveSet_SPR" gibt die
- kernel kombination sigmoid fuer timepoint, poly fuer dosage und rbf fuer abSignals an.
-
-- "kernel_matrix_SelectiveSet_SRP" gibt die
-  kernel kombination sigmoid fuer timepoint, rbf fuer dosage und poly fuer abSignals an.
-
-
-Benennung fuer "rescale" Matrizen fuer Whole Chip als auch Selective Set:
 
 - "kernel_matrix_rescale_SRR"  gibt die
    kernel kombination sigmoid fuer timepoint, rbf fuer dosage und rbf fuer abSignals an.
@@ -89,6 +55,7 @@ Benennung fuer "rescale" Matrizen fuer Whole Chip als auch Selective Set:
 - "kernel_matrix_rescale_SRP" gibt die
    kernel kombination sigmoid fuer timepoint, rbf fuer dosage und poly fuer abSignals an.
 
+Benennung fuer selective Set
 
 - "kernel_matrix_rescale_SelectiveSet_SRR"  gibt die
   kernel kombination sigmoid fuer timepoint, rbf fuer dosage und rbf fuer abSignals an.
@@ -101,7 +68,6 @@ Benennung fuer "rescale" Matrizen fuer Whole Chip als auch Selective Set:
 
 - "kernel_matrix_rescale_SelectiveSet_SRP" gibt die
   kernel kombination sigmoid fuer timepoint, rbf fuer dosage und poly fuer abSignals an.
-
 
 Benennung Parameter Kombination:
 

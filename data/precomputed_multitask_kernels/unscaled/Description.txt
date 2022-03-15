@@ -19,7 +19,7 @@ nicht verwendet werden.
 
 
 Target label:
-Target label enthaelt label und weiter meta Informationen fuer beide Analysen an
+Target label enthaelt label und weitere meta Informationen fuer beide Analysen an
 whole proteome chip und selective an Oeberflaechen proteinen.
 
 Target_label_vec.csv enthaelt den Sample Identifier "Patient", dessen Gruppe "group",
