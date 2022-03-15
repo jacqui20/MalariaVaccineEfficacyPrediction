@@ -107,6 +107,7 @@ def make_symmetric_matrix_positive_semidefinite(X):
     Tests, if a given symmetric matrix is positive semi-definite (psd) and, if not,
     the spectral translation approach (Schölkopf et al, 2002) is applied
     to make the kernel matrix positive semi-definite.
+    The existence of complex-valued eigenvalues will result in an error.
 
     Parameters
     ----------
@@ -126,14 +127,19 @@ def make_symmetric_matrix_positive_semidefinite(X):
     if not np.allclose(X, X.T):
         raise ValueError("Matrix is not symmetric.")
 
-    eigen_values = np.linalg.eigvals(X)
-    if not np.all(eigen_values >= 0.0):
-        minimum_eigenvalue = np.min(eigen_values.real)
+    eigenvalues = np.linalg.eigvals(X)
+
+    # check, if all eigenvalues are real
+    if not np.all(np.isreal(eigenvalues)):
+        raise ValueError("Matrix has complex eigenvalues")
+
+    if not np.all(eigenvalues >= 0.0):
+        minimum_eigenvalue = np.min(eigenvalues)
         np.fill_diagonal(X, np.diag(X) + np.abs(minimum_eigenvalue))
         warnings.warn(
             "Matrix is not positive semi-definite."
         )
-        if not np.all(eigen_values >= 0.0):
+        if not np.all(np.linalg.eigvals(X) >= 0.0):
             raise ValueError("Couldn't make matrix positive semi-definite")
         else:
             warnings.warn(
