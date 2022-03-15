@@ -102,7 +102,7 @@ def normalize_fast(
     return DD * X
 
 
-def make_symmetric_matrix_positive_semidefinite(X):
+def make_symmetric_matrix_psd(X):
     """ Spectral Translation approach
     Tests, if a given symmetric matrix is positive semi-definite (psd) and, if not,
     the spectral translation approach (Schölkopf et al, 2002) is applied
