@@ -419,8 +419,18 @@ class DataSelector:
         X: np.ndarray,
     ) -> np.ndarray:
 
-        fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R1_{self.R1:.1E}_"
-              f"R2_{self.R2:.1E}_P1_{self.P1}_P2_{self.P2}.npy")
+        if isinstance(self.R1, float) and isinstance(self.R2, float):
+            fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R1_{self.R1:.1E}_"
+                  f"R2_{self.R2:.1E}_P1_{self.P1}_P2_{self.P2}.npy")
+        elif isinstance(self.R1, float) and not isinstance(self.R2, float):
+            fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R1_{self.R1:.1E}_"
+                  f"R2_{self.R2}_P1_{self.P1}_P2_{self.P2}.npy")
+        elif not isinstance(self.R1, float) and isinstance(self.R2, float):
+            fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R1_{self.R1}_"
+                  f"R2_{self.R2:.1E}_P1_{self.P1}_P2_{self.P2}.npy")
+        else:
+            fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R1_{self.R1}_"
+                  f"R2_{self.R2}_P1_{self.P1}_P2_{self.P2}.npy")
         kernel = np.load(os.path.join(self.kernel_directory, fn))
 
         # kernel is a precomputed square kernel matrix
