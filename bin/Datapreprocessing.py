@@ -7,17 +7,14 @@ Created on: 25.05.2019
 """
 
 # required packages
-from typing import Callable, Any, Union
-
 import numpy as np
 import pandas as pd
 import os
-import sys
-import os.path
 
-currentdir = os.path.dirname(os.path.realpath(__file__))
-parentdir = os.path.dirname(currentdir)
-sys.path.append(parentdir)
+cwd = os.getcwd()
+datadir = '/'.join(cwd.split('/')[:-1]) + '/data'
+outputdir = '/'.join(cwd.split('/')[:-1]) + '/data/proteome_data'
+
 
 
 def substract_preimmunization_baseline(data):
@@ -76,8 +73,8 @@ def normalization(data):
             """
     start_indx = data.columns.get_loc("TimePointOrder") + 1
     # replace all negative values by 1
-    data[data.columns[start_indx:]] = data[data.columns[start_indx:]].clip_lower(1)
-    # log2 tranformation
+    data[data.columns[start_indx:]] = data[data.columns[start_indx:]].clip(lower=1)
+    # log2 transformation
     data[data.columns[start_indx:]] = np.log2(data[data.columns[start_indx:]])
     return data
 
@@ -118,16 +115,18 @@ def preprocessing(data_path):
 
 
 if __name__ == "__main__":
-    data_path = lambda d: os.path.join(os.path.dirname(os.path.realpath(__file__)), d)
-    proteome_whole_array = pd.read_csv(data_path('whole_proteomearray_rawdata.csv'))
-    proteome_selective_array = pd.read_csv(data_path('surface_proteomearray_rawdata.csv'))
+    data_path_whole = os.path.join(datadir, 'proteome_data/whole_proteomearray_rawdata.csv')
+    data_path_selective = os.path.join(datadir, 'proteome_data/surface_proteomearray_rawdata.csv')
+
+    proteome_whole_array = pd.read_csv(data_path_whole)
+    proteome_selective_array = pd.read_csv(data_path_selective)
 
     preprocessed_whole_data = preprocessing(data_path=proteome_whole_array)
-    preprocessed_whole_data.to_csv("preprocessed_whole_data.csv", index=False)
+    preprocessed_whole_data.to_csv(os.path.join(outputdir, r'preprocessed_whole_data.csv'), index=False)
 
     preprocessed_selective_data = preprocessing(data_path=proteome_selective_array)
-    preprocessed_selective_data.to_csv("preprocessed_selective_data.csv", index=False)
+    preprocessed_selective_data.to_csv(os.path.join(outputdir, r'preprocessed_selective_data.csv'), index=False)
 
     print("\n")
-    print("the preprocessed data is now saved in /Data as:" + "\n")
+    print("the preprocessed data is now saved in ./data/proteome_data as:" + "\n")
     print("preprocessed_whole_data.csv" + ' and ' + "preprocessed_selective_data.csv")
