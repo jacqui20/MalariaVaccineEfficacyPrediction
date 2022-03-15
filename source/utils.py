@@ -102,6 +102,46 @@ def normalize_fast(
     return DD * X
 
 
+def make_symmetric_matrix_positive_semidefinite(X):
+    """ Spectral Translation approach
+    Tests, if a given symmetric matrix is positive semi-definite (psd) and, if not,
+    the spectral translation approach (Schölkopf et al, 2002) is applied
+    to make the kernel matrix positive semi-definite.
+
+    Parameters
+    ----------
+    X: np.ndarray
+        Symmetric matrix to test and make psd, if necessary.
+
+    Returns
+    -------
+    X_psd : np.ndarray
+        Symmetric positive semi-definite matrix.
+    """
+    # check, if X is square
+    if X.shape[0] != X.shape[1]:
+        raise ValueError("Matrix is not square.")
+
+    # check, if X is symmetric:
+    if not np.allclose(X, X.T):
+        raise ValueError("Matrix is not symmetric.")
+
+    eigen_values = np.linalg.eigvals(X)
+    if not np.all(eigen_values >= 0.0):
+        minimum_eigenvalue = np.min(eigen_values.real)
+        np.fill_diagonal(X, np.diag(X) + np.abs(minimum_eigenvalue))
+        warnings.warn(
+            "Matrix is not positive semi-definite."
+        )
+        if not np.all(eigen_values >= 0.0):
+            raise ValueError("Couldn't make matrix positive semi-definite")
+        else:
+            warnings.warn(
+                "Made it positive semi-definite."
+            )
+    return X
+
+
 def is_symmetric_positive_semidefinite(
     X: np.ndarray,
     epsilon_factor: float = 1.e1
