@@ -102,7 +102,30 @@ def normalize_fast(
     return DD * X
 
 
-def make_symmetric_matrix_psd(X):
+def check_complex_or_negative(
+    ev: np.ndarray,
+) -> bool:
+    complex = False
+    negative = False
+    if np.any(np.iscomplex(ev)):
+        print(
+            'Complex eigenvalues found:\n'
+            f'{ev[np.iscomplex(ev)]}'
+        )
+        complex = True
+    if np.any(ev < 0.0):
+        print(
+            'Negative eigenvalues found:\n'
+            f'{ev[ev < 0.0]}'
+        )
+        negative = True
+    return complex, negative
+
+
+def make_symmetric_matrix_psd(
+    X: np.ndarray,
+    # epsilon_factor: float = 1.e3,
+):
     """ Spectral Translation approach
     Tests, if a given symmetric matrix is positive semi-definite (psd) and, if not,
     the spectral translation approach (Schölkopf et al, 2002) is applied
@@ -119,6 +142,9 @@ def make_symmetric_matrix_psd(X):
     X_psd : np.ndarray
         Symmetric positive semi-definite matrix.
     """
+    eps = np.finfo(X.dtype).eps
+    feedback = False
+
     # check, if X is square
     if X.shape[0] != X.shape[1]:
         raise ValueError("Matrix is not square.")
@@ -129,23 +155,41 @@ def make_symmetric_matrix_psd(X):
 
     eigenvalues = np.linalg.eigvals(X)
 
-    # check, if all eigenvalues are real
-    if not np.all(np.isreal(eigenvalues)):
-        raise ValueError("Matrix has complex eigenvalues")
-
-    if not np.all(eigenvalues >= 0.0):
-        minimum_eigenvalue = np.min(eigenvalues)
-        np.fill_diagonal(X, np.diag(X) + np.abs(minimum_eigenvalue))
-        warnings.warn(
-            "Matrix is not positive semi-definite."
+    # check, if all eigenvalues are real and non-negative
+    complex, negative = check_complex_or_negative(eigenvalues)
+    if complex or negative:
+        feedback = True
+        print(
+            "Matrix is not positive semi-definite.\n"
+            "Will try to make it positive semi-definite."
         )
-        if not np.all(np.linalg.eigvals(X) >= 0.0):
-            raise ValueError("Couldn't make matrix positive semi-definite")
-        else:
-            warnings.warn(
-                "Made it positive semi-definite."
+
+        c_list = []
+        while complex or negative:
+            eigenvalues = np.linalg.eigvals(X)
+            if negative:
+                c = np.abs(np.min(eigenvalues))
+            else:
+                c = np.abs(np.min(eigenvalues.imag))
+            if c < 10 * eps:
+                c = 10 * eps
+            c_list.append(c)
+            np.fill_diagonal(X, np.diag(X) + c)
+            eigenvalues = np.linalg.eigvals(X)
+            complex, negative = check_complex_or_negative(eigenvalues)
+
+        complex, negative = check_complex_or_negative(eigenvalues)
+        if complex or negative:
+            raise ValueError(
+                "Couldn't make matrix positive semi-definite by adding"
+                f"sum_c={np.sum(c_list)} in {len(c_list)} steps to its diagonal."
             )
-    return X
+        else:
+            print(
+                "Made matrix positive semi-definite by adding "
+                f"sum_c={np.sum(c_list)} in {len(c_list)} steps to its diagonal."
+            )
+    return X, feedback
 
 
 def is_symmetric_positive_semidefinite(
