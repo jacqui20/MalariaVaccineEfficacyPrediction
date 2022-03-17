@@ -104,20 +104,23 @@ def normalize_fast(
 
 def check_complex_or_negative(
     ev: np.ndarray,
+    warn: bool = True,
 ) -> bool:
     complex = False
     negative = False
     if np.any(np.iscomplex(ev)):
-        print(
-            'Complex eigenvalues found:\n'
-            f'{ev[np.iscomplex(ev)]}'
-        )
+        if warn:
+            print(
+                'Complex eigenvalues found:\n'
+                f'{ev[np.iscomplex(ev)]}'
+            )
         complex = True
     if np.any(ev < 0.0):
-        print(
-            'Negative eigenvalues found:\n'
-            f'{ev[ev < 0.0]}'
-        )
+        if warn:
+            print(
+                'Negative eigenvalues found:\n'
+                f'{ev[ev < 0.0]}'
+            )
         negative = True
     return complex, negative
 
@@ -168,7 +171,7 @@ def make_symmetric_matrix_psd(
         while complex or negative:
             eigenvalues = np.linalg.eigvals(X)
             if negative:
-                c = np.abs(np.min(eigenvalues))
+                c = np.abs(np.min(eigenvalues).real)
             else:
                 c = np.abs(np.min(eigenvalues.imag))
             if c < 10 * eps:
@@ -182,6 +185,84 @@ def make_symmetric_matrix_psd(
         if complex or negative:
             raise ValueError(
                 "Couldn't make matrix positive semi-definite by adding"
+                f"sum_c={np.sum(c_list)} in {len(c_list)} steps to its diagonal."
+            )
+        else:
+            print(
+                "Made matrix positive semi-definite by adding "
+                f"sum_c={np.sum(c_list)} in {len(c_list)} steps to its diagonal."
+            )
+    return X, feedback
+
+
+def make_symmetric_matrix_pd(
+    X: np.ndarray,
+    # epsilon_factor: float = 1.e3,
+):
+    """ Spectral Translation approach
+    Tests, if a given symmetric matrix is positive semi-definite (psd) and, if not,
+    the spectral translation approach (Schölkopf et al, 2002) is applied
+    to make the kernel matrix positive semi-definite.
+    The existence of complex-valued eigenvalues will result in an error.
+
+    Parameters
+    ----------
+    X: np.ndarray
+        Symmetric matrix to test and make psd, if necessary.
+
+    Returns
+    -------
+    X_psd : np.ndarray
+        Symmetric positive semi-definite matrix.
+    """
+    eps = np.finfo(X.dtype).eps
+    c = 10 * eps
+    feedback = False
+
+    # check, if X is square
+    if X.shape[0] != X.shape[1]:
+        raise ValueError("Matrix is not square.")
+
+    # check, if X is symmetric:
+    if not np.allclose(X, X.T):
+        raise ValueError("Matrix is not symmetric.")
+
+    # check, if matrix is pd by computing its cholesky decomposition
+    is_pd = is_symmetric_positive_definite(X)
+
+    eigenvalues = np.linalg.eigvals(X)
+
+    # check, if all eigenvalues are real and non-negative
+    complex, negative = check_complex_or_negative(eigenvalues)
+
+    if not is_pd:
+        feedback = True
+        print(
+            "Matrix is not positive definite.\n"
+            "Will try to make it positive definite."
+        )
+
+        c_list = []
+        while not is_pd:
+            eigenvalues = np.linalg.eigvals(X)
+            complex, negative = check_complex_or_negative(eigenvalues, warn=False)
+            if negative:
+                c = np.abs(np.min(eigenvalues.real)) / 100.
+            else:
+                if complex:
+                    c = np.abs(np.min(eigenvalues.imag))
+                else:
+                    c = 10. * eps
+            if c < 10. * eps:
+                c = 10. * eps
+            c_list.append(c)
+            np.fill_diagonal(X, np.diag(X) + c)
+            is_pd = is_symmetric_positive_definite(X, warn_npd=False)
+
+        is_pd = is_symmetric_positive_definite(X)
+        if not is_pd:
+            raise ValueError(
+                "Couldn't make matrix positive definite by adding"
                 f"sum_c={np.sum(c_list)} in {len(c_list)} steps to its diagonal."
             )
         else:
@@ -253,7 +334,8 @@ def is_symmetric_positive_semidefinite(
 
 
 def is_symmetric_positive_definite(
-    X: np.ndarray
+    X: np.ndarray,
+    warn_npd: bool = True,
 ) -> bool:
     """Utility function to check, if a matrix is symmetric positive definite (s.p.d.).
     The check is based on np.linalg.cholesky(Y) and is thus typically faster than
@@ -287,7 +369,8 @@ def is_symmetric_positive_definite(
         return True
     except np.linalg.LinAlgError as err:
         if "Matrix is not positive definite" in str(err):
-            warnings.warn("Matrix is not positive definite")
+            if warn_npd:
+                warnings.warn("Matrix is not positive definite")
             return False
         else:
             raise
