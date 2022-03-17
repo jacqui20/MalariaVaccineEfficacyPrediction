@@ -18,7 +18,7 @@
 
 import numpy as np
 import os.path
-from typing import Any, Dict, Union, Optional
+from typing import Any, Dict, Union, Optional, Tuple, List
 from sklearn.utils import check_X_y
 from sklearn.utils.multiclass import unique_labels
 from sklearn.model_selection._split import BaseCrossValidator
@@ -105,7 +105,7 @@ def normalize_fast(
 def check_complex_or_negative(
     ev: np.ndarray,
     warn: bool = True,
-) -> bool:
+) -> Tuple[bool, bool]:
     complex = False
     negative = False
     if np.any(np.iscomplex(ev)):
@@ -128,7 +128,7 @@ def check_complex_or_negative(
 def make_symmetric_matrix_psd(
     X: np.ndarray,
     # epsilon_factor: float = 1.e3,
-):
+) -> Tuple[np.ndarray, List[float]]:
     """ Spectral Translation approach
     Tests, if a given symmetric matrix is positive semi-definite (psd) and, if not,
     the spectral translation approach (Schölkopf et al, 2002) is applied
@@ -146,7 +146,7 @@ def make_symmetric_matrix_psd(
         Symmetric positive semi-definite matrix.
     """
     eps = np.finfo(X.dtype).eps
-    feedback = False
+    c_list = []
 
     # check, if X is square
     if X.shape[0] != X.shape[1]:
@@ -160,14 +160,13 @@ def make_symmetric_matrix_psd(
 
     # check, if all eigenvalues are real and non-negative
     complex, negative = check_complex_or_negative(eigenvalues)
+
     if complex or negative:
-        feedback = True
         print(
             "Matrix is not positive semi-definite.\n"
             "Will try to make it positive semi-definite."
         )
 
-        c_list = []
         while complex or negative:
             eigenvalues = np.linalg.eigvals(X)
             if negative:
@@ -192,7 +191,7 @@ def make_symmetric_matrix_psd(
                 "Made matrix positive semi-definite by adding "
                 f"sum_c={np.sum(c_list)} in {len(c_list)} steps to its diagonal."
             )
-    return X, feedback
+    return X, c_list
 
 
 def make_symmetric_matrix_pd(
