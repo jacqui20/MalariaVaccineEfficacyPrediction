@@ -127,25 +127,34 @@ def check_complex_or_negative(
 
 def make_symmetric_matrix_psd(
     X: np.ndarray,
-    # epsilon_factor: float = 1.e3,
+    epsilon_factor: float = 1.e1,
 ) -> Tuple[np.ndarray, List[float]]:
     """ Spectral Translation approach
     Tests, if a given symmetric matrix is positive semi-definite (psd) and, if not,
-    the spectral translation approach (Schölkopf et al, 2002) is applied
-    to make the kernel matrix positive semi-definite.
-    The existence of complex-valued eigenvalues will result in an error.
+    a damping value c is iteratively added to the matrix diagonal, i.e. `X = X + c * I`,
+    until the kernel matrix becomes positive semi-definite.
+    Non-positive-semi-definiteness will be tested via a spectral criterion:
+    If `X` has negative or complex eigenvalues, `X` can not be psd.
+    The damping value `c` is derived from the spectrum of `X`: If negative eigenvalues exist,
+    `c = max([epsilon_factor * np.finfo(X.dtype).eps, np.min(np.linalg.eigvals(X).real)])`,
+    else,if complex but non-negative eigenvalues exist,
+    `c = max([epsilon_factor * np.finfo(X.dtype).eps, np.abs(np.max(eigenvalues.imag))])`.
 
     Parameters
     ----------
     X: np.ndarray
         Symmetric matrix to test and make psd, if necessary.
+    epsilon_factor : float, default = 1e1
+        Factor `epsilon_factor` to multiply the machine precision `np.finfo(X.dtype).eps` with,
+        resulting in `c = epsilon_factor * np.finfo(X.dtype).eps` beinig the mimimum value
+        to add to the diagonal of `X`, if `X` is not psd.
 
     Returns
     -------
     X_psd : np.ndarray
         Symmetric positive semi-definite matrix.
     """
-    eps = np.finfo(X.dtype).eps
+    epsilon = epsilon_factor * np.finfo(X.dtype).eps
     c_list = []
 
     # check, if X is square
@@ -172,9 +181,9 @@ def make_symmetric_matrix_psd(
             if negative:
                 c = np.abs(np.min(eigenvalues).real)
             else:
-                c = np.abs(np.min(eigenvalues.imag))
-            if c < 10 * eps:
-                c = 10 * eps
+                c = np.abs(np.max(eigenvalues.imag))
+            if c < epsilon:
+                c = epsilon
             c_list.append(c)
             np.fill_diagonal(X, np.diag(X) + c)
             eigenvalues = np.linalg.eigvals(X)
@@ -196,27 +205,40 @@ def make_symmetric_matrix_psd(
 
 def make_symmetric_matrix_pd(
     X: np.ndarray,
-    # epsilon_factor: float = 1.e3,
-):
-    """ Spectral Translation approach
-    Tests, if a given symmetric matrix is positive semi-definite (psd) and, if not,
-    the spectral translation approach (Schölkopf et al, 2002) is applied
-    to make the kernel matrix positive semi-definite.
-    The existence of complex-valued eigenvalues will result in an error.
+    epsilon_factor: float = 1.e1,
+) -> Tuple[np.ndarray, List[float]]:
+    """USE WITH CAUTION (see below)
+    Tests, IN THEORY, if a given symmetric matrix is positive definite (pd) and, if not,
+    a damping value c is iteratively added to the matrix diagonal, i.e. `X = X + c * I`,
+    until the kernel matrix becomes positive definite.
+    Non-positive-definiteness will be tested via np.linalg.cholesky(Y):
+    The Cholesky decomposition fails for matrices `X` that aren't positive definite.
+    IN PRACTICE, np.linalg.cholesky(Y) sometimes passes for matrices with defective rank.
+    This stands in contradiction to the mathematical fact that pd matrices must have full rank.
+    Thus, in the best case, the resulting matrices are in fact only psd. In the worst case,
+    the checks in np.linalg.cholesky(Y) (and thus LAPACK) are entirely flawed.
+    THUS, THIS FUNCTION SHOULD BE USED WITH CAUTION.
+    The damping value `c` is derived from the spectrum of `X`: If non-positive eigenvalues exist,
+    `c = max([epsilon_factor * np.finfo(X.dtype).eps, np.min(np.linalg.eigvals(X).real)])`,
+    else, if complex but positive eigenvalues exist,
+    `c = max([epsilon_factor * np.finfo(X.dtype).eps, np.abs(np.max(eigenvalues.imag))])`.
 
     Parameters
     ----------
     X: np.ndarray
         Symmetric matrix to test and make psd, if necessary.
+    epsilon_factor : float, default = 1e1
+        Factor `epsilon_factor` to multiply the machine precision `np.finfo(X.dtype).eps` with,
+        resulting in `c = epsilon_factor * np.finfo(X.dtype).eps` beinig the mimimum value
+        to add to the diagonal of `X`, if `X` is not pd.
 
     Returns
     -------
     X_psd : np.ndarray
-        Symmetric positive semi-definite matrix.
+        Symmetric positive definite matrix.
     """
-    eps = np.finfo(X.dtype).eps
-    c = 10 * eps
-    feedback = False
+    epsilon = epsilon_factor * np.finfo(X.dtype).eps
+    c_list = []
 
     # check, if X is square
     if X.shape[0] != X.shape[1]:
@@ -227,7 +249,7 @@ def make_symmetric_matrix_pd(
         raise ValueError("Matrix is not symmetric.")
 
     # check, if matrix is pd by computing its cholesky decomposition
-    is_pd = is_symmetric_positive_definite(X)
+    is_pd = is_symmetric_positive_definite(X, warn_npd=False)
 
     eigenvalues = np.linalg.eigvals(X)
 
@@ -235,30 +257,28 @@ def make_symmetric_matrix_pd(
     complex, negative = check_complex_or_negative(eigenvalues)
 
     if not is_pd:
-        feedback = True
         print(
             "Matrix is not positive definite.\n"
             "Will try to make it positive definite."
         )
 
-        c_list = []
         while not is_pd:
             eigenvalues = np.linalg.eigvals(X)
             complex, negative = check_complex_or_negative(eigenvalues, warn=False)
             if negative:
-                c = np.abs(np.min(eigenvalues.real)) / 100.
+                c = np.abs(np.min(eigenvalues.real))
             else:
                 if complex:
-                    c = np.abs(np.min(eigenvalues.imag))
+                    c = np.abs(np.max(eigenvalues.imag))
                 else:
-                    c = 10. * eps
-            if c < 10. * eps:
-                c = 10. * eps
+                    c = epsilon
+            if c < epsilon:
+                c = epsilon
             c_list.append(c)
             np.fill_diagonal(X, np.diag(X) + c)
             is_pd = is_symmetric_positive_definite(X, warn_npd=False)
 
-        is_pd = is_symmetric_positive_definite(X)
+        is_pd = is_symmetric_positive_definite(X, warn_npd=False)
         if not is_pd:
             raise ValueError(
                 "Couldn't make matrix positive definite by adding"
@@ -269,7 +289,7 @@ def make_symmetric_matrix_pd(
                 "Made matrix positive semi-definite by adding "
                 f"sum_c={np.sum(c_list)} in {len(c_list)} steps to its diagonal."
             )
-    return X, feedback
+    return X, c_list
 
 
 def is_symmetric_positive_semidefinite(
