@@ -109,17 +109,18 @@ def check_complex_or_negative(
     complex = False
     negative = False
     if np.any(np.iscomplex(ev)):
+        if np.max(np.abs(ev.imag)) > np.finfo(ev.dtype).eps:
+            if warn:
+                print(
+                    'Complex eigenvalues with significant imaginary part found:\n'
+                    f'{ev[np.abs(ev.imag) > np.finfo(ev.dtype).eps]}'
+                )
+            complex = True
+    if np.any(ev.real < 0.0):
         if warn:
             print(
-                'Complex eigenvalues found:\n'
-                f'{ev[np.iscomplex(ev)]}'
-            )
-        complex = True
-    if np.any(ev < 0.0):
-        if warn:
-            print(
-                'Negative eigenvalues found:\n'
-                f'{ev[ev < 0.0]}'
+                'Eigenvalues with negative real parts found:\n'
+                f'{ev[ev.real < 0.0]}'
             )
         negative = True
     return complex, negative
@@ -128,7 +129,7 @@ def check_complex_or_negative(
 def make_symmetric_matrix_psd(
     X: np.ndarray,
     epsilon_factor: float = 1.e1,
-) -> Tuple[np.ndarray, List[float]]:
+) -> Tuple[np.ndarray, List[float], List[str]]:
     """ Spectral Translation approach
     Tests, if a given symmetric matrix is positive semi-definite (psd) and, if not,
     a damping value c is iteratively added to the matrix diagonal, i.e. `X = X + c * I`,
@@ -156,6 +157,7 @@ def make_symmetric_matrix_psd(
     """
     epsilon = epsilon_factor * np.finfo(X.dtype).eps
     c_list = []
+    info_list = []
 
     # check, if X is square
     if X.shape[0] != X.shape[1]:
@@ -176,31 +178,44 @@ def make_symmetric_matrix_psd(
             "Will try to make it positive semi-definite."
         )
 
-        while complex or negative:
-            eigenvalues = np.linalg.eigvals(X)
+        n_negative = 0
+        n_imaginary = 0
+        counter = 0
+        while (complex or negative) and counter <= 10000:
+            counter += 1
             if negative:
+                n_negative += 1
+                info = 'negative'
                 c = np.abs(np.min(eigenvalues).real)
             else:
-                c = np.abs(np.max(eigenvalues.imag))
+                n_imaginary += 1
+                info = 'imaginary'
+                c = np.max(np.abs(eigenvalues.imag))
             if c < epsilon:
+                info += '_epsilon'
                 c = epsilon
+            info_list.append(info)
             c_list.append(c)
             np.fill_diagonal(X, np.diag(X) + c)
             eigenvalues = np.linalg.eigvals(X)
-            complex, negative = check_complex_or_negative(eigenvalues)
+            complex, negative = check_complex_or_negative(eigenvalues, warn=False)
 
         complex, negative = check_complex_or_negative(eigenvalues)
         if complex or negative:
-            raise ValueError(
+            print(
                 "Couldn't make matrix positive semi-definite by adding"
-                f"sum_c={np.sum(c_list)} in {len(c_list)} steps to its diagonal."
+                f"sum_c={np.sum(c_list)} in {len(c_list)} steps to its diagonal.\n"
+                f"Damped {n_negative} times for negative eigenvalues "
+                f"and {n_imaginary} times for imaginary parts."
             )
         else:
             print(
                 "Made matrix positive semi-definite by adding "
-                f"sum_c={np.sum(c_list)} in {len(c_list)} steps to its diagonal."
+                f"sum_c={np.sum(c_list)} in {len(c_list)} steps to its diagonal.\n"
+                f"Damped {n_negative} times for negative eigenvalues "
+                f"and {n_imaginary} times for imaginary parts."
             )
-    return X, c_list
+    return X, c_list, info_list
 
 
 def make_symmetric_matrix_pd(
@@ -269,7 +284,7 @@ def make_symmetric_matrix_pd(
                 c = np.abs(np.min(eigenvalues.real))
             else:
                 if complex:
-                    c = np.abs(np.max(eigenvalues.imag))
+                    c = np.max(np.abs(eigenvalues.imag))
                 else:
                     c = epsilon
             if c < epsilon:
@@ -286,7 +301,7 @@ def make_symmetric_matrix_pd(
             )
         else:
             print(
-                "Made matrix positive semi-definite by adding "
+                "Made matrix positive definite by adding "
                 f"sum_c={np.sum(c_list)} in {len(c_list)} steps to its diagonal."
             )
     return X, c_list
