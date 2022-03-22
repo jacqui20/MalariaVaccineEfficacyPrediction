@@ -76,15 +76,22 @@ def main(
 
         print('=================================================================================')
         print(f'{time} start: {ncv.generate_timestamp()}')
+        print('')
 
         # define prefix for filenames:
         prefix = f'{time}_{combination}'
 
         # initialize test folds and CV splitters for outer CV
         cv = []
+        print('Predefined CV folds:')
+        print('---------------------------------------------------------------------------------')
         for rep in range(Nexp):
+            print(f'CV folds for repetition {rep}:')
             test_fold, train_fold = assign_folds(y, groups, 40, step, random_state=rep)
             cv.append(CustomPredefinedSplit(test_fold, train_fold))
+            print('')
+        print('---------------------------------------------------------------------------------')
+        print('')
 
         estimator = make_pipeline(
             DataSelector(
