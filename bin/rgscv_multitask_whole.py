@@ -96,7 +96,7 @@ def main(
                 class_weight='balanced',
                 probability=True,
                 random_state=1337,
-                # cache_size=3000,
+                cache_size=500,
             ),
             # memory=cachedir,
         )
@@ -116,7 +116,7 @@ def main(
             param_grid,
             scoring=scorings,
             cv=cv,
-            n_jobs=28,
+            n_jobs=8,
             Nexp=Nexp,
             save_to=None,
             reproducible=False,
@@ -194,7 +194,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         '--combination', dest='combination', required=True,
-        help='Kernel combination. Supply SPP, SPR, SRP, or SRR.'
+        help='Kernel combination. Supply SPP, SPR, SRP, SRR, RPP, RPR, RRP, or RRR.'
     )
     parser.add_argument(
         '--identifier', dest='identifier', required=True,
@@ -209,6 +209,7 @@ if __name__ == "__main__":
         param_grid = {
             "dataselector__SA": [0.25, 0.5, 0.75],
             "dataselector__SO": [-2.0, -1.0, 0.0, 1.0, 2.0],
+            "dataselector__R0": ["X"],
             "dataselector__R1": ["X"],
             "dataselector__R2": ["X"],
             "dataselector__P1": [2.0, 3.0, 4.0, 5.0],
@@ -219,6 +220,7 @@ if __name__ == "__main__":
         param_grid = {
             "dataselector__SA": [0.25, 0.5, 0.75],
             "dataselector__SO": [-2.0, -1.0, 0.0, 1.0, 2.0],
+            "dataselector__R0": ["X"],
             "dataselector__R1": ["X"],
             "dataselector__R2": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
             "dataselector__P1": [2.0, 3.0, 4.0, 5.0],
@@ -229,6 +231,7 @@ if __name__ == "__main__":
         param_grid = {
             "dataselector__SA": [0.25, 0.5, 0.75],
             "dataselector__SO": [-2.0, -1.0, 0.0, 1.0, 2.0],
+            "dataselector__R0": ["X"],
             "dataselector__R1": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
             "dataselector__R2": ["X"],
             "dataselector__P1": ["X"],
@@ -239,6 +242,51 @@ if __name__ == "__main__":
         param_grid = {
             "dataselector__SA": [0.25, 0.5, 0.75],
             "dataselector__SO": [-2.0, -1.0, 0.0, 1.0, 2.0],
+            "dataselector__R0": ["X"],
+            "dataselector__R1": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
+            "dataselector__R2": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
+            "dataselector__P1": ["X"],
+            "dataselector__P2": ["X"],
+            "svc__C": [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
+        }
+    elif combination == 'RPP':
+        param_grid = {
+            "dataselector__SA": ["X"],
+            "dataselector__SO": ["X"],
+            "dataselector__R0": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
+            "dataselector__R1": ["X"],
+            "dataselector__R2": ["X"],
+            "dataselector__P1": [2.0, 3.0, 4.0, 5.0],
+            "dataselector__P2": [2.0, 3.0, 4.0, 5.0],
+            "svc__C": [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
+        }
+    elif combination == 'RPR':
+        param_grid = {
+            "dataselector__SA": ["X"],
+            "dataselector__SO": ["X"],
+            "dataselector__R0": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
+            "dataselector__R1": ["X"],
+            "dataselector__R2": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
+            "dataselector__P1": [2.0, 3.0, 4.0, 5.0],
+            "dataselector__P2": ["X"],
+            "svc__C": [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
+        }
+    elif combination == 'RRP':
+        param_grid = {
+            "dataselector__SA": ["X"],
+            "dataselector__SO": ["X"],
+            "dataselector__R0": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
+            "dataselector__R1": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
+            "dataselector__R2": ["X"],
+            "dataselector__P1": ["X"],
+            "dataselector__P2": [2.0, 3.0, 4.0, 5.0],
+            "svc__C": [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
+        }
+    elif combination == 'RRR':
+        param_grid = {
+            "dataselector__SA": ["X"],
+            "dataselector__SO": ["X"],
+            "dataselector__R0": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
             "dataselector__R1": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
             "dataselector__R2": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
             "dataselector__P1": ["X"],
