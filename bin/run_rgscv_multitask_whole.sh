@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source "/home/breuter/anaconda3/etc/profile.d/conda.sh"
 conda activate malaria_env
 
 maindir='/home/breuter/MalariaVaccineEfficacyPrediction/results/multitaskSVM'
