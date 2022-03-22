@@ -151,11 +151,12 @@ def main(
             results['scoring'].append(scoring)
             results['best_params'].append(opt_params[scoring])
             results['best_score'].append(opt_scores[scoring])
-        print(f'{time} results:')
-        pprint(results)
-        print('')
 
-    filename = f"{prefix}_RepeatedGridSearchCV_results"
+    print('results:')
+    pprint(results)
+    print('')
+
+    filename = "RepeatedGridSearchCV_results"
     fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
     pd.DataFrame(data=results).to_csv(fn, sep='\t', na_rep='nan')
     fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)
