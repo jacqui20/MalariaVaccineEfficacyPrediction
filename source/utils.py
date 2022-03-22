@@ -128,7 +128,7 @@ def check_complex_or_negative(
 
 def make_symmetric_matrix_psd(
     X: np.ndarray,
-    epsilon_factor: float = 1.e1,
+    epsilon_factor: float = 1.e3,
 ) -> Tuple[np.ndarray, List[float], List[str]]:
     """ Spectral Translation approach
     Tests, if a given symmetric matrix is positive semi-definite (psd) and, if not,
@@ -181,7 +181,7 @@ def make_symmetric_matrix_psd(
         n_negative = 0
         n_imaginary = 0
         counter = 0
-        while (complex or negative) and counter <= 10000:
+        while (complex or negative) and counter <= 1000:
             counter += 1
             if negative:
                 n_negative += 1
@@ -595,6 +595,7 @@ class DataSelector:
         identifier: str,
         SA: Union[float, str] = 'X',
         SO: Union[float, str] = 'X',
+        R0: Union[float, str] = 'X',
         R1: Union[float, str] = 'X',
         R2: Union[float, str] = 'X',
         P1: Union[float, str] = 'X',
@@ -604,6 +605,7 @@ class DataSelector:
         self.identifier = identifier
         self.SA = SA
         self.SO = SO
+        self.R0 = R0
         self.R1 = R1
         self.R2 = R2
         self.P1 = P1
@@ -626,18 +628,33 @@ class DataSelector:
         X: np.ndarray,
     ) -> np.ndarray:
 
-        if isinstance(self.R1, float) and isinstance(self.R2, float):
-            fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R1_{self.R1:.1E}_"
-                  f"R2_{self.R2:.1E}_P1_{self.P1}_P2_{self.P2}.npy")
-        elif isinstance(self.R1, float) and not isinstance(self.R2, float):
-            fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R1_{self.R1:.1E}_"
-                  f"R2_{self.R2}_P1_{self.P1}_P2_{self.P2}.npy")
-        elif not isinstance(self.R1, float) and isinstance(self.R2, float):
-            fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R1_{self.R1}_"
-                  f"R2_{self.R2:.1E}_P1_{self.P1}_P2_{self.P2}.npy")
+        if isinstance(self.R0, float):
+            if isinstance(self.R1, float) and isinstance(self.R2, float):
+                fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R0_{self.R0:.1E}_"
+                      f"R1_{self.R1:.1E}_R2_{self.R2:.1E}_P1_{self.P1}_P2_{self.P2}.npy")
+            elif isinstance(self.R1, float) and not isinstance(self.R2, float):
+                fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R0_{self.R0:.1E}_"
+                      f"R1_{self.R1:.1E}_R2_{self.R2}_P1_{self.P1}_P2_{self.P2}.npy")
+            elif not isinstance(self.R1, float) and isinstance(self.R2, float):
+                fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R0_{self.R0:.1E}_"
+                      f"R1_{self.R1}_R2_{self.R2:.1E}_P1_{self.P1}_P2_{self.P2}.npy")
+            else:
+                fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R0_{self.R0:.1E}_"
+                      f"R1_{self.R1}_R2_{self.R2}_P1_{self.P1}_P2_{self.P2}.npy")
         else:
-            fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R1_{self.R1}_"
-                  f"R2_{self.R2}_P1_{self.P1}_P2_{self.P2}.npy")
+            if isinstance(self.R1, float) and isinstance(self.R2, float):
+                fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R0_{self.R0}_"
+                      f"R1_{self.R1:.1E}_R2_{self.R2:.1E}_P1_{self.P1}_P2_{self.P2}.npy")
+            elif isinstance(self.R1, float) and not isinstance(self.R2, float):
+                fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R0_{self.R0}_"
+                      f"R1_{self.R1:.1E}_R2_{self.R2}_P1_{self.P1}_P2_{self.P2}.npy")
+            elif not isinstance(self.R1, float) and isinstance(self.R2, float):
+                fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R0_{self.R0}_"
+                      f"R1_{self.R1}_R2_{self.R2:.1E}_P1_{self.P1}_P2_{self.P2}.npy")
+            else:
+                fn = (f"{self.identifier}_SA_{self.SA}_SO_{self.SO}_R0_{self.R0}_"
+                      f"R1_{self.R1}_R2_{self.R2}_P1_{self.P1}_P2_{self.P2}.npy")
+
         kernel = np.load(os.path.join(self.kernel_directory, fn))
 
         # kernel is a precomputed square kernel matrix
