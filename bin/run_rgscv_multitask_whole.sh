@@ -5,7 +5,8 @@ conda activate malaria_env
 
 maindir='/home/breuter/MalariaVaccineEfficacyPrediction/results/multitaskSVM'
 data_maindir='/home/breuter/MalariaVaccineEfficacyPrediction/data/precomputed_multitask_kernels'
-combinations=('SPP' 'SPR' 'SRP' 'SRR' 'RPP' 'RPR' 'RRP' 'RRR')
+#combinations=('SPP' 'SPR' 'SRP' 'SRR' 'RPP' 'RPR' 'RRP' 'RRR')
+combinations=('RPP' 'RPR' 'RRP' 'RRR')
 
 #for dataset in 'whole' 'selective'; do
 for dataset in 'whole'; do
