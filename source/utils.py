@@ -145,7 +145,7 @@ def make_symmetric_matrix_psd(
     ----------
     X: np.ndarray
         Symmetric matrix to test and make psd, if necessary.
-    epsilon_factor : float, default = 1e1
+    epsilon_factor : float, default = 1e3
         Factor `epsilon_factor` to multiply the machine precision `np.finfo(X.dtype).eps` with,
         resulting in `c = epsilon_factor * np.finfo(X.dtype).eps` beinig the mimimum value
         to add to the diagonal of `X`, if `X` is not psd.
