@@ -1,0 +1,10 @@
+	time	scoring	best_params	best_score
+0	III14	mcc	{'dataselector__P1': 5.0, 'dataselector__P2': 4.0, 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 'X', 'dataselector__SA': 0.25, 'dataselector__SO': 2.0, 'svc__C': 0.001}	0.5307087792582635
+1	III14	precision_recall_auc	{'dataselector__P1': 4.0, 'dataselector__P2': 3.0, 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 'X', 'dataselector__SA': 0.5, 'dataselector__SO': 2.0, 'svc__C': 0.01}	0.8669540222062782
+2	III14	roc_auc	{'dataselector__P1': 2.0, 'dataselector__P2': 2.0, 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 'X', 'dataselector__SA': 0.75, 'dataselector__SO': 1.0, 'svc__C': 0.1}	0.8674242424242424
+3	C-1	mcc	{'dataselector__P1': 5.0, 'dataselector__P2': 2.0, 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 'X', 'dataselector__SA': 0.25, 'dataselector__SO': 2.0, 'svc__C': 0.01}	0.5512384525189222
+4	C-1	precision_recall_auc	{'dataselector__P1': 3.0, 'dataselector__P2': 2.0, 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 'X', 'dataselector__SA': 0.5, 'dataselector__SO': 2.0, 'svc__C': 0.1}	0.837419213902219
+5	C-1	roc_auc	{'dataselector__P1': 3.0, 'dataselector__P2': 2.0, 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 'X', 'dataselector__SA': 0.5, 'dataselector__SO': 2.0, 'svc__C': 0.1}	0.845959595959596
+6	C28	mcc	{'dataselector__P1': 5.0, 'dataselector__P2': 2.0, 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 'X', 'dataselector__SA': 0.5, 'dataselector__SO': 2.0, 'svc__C': 0.01}	0.555395590213636
+7	C28	precision_recall_auc	{'dataselector__P1': 2.0, 'dataselector__P2': 2.0, 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 'X', 'dataselector__SA': 0.25, 'dataselector__SO': 2.0, 'svc__C': 0.0001}	0.8553708107384486
+8	C28	roc_auc	{'dataselector__P1': 2.0, 'dataselector__P2': 2.0, 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 'X', 'dataselector__SA': 0.5, 'dataselector__SO': 2.0, 'svc__C': 0.1}	0.8497474747474747
