@@ -11,6 +11,4 @@ C28 == post CHMI
 
 Selective set of surface proteins:
 40 samples per time point with 1194 features.
-
-Target_label_vec files
-Enthalten pro Datensatz die target_label als .csv files. 
+ 
