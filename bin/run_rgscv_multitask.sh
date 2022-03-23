@@ -27,9 +27,9 @@ for dataset in 'whole'; do
             data_dir="${data_maindir}/${scaling}"
             mkdir "${ana_dir}"
             cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
-            cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_multitask_whole.py . || { echo "cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_multitask_whole.py . failed"; exit 1; }
+            cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_multitask.py . || { echo "cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_multitask_whole.py . failed"; exit 1; }
 
-            python -u rgscv_multitask_whole.py --analysis-dir "${ana_dir}" --data-dir "${data_dir}" --combination "${combination}" --identifier "${identifier}" 1> "${out}" 2> "${err}"
+            python -u rgscv_multitask.py --analysis-dir "${ana_dir}" --data-dir "${data_dir}" --combination "${combination}" --identifier "${identifier}" 1> "${out}" 2> "${err}"
         done
     done
 done
