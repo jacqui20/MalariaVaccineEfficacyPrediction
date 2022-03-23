@@ -106,7 +106,9 @@ def main(
             test_fold, train_fold = assign_folds(
                 y_all, groups_all, 40, step, random_state=rep, print_info=False
             )
-            train_fold = train_fold[40 * step, 40 * (step + 1)]
+            test_fold = test_fold[40 * step: 40 * (step + 1)]
+            train_fold = train_fold[40 * step: 40 * (step + 1)]
+            assert np.all(test_fold == train_fold), f"test_fold != train_fold: {test_fold} != {train_fold}"
             cv.append(CustomPredefinedSplit(test_fold, train_fold))
             print(
                 f"train_fold: {train_fold} "
