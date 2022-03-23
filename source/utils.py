@@ -417,6 +417,7 @@ def assign_folds(
     step: int,
     n_splits: int = 5,
     shuffle: bool = True,
+    print_info: bool = True,
     random_state: Optional[Union[int, np.random.mtrand.RandomState]] = None,
 ):
     """
@@ -452,6 +453,8 @@ def assign_folds(
     shuffle : bool, default=True
         Whether to shuffle each class's samples before splitting into batches.
         Note that the samples within each split will not be shuffled.
+    print_info : bool, default=True
+        If True, printout detailed information about the train/test splits.
     random_state : int, RandomState instance or None, default=None
         When shuffle is True, random_state affects the ordering of the indices,
         which controls the randomness of each fold for each class. Otherwise,
@@ -477,28 +480,30 @@ def assign_folds(
         "delta + delta * step <= len(labels) must be ensured"
     labels_slice = labels[delta * step: delta + delta * step]
     groups_slice = groups[delta * step: delta + delta * step]
-    skf = StratifiedKFold(n_splits, shuffle=True, random_state=random_state)
+    skf = StratifiedKFold(n_splits, shuffle=shuffle, random_state=random_state)
     test_fold = np.array([-1 for i in range(len(labels))])
     train_fold = np.array([-1 for i in range(len(labels))])
     for i, (train_index, test_index) in enumerate(
         skf.split(np.zeros((delta, delta)), labels_slice)
     ):
-        print("TEST:", test_index + delta * step)
         exclude_groups = []
         for j in test_index:
             test_fold[j + delta * step] = i
             exclude_groups.append(groups_slice[j])
         train_fold = np.where(np.isin(groups, exclude_groups), i, train_fold)
-        print('exclude groups:', exclude_groups)
-        print('train_fold:', train_fold)
-    print('test_fold:', test_fold)
-    cps = CustomPredefinedSplit(test_fold, train_fold)
-    for i, (train_index, test_index) in enumerate(cps.split()):
-        print(
-            f"TRAIN (len={len(train_index)}): {train_index} "
-            f"TEST (len={len(test_index)}): {test_index}"
-        )
-    print('')
+        if print_info:
+            print("TEST:", test_index + delta * step)
+            print('exclude groups:', exclude_groups)
+            print('train_fold:', train_fold)
+    if print_info:
+        print('test_fold:', test_fold)
+        cps = CustomPredefinedSplit(test_fold, train_fold)
+        for i, (train_index, test_index) in enumerate(cps.split()):
+            print(
+                f"TRAIN (len={len(train_index)}): {train_index} "
+                f"TEST (len={len(test_index)}): {test_index}"
+            )
+        print('')
     return test_fold, train_fold
 
 
