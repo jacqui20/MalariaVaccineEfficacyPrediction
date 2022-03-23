@@ -1,0 +1,10 @@
+	time	scoring	best_params	best_score
+0	III14	mcc	{'dataselector__P1': 2.0, 'dataselector__P2': 'X', 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 1e-05, 'dataselector__SA': 0.25, 'dataselector__SO': 0.0, 'svc__C': 0.1}	0.74715612106153
+1	III14	precision_recall_auc	{'dataselector__P1': 3.0, 'dataselector__P2': 'X', 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 1e-06, 'dataselector__SA': 0.5, 'dataselector__SO': 1.0, 'svc__C': 0.1}	0.9330530440776293
+2	III14	roc_auc	{'dataselector__P1': 2.0, 'dataselector__P2': 'X', 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 1e-05, 'dataselector__SA': 0.25, 'dataselector__SO': -2.0, 'svc__C': 0.01}	0.9338383838383839
+3	C-1	mcc	{'dataselector__P1': 2.0, 'dataselector__P2': 'X', 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 1e-05, 'dataselector__SA': 0.25, 'dataselector__SO': 0.0, 'svc__C': 0.01}	0.8112457445926344
+4	C-1	precision_recall_auc	{'dataselector__P1': 2.0, 'dataselector__P2': 'X', 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 1e-05, 'dataselector__SA': 0.5, 'dataselector__SO': -2.0, 'svc__C': 0.001}	0.9413481840609306
+5	C-1	roc_auc	{'dataselector__P1': 2.0, 'dataselector__P2': 'X', 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 1e-06, 'dataselector__SA': 0.75, 'dataselector__SO': -1.0, 'svc__C': 0.1}	0.9368686868686869
+6	C28	mcc	{'dataselector__P1': 2.0, 'dataselector__P2': 'X', 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 1e-05, 'dataselector__SA': 0.25, 'dataselector__SO': -2.0, 'svc__C': 0.001}	0.8189069962644971
+7	C28	precision_recall_auc	{'dataselector__P1': 2.0, 'dataselector__P2': 'X', 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 1e-05, 'dataselector__SA': 0.25, 'dataselector__SO': -1.0, 'svc__C': 0.01}	0.9531012560913252
+8	C28	roc_auc	{'dataselector__P1': 2.0, 'dataselector__P2': 'X', 'dataselector__R0': 'X', 'dataselector__R1': 'X', 'dataselector__R2': 1e-05, 'dataselector__SA': 0.25, 'dataselector__SO': -1.0, 'svc__C': 0.01}	0.9492424242424244
