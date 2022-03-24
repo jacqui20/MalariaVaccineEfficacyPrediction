@@ -1,0 +1,2887 @@
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:1157: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  np.full(len(grid), np.nan, dtype=np.object), mask=True
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1157, in fit
+    np.full(len(grid), np.nan, dtype=np.object), mask=True
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/site-packages/numpy/__init__.py", line 297, in __getattr__
+    warnings.warn(msg, DeprecationWarning, stacklevel=2)
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:1157: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  np.full(len(grid), np.nan, dtype=np.object), mask=True
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1157, in fit
+    np.full(len(grid), np.nan, dtype=np.object), mask=True
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/site-packages/numpy/__init__.py", line 297, in __getattr__
+    warnings.warn(msg, DeprecationWarning, stacklevel=2)
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:1157: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  np.full(len(grid), np.nan, dtype=np.object), mask=True
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1157, in fit
+    np.full(len(grid), np.nan, dtype=np.object), mask=True
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/site-packages/numpy/__init__.py", line 297, in __getattr__
+    warnings.warn(msg, DeprecationWarning, stacklevel=2)
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:351: UserWarning: Divide through zero encountered while trying to calculate the MCC. MCC is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rgscv_RLR.py", line 235, in <module>
+    args.identifier,
+  File "rgscv_RLR.py", line 150, in main
+    gs.fit(X, y, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 1400, in fit
+    y_D[key], Predictions[key], sample_weight=None
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 351, in matthews_corrcoef
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rgscv_RLR.py", line 203, in warn_with_traceback
+    traceback.print_stack(file=warning_file)

@@ -1,0 +1,10 @@
+	time	scoring	best_params	best_score
+0	III14	mcc	{'logisticregression__C': 0.1, 'logisticregression__l1_ratio': 0.7}	0.6521560852717296
+1	III14	precision_recall_auc	{'logisticregression__C': 0.1, 'logisticregression__l1_ratio': 0.9}	0.8903869501634812
+2	III14	roc_auc	{'logisticregression__C': 0.1, 'logisticregression__l1_ratio': 1.0}	0.8970959595959596
+3	C-1	mcc	{'logisticregression__C': 0.1, 'logisticregression__l1_ratio': 0.4}	0.730569434334119
+4	C-1	precision_recall_auc	{'logisticregression__C': 0.1, 'logisticregression__l1_ratio': 0.6}	0.8949661618592699
+5	C-1	roc_auc	{'logisticregression__C': 0.1, 'logisticregression__l1_ratio': 0.7}	0.8963383838383839
+6	C28	mcc	{'logisticregression__C': 1.0, 'logisticregression__l1_ratio': 1.0}	0.7788667208703016
+7	C28	precision_recall_auc	{'logisticregression__C': 1.0, 'logisticregression__l1_ratio': 1.0}	0.9200502398523375
+8	C28	roc_auc	{'logisticregression__C': 1.0, 'logisticregression__l1_ratio': 1.0}	0.9239898989898989

@@ -8,8 +8,9 @@ data_dir='/home/breuter/MalariaVaccineEfficacyPrediction/data/timepoint-wise'
 
 for dataset in 'whole' 'selective'; do
 
-    err="runRGSCV_${dataset}.err"
-    out="runRGSCV_${dataset}.out"
+    timestamp=$(date +%d-%m-%Y_%H-%M-%S)
+    err="runRGSCV_${dataset}_${timestamp}.err"
+    out="runRGSCV_${dataset}_${timestamp}.out"
     ana_dir="${maindir}/${dataset}"
     mkdir "${ana_dir}"
     cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
