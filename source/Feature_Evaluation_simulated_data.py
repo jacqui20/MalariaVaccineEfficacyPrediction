@@ -217,7 +217,8 @@ def ESPY_measurment(data, lq, up):
     X_train, X_test, Y_train, Y_test = train_testSplit(data.iloc[:, :1000], data.iloc[:, 1000])
     #print(X_test.head())
     #print(Y_test)
-    rbf_svm_model = initialize_svm_model(X_Train_data=X_train, y_train_data= Y_train, X_test_data=X_test, y_test_data=Y_test)
+    rbf_svm_model = initialize_svm_model(X_Train_data=X_train, y_train_data=Y_train,
+                                         X_test_data=X_test, y_test_data=Y_test)
     combinations, all_feature_combinations = make_feature_combination(X_test, up, lq)
     distance_matrix_for_all_feature_comb = compute_disctance_hyper(all_feature_combinations, rbf_svm_model,
                                                                    combinations)
