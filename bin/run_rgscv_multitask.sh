@@ -21,14 +21,14 @@ for dataset in 'selective'; do
         mkdir "${maindir}/${dataset}/${combination}"
 
         for scaling in 'unscaled' 'scaled'; do
-            err="runRGSCV_${dataset}_${combination}_${scaling}.err"
-            out="runRGSCV_${dataset}_${combination}_${scaling}.out"
+	    timestamp=$(date +%d-%m-%Y_%H-%M-%S)
+            err="runRGSCV_${dataset}_${combination}_${scaling}_${timestamp}.err"
+            out="runRGSCV_${dataset}_${combination}_${scaling}_${timestamp}.out"
             ana_dir="${maindir}/${dataset}/${combination}/${scaling}"
             data_dir="${data_maindir}/${scaling}"
             mkdir "${ana_dir}"
             cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
             cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_multitask.py . || { echo "cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_multitask.py . failed"; exit 1; }
-
             python -u rgscv_multitask.py --analysis-dir "${ana_dir}" --data-dir "${data_dir}" --combination "${combination}" --identifier "${identifier}" 1> "${out}" 2> "${err}"
         done
     done
