@@ -132,7 +132,7 @@ def main(
             LogisticRegression(
                 penalty='elasticnet',
                 solver='saga',
-                max_iter=1000,
+                max_iter=10000,
             ),
             # memory=cachedir,
         )
