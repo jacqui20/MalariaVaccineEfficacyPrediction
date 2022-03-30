@@ -57,8 +57,8 @@ def main(
     pathlib.Path(maindir).mkdir(parents=True, exist_ok=True)
     rfiledir = os.path.join(ANA_PATH, 'RNCV/results/')
     pathlib.Path(rfiledir).mkdir(parents=True, exist_ok=True)
-    efiledir = os.path.join(ANA_PATH, 'RNCV/estimators/')
-    pathlib.Path(efiledir).mkdir(parents=True, exist_ok=True)
+    # efiledir = os.path.join(ANA_PATH, 'RNCV/estimators/')
+    # pathlib.Path(efiledir).mkdir(parents=True, exist_ok=True)
     # pfiledir = os.path.join(ANA_PATH, 'GridSearchCV/plots/')
     # pathlib.Path(pfiledir).mkdir(parents=True, exist_ok=True)
     # ifiledir = os.path.join(ANA_PATH, 'GridSearchCV/results/RGSCV/')
@@ -102,6 +102,7 @@ def main(
 
         print('=================================================================================')
         print(f'{time} start: {ncv.generate_timestamp()}')
+        print('')
 
         # define prefix for filenames:
         prefix = f'{time}_{combination}'
@@ -206,8 +207,9 @@ def main(
         pprint(result, width=200)
         print('')
 
+        scorings = sorted(result.keys())
         # collect the key results:
-        for scoring in result.keys():
+        for scoring in scorings:
             key_results['kernel_combination'].append(combination)
             key_results['time'].append(time)
             key_results['scoring'].append(scoring)
@@ -217,7 +219,6 @@ def main(
 
         performances = []
         ncv_performances = []
-        scorings = result.keys()
         for scoring in scorings:
 
             performance = {}
