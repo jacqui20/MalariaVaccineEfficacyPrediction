@@ -18,7 +18,7 @@ for dataset in 'whole' 'selective'; do
     for combination in "${combinations[@]}"; do
         mkdir "${maindir}/${dataset}/${combination}"
 
-        for scaling in 'unscaled' 'scaled'; do
+        for scaling in 'unscaled'; do
 	    timestamp=$(date +%d-%m-%Y_%H-%M-%S)
             err="runRNCV_${dataset}_${combination}_${scaling}_${timestamp}.err"
             out="runRNCV_${dataset}_${combination}_${scaling}_${timestamp}.out"
