@@ -227,11 +227,10 @@ def main(
                 if (bool(re.match(r'best', score)) and not
                         bool(re.search(r'ncv|best_inner|best_params', score))):
                     performance[score] = result[scoring][score]
-                elif (bool(re.match(r'test|train|baseline', score)) and not
+                elif (bool(re.match(r'test|train', score)) and not
                         bool(re.search(r'ncv|best_inner|best_params', score))):
-                    scores.append(re.sub(r'test_|train_|baseline_', '', score, count=1))
+                    scores.append(re.sub(r'test_|train_', '', score, count=1))
             for score in sorted(scores):
-                performance[f'baseline_{score}'] = result[scoring][f'baseline_{score}']
                 performance[f'test_{score}'] = result[scoring][f'test_{score}']
                 performance[f'train_{score}'] = result[scoring][f'train_{score}']
 
@@ -247,10 +246,9 @@ def main(
             ncv_performance = {}
             scores = []
             for score in result[scoring].keys():
-                if bool(re.match(r'ncv|baseline_ncv', score)):
-                    scores.append(re.sub(r'ncv_|baseline_ncv_', '', score, count=1))
+                if bool(re.match(r'ncv', score)):
+                    scores.append(re.sub(r'ncv_', '', score, count=1))
             for score in sorted(scores):
-                ncv_performance[f'baseline_ncv_{score}'] = result[scoring][f'baseline_ncv_{score}']
                 ncv_performance[f'ncv_{score}'] = result[scoring][f'ncv_{score}']
             index = []
             for x2 in range(cv_options['Nexp2']):
@@ -325,9 +323,9 @@ def main(
                     performance_min_max_nice[dummy_min_max] = [
                         "[%.3f, %.3f]" % (result[scoring][min_], result[scoring][max_])
                     ]
-                elif (bool(re.match(r'test|train|baseline', score)) and not
+                elif (bool(re.match(r'test|train', score)) and not
                         bool(re.search(r'ncv|best_inner|best_params', score))):
-                    scores.append(re.sub(r'test_|train_|baseline_', '', score, count=1))
+                    scores.append(re.sub(r'test_|train_', '', score, count=1))
 
             if not threshold_tuning_score:
                 performance_mean['mean_best_threshold_tuning_score'] = [np.nan]
@@ -336,7 +334,7 @@ def main(
                 performance_min_max_nice['min_max_best_threshold'] = ['[nan, nan]']
 
             for score in sorted(scores):
-                for x in ['baseline', 'test', 'train']:
+                for x in ['test', 'train']:
                     mean = f'mean_{x}_{score}'
                     std = f'std_{x}_{score}'
                     min_ = f'min_{x}_{score}'
@@ -414,10 +412,10 @@ def main(
             performance_min_max_nice = {}
             scores = []
             for score in result[scoring].keys():
-                if bool(re.match(r'ncv|baseline_ncv', score)):
-                    scores.append(re.sub(r'ncv_|baseline_ncv_', '', score, count=1))
+                if bool(re.match(r'ncv', score)):
+                    scores.append(re.sub(r'ncv_', '', score, count=1))
             for score in sorted(scores):
-                for x in ['baseline_ncv', 'ncv']:
+                for x in ['ncv']:
                     mean = f'mean_{x}_' + score
                     std = f'std_{x}_' + score
                     min_ = f'min_{x}_' + score
