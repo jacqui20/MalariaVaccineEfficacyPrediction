@@ -20,8 +20,8 @@ for dataset in 'whole' 'selective'; do
 
         for scaling in 'unscaled' 'scaled'; do
 	    timestamp=$(date +%d-%m-%Y_%H-%M-%S)
-            err="runRGSCV_${dataset}_${combination}_${scaling}_${timestamp}.err"
-            out="runRGSCV_${dataset}_${combination}_${scaling}_${timestamp}.out"
+            err="runRNCV_${dataset}_${combination}_${scaling}_${timestamp}.err"
+            out="runRNCV_${dataset}_${combination}_${scaling}_${timestamp}.out"
             ana_dir="${maindir}/${dataset}/${combination}/${scaling}"
             data_dir="${data_maindir}/${scaling}"
             mkdir "${ana_dir}"
