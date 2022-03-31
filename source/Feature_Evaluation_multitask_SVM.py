@@ -9,20 +9,18 @@ Created on: 25.05.2019
 
 """
 
-#import pandas as pd
+import pandas as pd
 import numpy as np
 from sklearn import svm
 from sklearn.metrics.pairwise import rbf_kernel, sigmoid_kernel, polynomial_kernel
+import time
 import os
 import sys
 maindir = '/'.join(os.getcwd().split('/')[:-1])
 sys.path.append(maindir)
 from utils import make_symmetric_matrix_psd, normalize
 
-outputdir_whole = '/'.join(os.getcwd().split('/')[:-1]) + \
-                  '/results/multitaskSVM/whole/RRR/unscaled/Informative features'
-outputdir_selective = '/'.join(os.getcwd().split('/')[:-1]) + \
-                      '/results/multitaskSVM/selective/RRR/unscaled/Informative features'
+
 
 
 def multitask(
@@ -344,301 +342,67 @@ def compute_distance_hyper(combinations, model, input_labels, data, kernel_param
     return get_distance_df
 
 
-def main_III14(target_label,
-               kernel_parameter,
-               proteome_data,
-               uq,
-               lq,
-               outputdir):
+def ESPY_measurment(target_label,
+                    kernel_parameter,
+                    kernel_matrix,
+                    timePoint,
+                    t_nm,
+                    proteome_data,
+                    uq,
+                    lq,
+                    outputdir,
+                    output_filename):
+    """ MAIN function of the feature evaluation approach.
 
-    input_matrix = os.path.join(maindir, "data/precomputed_multitask_kernels/unscaled/"
-                                         "kernel_matrix_RRR_SA_X_SO_X_R0_1.0E+02_R1_1.0E-01_R2_1.0E-06_P1_X_P2_X.npy")
-    kernel_matrix = np.load(input_matrix)
-
-    timePoint = "III14"
-    time_point_III14 = select_time_point(kernel_parameter, timePoint)
-    param_combi_RRR = get_kernel_paramter(time_point_III14)
-
-    kernel_pamR0 = pd.to_numeric(param_combi_RRR[5].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for time point series " + str(kernel_pamR0))
-    kernel_pamR1 = pd.to_numeric(param_combi_RRR[7].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for dose " + str(kernel_pamR1))
-    kernel_pamR2 = pd.to_numeric(param_combi_RRR[9].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for ab signals " + str(kernel_pamR2))
-    print('')
-
-    y_label = target_label.loc[:, 'Protection'].to_numpy()
-    multitask_classifier = multitask_model(kernel_matrix, param_combi_RRR, y_label)
-    proteome_data = sort(proteome_data)
-    print("Are values in proteome data floats: " + str(np.all(np.isin(proteome_data_whole.dtypes.to_list()[5:], ['float64']))))
-    data_t2 = proteome_data.loc[proteome_data["TimePointOrder"] == 2]
-    combinations, all_feature_combinations = make_feature_combination(data_t2, uq, lq)
-    print("ESPY measurment on proteome data at time point " + str(timePoint) + " started")
-    distances_for_all_feature_comb = compute_distance_hyper(all_feature_combinations, multitask_classifier, combinations, proteome_data.iloc[:,3:], param_combi_RRR)
-    # print(distances_for_all_feature_comb)
-    output_filename = "ESPY_values_whole_chip_III14.tsv"
-    distances_for_all_feature_comb.to_csv(os.path.join(outputdir, output_filename), sep='\t', na_rep='nan')
-    print('results are saved in: ' + os.path.join(outputdir, output_filename))
+                the distances of each feature to the classification boundery are evaluated.
 
 
-def main_C1(target_label,
-            kernel_parameter,
-            proteome_data,
-            uq,
-            lq,
-            outputdir):
-    input_matrix = os.path.join(maindir, "data/precomputed_multitask_kernels/unscaled/"
-                                         "kernel_matrix_RRR_SA_X_SO_X_R0_1.0E-01_R1_1.0E-01_R2_1.0E-05_P1_X_P2_X.npy")
-    kernel_matrix = np.load(input_matrix)
-
-    timePoint = "C-1"
-    time_point_III14 = select_time_point(kernel_parameter, timePoint)
-    param_combi_RRR = get_kernel_paramter(time_point_III14)
-
-    kernel_pamR0 = pd.to_numeric(param_combi_RRR[5].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for time point series " + str(kernel_pamR0))
-    kernel_pamR1 = pd.to_numeric(param_combi_RRR[7].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for dose " + str(kernel_pamR1))
-    kernel_pamR2 = pd.to_numeric(param_combi_RRR[9].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for ab signals " + str(kernel_pamR2))
-    print('')
-
-
-    y_label = target_label.loc[:, 'Protection'].to_numpy()
-    multitask_classifier = multitask_model(kernel_matrix, param_combi_RRR, y_label)
-    proteome_data = sort(proteome_data)
-    print("Are values in proteome data floats: " + str(np.all(np.isin(proteome_data_whole.dtypes.to_list()[5:],
-                                                                      ['float64']))))
-    data_t3 = proteome_data.loc[proteome_data["TimePointOrder"] == 3]
-    combinations, all_feature_combinations = make_feature_combination(data_t3, uq, lq)
-    print("ESPY measurment on proteome data at time point " + str(timePoint) + " started")
-    distances_for_all_feature_comb = compute_distance_hyper(all_feature_combinations, multitask_classifier, combinations, proteome_data.iloc[:,3:], param_combi_RRR)
-    # print(distances_for_all_feature_comb)
-    output_filename = "ESPY_values_whole_chip_C1.tsv"
-    distances_for_all_feature_comb.to_csv(os.path.join(outputdir, output_filename), sep='\t', na_rep='nan')
-    print('results are saved in: ' + os.path.join(outputdir, output_filename))
-
-def main_C28(target_label,
-             kernel_parameter,
-             proteome_data,
-             uq,
-             lq,
-             outputdir):
-
-    input_matrix = os.path.join(maindir, "data/precomputed_multitask_kernels/unscaled/"
-                                         "kernel_matrix_RRR_SA_X_SO_X_R0_1.0E+01_R1_1.0E+00_R2_1.0E-05_P1_X_P2_X.npy")
-    kernel_matrix = np.load(input_matrix)
-
-    timePoint = "C28"
-    time_point_C28 = select_time_point(kernel_parameter, timePoint)
-    param_combi_RRR = get_kernel_paramter(time_point_C28)
-
-    kernel_pamR0 = pd.to_numeric(param_combi_RRR[5].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for time point series " + str(kernel_pamR0))
-    kernel_pamR1 = pd.to_numeric(param_combi_RRR[7].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for dose " + str(kernel_pamR1))
-    kernel_pamR2 = pd.to_numeric(param_combi_RRR[9].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for ab signals " + str(kernel_pamR2))
-    print('')
-
-
-    y_label = target_label.loc[:, 'Protection'].to_numpy()
-    multitask_classifier = multitask_model(kernel_matrix, param_combi_RRR, y_label)
-    proteome_data = sort(proteome_data)
-    print("Are values in proteome data floats: " + str(np.all(np.isin(proteome_data_whole.dtypes.to_list()[5:],
-                                                                      ['float64']))))
-    data_t4 = proteome_data.loc[proteome_data["TimePointOrder"] == 4]
-    combinations, all_feature_combinations = make_feature_combination(data_t4, uq, lq)
-    print("ESPY measurment on proteome data at time point " + str(timePoint) + " started")
-    distances_for_all_feature_comb = compute_distance_hyper(all_feature_combinations, multitask_classifier, combinations, proteome_data.iloc[:,3:], param_combi_RRR)
-    # print(distances_for_all_feature_comb)
-    output_filename = "ESPY_values_whole_chip_C28.tsv"
-    distances_for_all_feature_comb.to_csv(os.path.join(outputdir, output_filename), sep='\t', na_rep='nan')
-    print('results are saved in: ' + os.path.join(outputdir, output_filename))
-
-
-def main_III14_sel(target_label,
-                   kernel_parameter,
-                   proteome_data,
-                   uq,
-                   lq,
-                   outputdir):
-
-    input_matrix = os.path.join(maindir, "data/precomputed_multitask_kernels/unscaled/"
-                                         "kernel_matrix_SelectiveSet_RRR_"
-                                         "SA_X_SO_X_R0_1.0E+02_R1_1.0E-01_R2_1.0E-05_P1_X_P2_X.npy")
-    kernel_matrix = np.load(input_matrix)
-
-    timePoint = "III14"
-    time_point_III14 = select_time_point(kernel_parameter, timePoint)
-    param_combi_RRR = get_kernel_paramter(time_point_III14)
-
-    kernel_pamR0 = pd.to_numeric(param_combi_RRR[5].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for time point series " + str(kernel_pamR0))
-    kernel_pamR1 = pd.to_numeric(param_combi_RRR[7].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for dose " + str(kernel_pamR1))
-    kernel_pamR2 = pd.to_numeric(param_combi_RRR[9].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for ab signals " + str(kernel_pamR2))
-    print('')
-
-
-    y_label = target_label.loc[:, 'Protection'].to_numpy()
-    multitask_classifier = multitask_model(kernel_matrix, param_combi_RRR, y_label)
-    proteome_data = sort(proteome_data)
-    print("Are values in proteome data floats: " + str(np.all(np.isin(proteome_data_whole.dtypes.to_list()[5:], ['float64']))))
-    data_t2 = proteome_data.loc[proteome_data["TimePointOrder"] == 2]
-    combinations, all_feature_combinations = make_feature_combination(data_t2, uq, lq)
-    print("ESPY measurment on proteome data at time point " + str(timePoint) + " started")
-    distances_for_all_feature_comb = compute_distance_hyper(all_feature_combinations, multitask_classifier, combinations, proteome_data.iloc[:,3:], param_combi_RRR)
-    # print(distances_for_all_feature_comb)
-    output_filename = "ESPY_values_selective_chip_III14.tsv"
-    distances_for_all_feature_comb.to_csv(os.path.join(outputdir, output_filename), sep='\t', na_rep='nan')
-    print('results are saved in: ' + os.path.join(outputdir, output_filename))
-
-def main_C1_sel(target_label,
-                kernel_parameter,
-                proteome_data,
-                uq,
-                lq,
-                outputdir):
-
-    input_matrix = os.path.join(maindir, "data/precomputed_multitask_kernels/unscaled/"
-                                         "kernel_matrix_SelectiveSet_RRR_"
-                                         "SA_X_SO_X_R0_1.0E-02_R1_1.0E-01_R2_1.0E-04_P1_X_P2_X.npy")
-    kernel_matrix = np.load(input_matrix)
-
-    timePoint = "C-1"
-    time_point_C1 = select_time_point(kernel_parameter, timePoint)
-    param_combi_RRR = get_kernel_paramter(time_point_C1)
-
-    kernel_pamR0 = pd.to_numeric(param_combi_RRR[5].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for time point series " + str(kernel_pamR0))
-    kernel_pamR1 = pd.to_numeric(param_combi_RRR[7].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for dose " + str(kernel_pamR1))
-    kernel_pamR2 = pd.to_numeric(param_combi_RRR[9].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for ab signals " + str(kernel_pamR2))
-    print('')
-
-
-    y_label = target_label.loc[:, 'Protection'].to_numpy()
-    multitask_classifier = multitask_model(kernel_matrix, param_combi_RRR, y_label)
-    proteome_data = sort(proteome_data)
-    print("Are values in proteome data floats: " + str(np.all(np.isin(proteome_data_whole.dtypes.to_list()[5:], ['float64']))))
-    data_t3 = proteome_data.loc[proteome_data["TimePointOrder"] == 3]
-    combinations, all_feature_combinations = make_feature_combination(data_t3, uq, lq)
-    print("ESPY measurment on proteome data at time point " + str(timePoint) + " started")
-    distances_for_all_feature_comb = compute_distance_hyper(all_feature_combinations, multitask_classifier, combinations, proteome_data.iloc[:,3:], param_combi_RRR)
-    # print(distances_for_all_feature_comb)
-    output_filename = "ESPY_values_selective_chip_C1.tsv"
-    distances_for_all_feature_comb.to_csv(os.path.join(outputdir, output_filename), sep='\t', na_rep='nan')
-    print('results are saved in: ' + os.path.join(outputdir, output_filename))
-
-
-def main_C28_sel(target_label,
-                 kernel_parameter,
-                 proteome_data,
-                 uq,
-                 lq,
-                 outputdir):
-
-    input_matrix = os.path.join(maindir, "data/precomputed_multitask_kernels/unscaled/"
-                                         "kernel_matrix_SelectiveSet_RRR_"
-                                         "SA_X_SO_X_R0_1.0E+01_R1_1.0E-01_R2_1.0E-06_P1_X_P2_X.npy")
-    kernel_matrix = np.load(input_matrix)
-
-    timePoint = "C28"
-    time_point_C28 = select_time_point(kernel_parameter, timePoint)
-    param_combi_RRR = get_kernel_paramter(time_point_C28)
-
-    kernel_pamR0 = pd.to_numeric(param_combi_RRR[5].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for time point series " + str(kernel_pamR0))
-    kernel_pamR1 = pd.to_numeric(param_combi_RRR[7].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for dose " + str(kernel_pamR1))
-    kernel_pamR2 = pd.to_numeric(param_combi_RRR[9].str.split(",", expand=True)[0])
-    print("gamma value for rbf kernel for ab signals " + str(kernel_pamR2))
-    print('')
-
-
-    y_label = target_label.loc[:, 'Protection'].to_numpy()
-    multitask_classifier = multitask_model(kernel_matrix, param_combi_RRR, y_label)
-    proteome_data = sort(proteome_data)
-    print("Are values in proteome data floats: " + str(np.all(np.isin(proteome_data_whole.dtypes.to_list()[5:], ['float64']))))
-    data_t4 = proteome_data.loc[proteome_data["TimePointOrder"] == 4]
-    combinations, all_feature_combinations = make_feature_combination(data_t4, uq, lq)
-    print("ESPY measurment on proteome data at time point " + str(timePoint) + " started")
-    distances_for_all_feature_comb = compute_distance_hyper(all_feature_combinations, multitask_classifier, combinations, proteome_data.iloc[:,3:], param_combi_RRR)
-    # print(distances_for_all_feature_comb)
-    output_filename = "ESPY_values_selective_chip_C28.tsv"
-    distances_for_all_feature_comb.to_csv(os.path.join(outputdir, output_filename), sep='\t', na_rep='nan')
-    print('results are saved in: ' + os.path.join(outputdir, output_filename))
-
-
-if __name__ == "__main__":
-    # Load data
-    input_target_label = os.path.join(maindir, "data/precomputed_multitask_kernels/unscaled/target_label_vec.csv")
-    target_label = pd.read_csv(input_target_label, index_col=0)
-    input_RRR_paramter = os.path.join(maindir, "results/multitaskSVM/whole/RRR/unscaled/RGSCV/"
-                                               "RepeatedGridSearchCV_results_24.03.2022_16-16-36.tsv")
-    parameter_RRR = pd.read_csv(input_RRR_paramter, delimiter="\t", header=0, index_col=0)
-    proteome_input_file = os.path.join(maindir, "data/proteome_data/preprocessed_whole_data.csv")
-    proteome_data_whole = pd.read_csv(proteome_input_file)
-
-    main_III14(target_label, parameter_RRR, proteome_data_whole, 75, 25, outputdir_whole)
-    main_C1(target_label, parameter_RRR, proteome_data_whole, 75, 25, outputdir_whole)
-    main_C28(target_label, parameter_RRR, proteome_data_whole, 75, 25, outputdir_whole)
-
-    input_RRR_parameter_selective = os.path.join(maindir, "results/multitaskSVM/selective/RRR/unscaled/RGSCV/"
-                                                          "RepeatedGridSearchCV_results_24.03.2022_19-19-18.tsv")
-    parameter_RRR_selective = pd.read_csv(input_RRR_parameter_selective, delimiter="\t", header=0, index_col=0)
-
-    proteome_input_file_selective = os.path.join(maindir, "data/proteome_data/preprocessed_selective_data.csv")
-    proteome_data_selective = pd.read_csv(proteome_input_file_selective)
-
-    main_III14_sel(target_label, parameter_RRR_selective, proteome_data_selective, 75, 25, outputdir_selective)
-    main_C1_sel(target_label, parameter_RRR_selective, proteome_data_selective, 75, 25, outputdir_selective)
-    main_C28_sel(target_label, parameter_RRR_selective, proteome_data_selective, 75, 25, outputdir_selective)
-
-
-def feature_evaluation(target_label, kernel_parameter, proteome_data, uq, lq, outputdir, kernel_matrix, ):
-    """ MAIN MODUL of the feature evaluation approach.
-
-                This main modul evaluates the distances of each feature to the classification boundery.
-
-
-                Args: data (matrix): preprocessed proteome matrix as n x m matrix (where n = samples in rows, m = features
-                              as columns) concatenated with the column "time point", the column "protection state" and the column
-                              "dosage"
-
-                      kernel_parameter (dictionary): combination of kernel parameter
-                      UpperValue (int): value of upper quantile
-                      LowerValue (int): value of lower quantile
+                Paramters:
+                ----------
+                target_label (dataframe): dataframe of target values
+                kernel_parameter (dictionary): combination of kernel parameter
+                kernel_matrix (matrix): 120x120 gram matrix
+                timePoint (str): timepoint
+                t_nm (int): int of time point
+                proteome_data (dataframe): dataframe of proteome data (n = rows of samples, m = columns of features)
+                uq (int): value of upper quantile
+                lq (int): value of lower quantile
+                outputdir (path): path where results are stored
+                output_filename(str): name of output file
 
 
                 Returns: distances_for_all_feature_comb (matrix): matrix of distance values for each feature per time point
                          combinations (matrix): combination of features
                          timePoint (int): time point of feature evaluation
                 """
+
     start = time.time()
 
-    timePoint = select_time_point(kernel_parameter, TimePoint)
-    print("ESPY value computation at time point: ", TimePoint)
+    time_point = select_time_point(kernel_parameter, timePoint)
+    param_combi_RRR = get_kernel_paramter(time_point)
 
-    param_combi = get_kernel_paramter(time_point_III14)
+    kernel_pamR0 = pd.to_numeric(param_combi_RRR[5].str.split(",", expand=True)[0])
+    print("gamma value for rbf kernel for time point series " + str(kernel_pamR0))
+    kernel_pamR1 = pd.to_numeric(param_combi_RRR[7].str.split(",", expand=True)[0])
+    print("gamma value for rbf kernel for dose " + str(kernel_pamR1))
+    kernel_pamR2 = pd.to_numeric(param_combi_RRR[9].str.split(",", expand=True)[0])
+    print("gamma value for rbf kernel for ab signals " + str(kernel_pamR2))
+    print('')
+
     y_label = target_label.loc[:, 'Protection'].to_numpy()
-
-    # set up model for best parameter
-    multitask_model = multitask_model(kernel_matrix, param_combi, y_label)
-
-    combinations, all_feature_combinations = make_feature_combination(data_perTime, UpperValue, LowerValue)
-    print("Length of matrix of feature combination at time point" + ' ' + str(timePoint) + ' ' +
-          "for importance eval: ", len(all_feature_combinations))
-
-    # pre-process data - delete, sample ID, groups, protection columns
-    X = data.iloc[:,3:]
-    print("Feature evaluation is running....")
-    distances_for_all_feature_comb = compute_distance_hyper(all_feature_combinations, multitaskModel, combinations, X,
-                                                            kernel_parameter)
+    multitask_classifier = multitask_model(kernel_matrix, param_combi_RRR, y_label)
+    proteome_data = sort(proteome_data)
+    print("Are values in proteome data floats: " + str(np.all(np.isin(proteome_data.dtypes.to_list()[5:], ['float64']))))
+    data_at_timePoint = proteome_data.loc[proteome_data["TimePointOrder"] == t_nm]
+    combinations, all_feature_combinations = make_feature_combination(data_at_timePoint, uq, lq)
+    print("ESPY measurment on proteome data at time point " + str(timePoint) + " started")
+    distances_for_all_feature_comb = compute_distance_hyper(all_feature_combinations, multitask_classifier, combinations, proteome_data.iloc[:,3:], param_combi_RRR)
+    # print(distances_for_all_feature_comb)
+    distances_for_all_feature_comb.to_csv(os.path.join(outputdir, output_filename), sep='\t', na_rep='nan')
+    print('results are saved in: ' + os.path.join(outputdir, output_filename))
 
     end = time.time()
     print("end of computation after: ", str(end - start), "seconds")
-    return distances_for_all_feature_comb, combinations, timePoint
+
+    return distances_for_all_feature_comb, combinations
+
