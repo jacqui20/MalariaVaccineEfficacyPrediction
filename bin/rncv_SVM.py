@@ -18,7 +18,7 @@ import sys
 import traceback
 import warnings
 # from shutil import rmtree
-from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import StratifiedGroupKFold
@@ -40,8 +40,8 @@ def main(
     Nexp2 = 10
 
     param_grid = {
-        'logisticregression__l1_ratio': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-        'logisticregression__C': [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
+        'svc__gamma': [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
+        'svc__C': [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
     }
 
     # Generate a timestamp used for file naming
@@ -187,10 +187,11 @@ def main(
                 with_mean=True,
                 with_std=True,
             ),
-            LogisticRegression(
-                penalty='elasticnet',
-                solver='saga',
-                max_iter=10000,
+            SVC(
+                kernel='rbf',
+                probability=True,
+                random_state=1337,
+                cache_size=500,
             ),
             # memory=cachedir,
         )
