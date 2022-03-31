@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0aacc78-e9f4-4d70-95da-a1324f27a253" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../bin/ESPY.py" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/ESPY.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/precompute_kernel_matrices.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/precompute_kernel_matrices.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/preprocessing_ESPY.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../malaria_env.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../malaria_env.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Feature_Evaluation_multitask_SVM.py" beforeDir="false" afterPath="$PROJECT_DIR$/Feature_Evaluation_multitask_SVM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Normal_Distribution_Fitting.py" beforeDir="false" afterPath="$PROJECT_DIR$/Normal_Distribution_Fitting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/featureEvaluationRLR.py" beforeDir="false" afterPath="$PROJECT_DIR$/featureEvaluationRLR.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +12,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="277DYs1Q4DrCQiXEYYmOxDuTIQm" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -30,6 +29,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -41,6 +41,7 @@
       <updated>1648662281347</updated>
       <workItem from="1648662298080" duration="49000" />
       <workItem from="1648662550656" duration="9000" />
+      <workItem from="1648750027974" duration="885000" />
     </task>
     <servers />
   </component>

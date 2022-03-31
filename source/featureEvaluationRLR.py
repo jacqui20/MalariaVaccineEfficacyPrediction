@@ -1,7 +1,7 @@
 """
 Evaluation of informative features from RLR models
 
-Will save the results to various .tsv/.csv files
+Will save the results to various .tsv files
 
 
 """
@@ -15,26 +15,21 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 
-cwd = os.getcwd()
-resultsdir = '/'.join(cwd.split('/')[:-1]) + '/results/RLR'
-datadir = '/'.join(cwd.split('/')[:-1]) + '/data/timepoint-wise'
-outputdir_whole = '/'.join(cwd.split('/')[:-1]) + '/results/RLR/whole/Informative_features'
-outputdir_selective = '/'.join(cwd.split('/')[:-1]) + '/results/RLR/selective/Informative_features'
 
+def get_kernel_parameter(
+        kernel_parameter: np.ndarray
+        ):
+    """ Return combination of kernel parameter to initialize Elastic Net model
 
-def get_kernel_paramter(kernel_parameter):
-    """ Returns the combination of kernel parameters from the results of the
-        multitask-SVM approach based on the highest mean AUC.
+        Parameters
+        ----------
+        kernel_parameter : np.ndarray
+            matrix of kernel parameter per time point and the evaluated mean AUC value
 
-        see results of the Parser_multitask_SVM.py module
-
-        Args: kernel_parameter: results of the multitask-SVM approach as .csv file
-
-        Returns:
-            pam (list): Combination of kernel parameter for the combination of kernel functions for the
-            multitask-SVM classifier
-            based on the highest mean AUC value
-            best_AUC (float): highest mean AUC value
+        Returns
+        --------
+        pam : dict
+            Dictionary of kernel values
         """
     pam_roc_auc = kernel_parameter[kernel_parameter['scoring'].isin(['roc_auc'])]
     pam = pam_roc_auc['best_params']
@@ -44,29 +39,48 @@ def get_kernel_paramter(kernel_parameter):
     return pam
 
 
-def select_time_point(kernel_parameter, time_point):
-    """
-    Selection of the time point to run ESPY measurment
+def select_time_point(
+        kernel_parameter: np.ndarray,
+        time_point: str
+        ):
+    """ Select time point to evaluate informative features from RLR
 
-    Parameter:
+    Parameter
     ---------
-    kernel_parameter: dataframe
-        performance results per time point
-    time_point: str
+    kernel_parameter : np.ndarrray
+        matrix of kernel parameter per time point and the evaluated mean AUC value
+    time_point : str
         preferable time point
 
-    Returns:
+    Returns
     --------
-    x: np.darray
-        matrix of performance scores per time point
-
+    x: np.ndarray
+        matrix of performance and kernel values per time point
     """
     x = kernel_parameter[kernel_parameter['time'].isin([time_point])]
     #print(X)
     return x
 
 
-def rearagne_columns(data):
+def rearagne_columns(
+        data: pd.DataFrame
+):
+    """ Re-arrange column order of dataframe
+
+    Move column Dose to the start position of features
+
+    Parameters
+    ----------
+    data: pd.Dataframe
+        dataframe of proteome data
+
+    Returns
+    --------
+    df : pd.Dataframe
+        re-arranged column order of dataframe
+
+    """
+
     df = data.copy()
     dose = df['Dose']
     df = df.drop(columns=['Dose'])
@@ -76,14 +90,46 @@ def rearagne_columns(data):
     return df
 
 
-def RLR_model(X_data, y_labels, kernel_parameter, feature_labels):
+def RLR_model(
+        *,
+        X_data: np.ndarray,
+        y_labels: np.ndarray,
+        kernel_parameter: dict,
+        feature_labels: list
+) -> LogisticRegression:
+    """Initialize Elastic Net model on proteome data
 
+    Initialize Elastic Net model with kernel parameter from grid search on proteome data and
+    evaluate coefficients.
+    Returns the evaluated coefficients.
+
+    Parameters
+    ---------
+    X_data: np.ndarray,
+        matrix of input data
+    y_labels: np.ndarray,
+        y label
+    kernel_parameter: dict,
+        dictionary of kernel parameter to initialize Elastic Net model
+    feature_labels: list
+        list of feature labels
+
+    Returns
+    -------
+    model: sklearn.linear_model.LogisticRegression object
+        initialized Elastic net model on pre-defined kernel parameter
+    cdf_nonzeros: pd.Dataframe
+        dataframe of features with evaluated non-zero coefficient weights
+
+    """
+    # get parameter for Elastic Net model
     c = pd.to_numeric(kernel_parameter[0][1].split(",")[0])
     print("C-value:" + str(c))
     print(type(c))
     l1_value = pd.to_numeric(kernel_parameter[0][3].split("}")[0])
     print("l1_value:" + str(l1_value))
 
+    # Initialize Elastic Net model
     estimator = make_pipeline(
         StandardScaler(
             with_mean=True,
@@ -101,6 +147,8 @@ def RLR_model(X_data, y_labels, kernel_parameter, feature_labels):
     estimator.fit(X_data, y_labels)
     print(estimator)
     model = estimator[1]
+
+    # Extract non-zero coefficients
     print("Non Zero weights:", np.count_nonzero(model.coef_))
     cdf = pd.concat([pd.DataFrame(feature_labels), pd.DataFrame(np.transpose(model.coef_))], axis=1)
     cdf.columns = ['Pf_antigen_ID', 'weight']
@@ -109,26 +157,51 @@ def RLR_model(X_data, y_labels, kernel_parameter, feature_labels):
     return model, cdf_nonzeros
 
 
-def featureEvaluationRLR(data, results_rgscv, timepoint):
+def featureEvaluationRLR(
+        data: pd.DataFrame,
+        results_rgscv: np.ndarray,
+        timepoint: str
+):
+    """Evaluation of informative features from Elastic Net model
+
+    Parameter
+    ---------
+    data: pd.DataFrame
+        Dataframe of proteome data
+    results_rgscv: np.ndarray
+        kernel combination for Elastic Net model per time point based on mean AUC score
+    timepoint: str
+        time point to evaluate informative features
+
+    Returns
+    -------
+    coefficients: pd.Dataframe
+        Dataframe of non-zero coefficients
+
+    """
 
     data = rearagne_columns(data)
-    print("Paramter combination for best mean AUC at timepoint" + str(timepoint) + ":")
-    time_point = select_time_point(results_rgscv, timepoint)
-    kernel_param = get_kernel_paramter(time_point)
+
+    print("Paramter combination for best mean AUC at time point" + str(timepoint) + ":")
+
+    time_point = select_time_point(
+        kernel_parameter=results_rgscv,
+        time_point=timepoint)
+    kernel_param = get_kernel_parameter(
+        kernel_parameter=time_point)
     print(kernel_param)
     print('')
+
     print("Start feature evaluation with dose as auxellary feature:")
     X_data = data.iloc[:, 4:].to_numpy()
-    #print(X_data)
     y_labels = data.loc[:, 'Protection'].to_numpy()
-    #print(y_labels)
     feature_labels = data.iloc[:, 4:].columns
 
-    model, coeffiecients = RLR_model(X_data, y_labels, kernel_param, feature_labels)
+    model, coeffiecients = RLR_model(
+        X_data=X_data,
+        y_labels=y_labels,
+        kernel_parameter=kernel_param,
+        feature_labels=feature_labels)
     print(coeffiecients)
+
     return coeffiecients
-
-
-
-
-

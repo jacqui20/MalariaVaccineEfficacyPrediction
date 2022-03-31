@@ -1,7 +1,7 @@
 """
 Evaluation of informative features from RLR models
 
-Will save the results to various .tsv/.csv files
+Will save the results to various .tsv files
 
 
 """
@@ -23,9 +23,12 @@ def main():
 
     """
     coefs = featureEvaluationRLR(proteome_data, results_rgscv, timepoint)
-    pd.DataFrame(data=coefs).to_csv(os.path.join(outputdir, output_file_name + ".tsv"),
-                                               sep='\t', na_rep='nan')
+    pd.DataFrame(data=coefs).to_csv(os.path.join(outputdir, output_file_name + ".tsv"), sep='\t', na_rep='nan')
 
+    print(
+        "Results are saved in: "
+        + os.path.join(outputdir, output_file_name + ".tsv")
+    )
 
 
 if __name__ == "__main__":
