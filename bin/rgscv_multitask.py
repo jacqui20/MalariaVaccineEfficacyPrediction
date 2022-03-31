@@ -3,7 +3,7 @@ Find the best parameters using 10-times repeated NestedGridsearchCV.
 
 Will save the results to a various .tsv/.xslx files.
 
-Activate associated environment first: conda activate tbenv_combi_sklearn102
+Activate associated environment first: conda activate malaria_env
 '''
 import argparse
 import numpy as np

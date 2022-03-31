@@ -3,7 +3,7 @@ Find the best parameters using 10-times repeated NestedGridsearchCV.
 
 Will save the results to a various .tsv/.xslx files.
 
-Activate associated environment first: conda activate tbenv_combi_sklearn102
+Activate associated environment first: conda activate malaria_env
 '''
 import argparse
 import numpy as np
@@ -108,7 +108,8 @@ def main(
             )
             test_fold = test_fold[40 * step: 40 * (step + 1)]
             train_fold = train_fold[40 * step: 40 * (step + 1)]
-            assert np.all(test_fold == train_fold), f"test_fold != train_fold: {test_fold} != {train_fold}"
+            assert np.all(test_fold == train_fold), \
+                f"test_fold != train_fold: {test_fold} != {train_fold}"
             cv.append(CustomPredefinedSplit(test_fold, train_fold))
             print(
                 f"train_fold: {train_fold} "

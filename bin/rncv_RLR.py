@@ -18,34 +18,37 @@ import sys
 import traceback
 import warnings
 # from shutil import rmtree
-from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import StratifiedGroupKFold
-from typing import Dict, List, Any, Union
+from typing import Dict, List, Any
 # from tempfile import mkdtemp
 sys.path.append('/home/breuter/NestedGridSearchCV')
 import nestedcv as ncv
 sys.path.append('/home/breuter/MalariaVaccineEfficacyPrediction')
-from source.utils import DataSelector, CustomPredefinedSplit, assign_folds
+from source.utils import CustomPredefinedSplit, assign_folds
 
 
 def main(
     ANA_PATH: str,
     DATA_PATH: str,
     identifier: str,
-    combination: str,
-    param_grid: Union[Dict[str, List[Any]], List[Dict[str, List[Any]]]],
 ) -> None:
 
     # number of repetitions:
     Nexp2 = 10
+
+    param_grid = {
+        'logisticregression__l1_ratio': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+        'logisticregression__C': [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
+    }
 
     # Generate a timestamp used for file naming
     timestamp = ncv.generate_timestamp()
 
     print('')
     print("Identifier:", identifier)
-    print('Kernel combination:', combination)
     print('parameter grid:')
     print(param_grid)
     print('')
@@ -66,14 +69,14 @@ def main(
     # ofiledir = os.path.join(ANA_PATH, 'GridSearchCV/results/RNCV/')
     # pathlib.Path(ofiledir).mkdir(parents=True, exist_ok=True)
 
-    labels = pd.read_table(os.path.join(DATA_PATH, 'target_label_vec.csv'), sep=',', index_col=0)
-    groups = labels.loc[:, 'group'].to_numpy()
-    y = labels.loc[:, 'Protection'].to_numpy()
-
-    print('shape of binary response array:', y.size)
-    print('number of positives:', np.sum(y))
-    print('number of positives divided by total number of samples:', np.sum(y)/y.size)
-    print('')
+    labels_all = pd.read_table(
+        ('/home/breuter/MalariaVaccineEfficacyPrediction/data/'
+         'precomputed_multitask_kernels/unscaled/target_label_vec.csv'),
+        sep=',',
+        index_col=0
+    )
+    groups_all = labels_all.loc[:, 'group'].to_numpy()
+    y_all = labels_all.loc[:, 'Protection'].to_numpy()
 
     # initialize the key result collector:
     key_results: Dict[str, List[Any]] = {}
@@ -105,9 +108,23 @@ def main(
         print('')
 
         # define prefix for filenames:
-        prefix = f'{time}_{combination}'
+        prefix = f'{time}'
 
         rng = np.random.RandomState(0)
+
+        data = pd.read_table(
+            os.path.join(DATA_PATH, f'{identifier}_data_{time}.csv'),
+            sep=',',
+            index_col=0
+        )
+        X = data.iloc[:, 2:].to_numpy()
+        groups = data.loc[:, 'group'].to_numpy()
+        y = data.loc[:, 'Protection'].to_numpy()
+
+        print('shape of binary response array:', y.size)
+        print('number of positives:', np.sum(y))
+        print('number of positives divided by total number of samples:', np.sum(y)/y.size)
+        print('')
 
         # initialize test folds and CV splitters for outer CV
         outer_cv = []
@@ -115,8 +132,24 @@ def main(
         print('---------------------------------------------------------------------------------')
         for rep in range(Nexp2):
             print(f'CV folds for repetition {rep}:')
-            test_fold, train_fold = assign_folds(y, groups, 40, step, random_state=rep)
+            test_fold, train_fold = assign_folds(
+                y_all, groups_all, 40, step, random_state=rep, print_info=False
+            )
+            test_fold = test_fold[40 * step: 40 * (step + 1)]
+            train_fold = train_fold[40 * step: 40 * (step + 1)]
+            assert np.all(test_fold == train_fold), \
+                f"test_fold != train_fold: {test_fold} != {train_fold}"
             outer_cv.append(CustomPredefinedSplit(test_fold, train_fold))
+            print(
+                f"train_fold: {train_fold} "
+                f"test_fold: {test_fold}"
+            )
+            cps = CustomPredefinedSplit(test_fold, train_fold)
+            for i, (train_index, test_index) in enumerate(cps.split()):
+                print(
+                    f"TRAIN (len={len(train_index)}): {train_index} "
+                    f"TEST (len={len(test_index)}): {test_index}"
+                )
             print('')
         print('---------------------------------------------------------------------------------')
         print('')
@@ -151,28 +184,17 @@ def main(
         }
 
         estimator = make_pipeline(
-            DataSelector(
-                kernel_directory=DATA_PATH,
-                identifier=f'{identifier}_{combination}',
+            StandardScaler(
+                with_mean=True,
+                with_std=True,
             ),
-            SVC(
-                kernel='precomputed',
-                probability=True,
-                random_state=1337,
-                cache_size=500,
+            LogisticRegression(
+                penalty='elasticnet',
+                solver='saga',
+                max_iter=10000,
             ),
             # memory=cachedir,
         )
-
-        # initialize running index array for DataSelector
-        assert y.size * y.size < np.iinfo(np.uint32).max, \
-            f"y is to large: y.size * y.size >= {np.iinfo(np.uint32).max}"
-        X = np.array(
-            [x for x in range(y.size * y.size)],
-            dtype=np.uint32
-        ).reshape((y.size, y.size))
-        print('shape of running index array:', X.shape)
-        print('')
 
         clf_grid = ncv.RepeatedStratifiedNestedCV(
             estimator=estimator,
@@ -531,10 +553,6 @@ if __name__ == "__main__":
         help='Path to the directory were the data is located.'
     )
     parser.add_argument(
-        '--combination', dest='combination', required=True,
-        help='Kernel combination. Supply SPP, SPR, SRP, or SRR.'
-    )
-    parser.add_argument(
         '--identifier', dest='identifier', required=True,
         help=('Prefix to identify the precomputed kernel matrices (stored as .npy files).'
               'E.g. kernel_matrix_rescale.')
@@ -543,102 +561,12 @@ if __name__ == "__main__":
 
     # cachedir = mkdtemp()
     combination = args.combination
-    if combination == 'SPP':
-        param_grid = {
-            "dataselector__SA": [0.25, 0.5, 0.75],
-            "dataselector__SO": [-2.0, -1.0, 0.0, 1.0, 2.0],
-            "dataselector__R0": ["X"],
-            "dataselector__R1": ["X"],
-            "dataselector__R2": ["X"],
-            "dataselector__P1": [2.0, 3.0, 4.0, 5.0],
-            "dataselector__P2": [2.0, 3.0, 4.0, 5.0],
-            "svc__C": [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
-        }
-    elif combination == 'SPR':
-        param_grid = {
-            "dataselector__SA": [0.25, 0.5, 0.75],
-            "dataselector__SO": [-2.0, -1.0, 0.0, 1.0, 2.0],
-            "dataselector__R0": ["X"],
-            "dataselector__R1": ["X"],
-            "dataselector__R2": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
-            "dataselector__P1": [2.0, 3.0, 4.0, 5.0],
-            "dataselector__P2": ["X"],
-            "svc__C": [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
-        }
-    elif combination == 'SRP':
-        param_grid = {
-            "dataselector__SA": [0.25, 0.5, 0.75],
-            "dataselector__SO": [-2.0, -1.0, 0.0, 1.0, 2.0],
-            "dataselector__R0": ["X"],
-            "dataselector__R1": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
-            "dataselector__R2": ["X"],
-            "dataselector__P1": ["X"],
-            "dataselector__P2": [2.0, 3.0, 4.0, 5.0],
-            "svc__C": [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
-        }
-    elif combination == 'SRR':
-        param_grid = {
-            "dataselector__SA": [0.25, 0.5, 0.75],
-            "dataselector__SO": [-2.0, -1.0, 0.0, 1.0, 2.0],
-            "dataselector__R0": ["X"],
-            "dataselector__R1": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
-            "dataselector__R2": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
-            "dataselector__P1": ["X"],
-            "dataselector__P2": ["X"],
-            "svc__C": [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
-        }
-    elif combination == 'RPP':
-        param_grid = {
-            "dataselector__SA": ["X"],
-            "dataselector__SO": ["X"],
-            "dataselector__R0": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
-            "dataselector__R1": ["X"],
-            "dataselector__R2": ["X"],
-            "dataselector__P1": [2.0, 3.0, 4.0, 5.0],
-            "dataselector__P2": [2.0, 3.0, 4.0, 5.0],
-            "svc__C": [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
-        }
-    elif combination == 'RPR':
-        param_grid = {
-            "dataselector__SA": ["X"],
-            "dataselector__SO": ["X"],
-            "dataselector__R0": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
-            "dataselector__R1": ["X"],
-            "dataselector__R2": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
-            "dataselector__P1": [2.0, 3.0, 4.0, 5.0],
-            "dataselector__P2": ["X"],
-            "svc__C": [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
-        }
-    elif combination == 'RRP':
-        param_grid = {
-            "dataselector__SA": ["X"],
-            "dataselector__SO": ["X"],
-            "dataselector__R0": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
-            "dataselector__R1": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
-            "dataselector__R2": ["X"],
-            "dataselector__P1": ["X"],
-            "dataselector__P2": [2.0, 3.0, 4.0, 5.0],
-            "svc__C": [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
-        }
-    elif combination == 'RRR':
-        param_grid = {
-            "dataselector__SA": ["X"],
-            "dataselector__SO": ["X"],
-            "dataselector__R0": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
-            "dataselector__R1": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
-            "dataselector__R2": [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
-            "dataselector__P1": ["X"],
-            "dataselector__P2": ["X"],
-            "svc__C": [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
-        }
 
     try:
         main(
             args.analysis_dir,
             args.data_dir,
             args.identifier,
-            combination,
-            param_grid,
         )
     finally:
 
