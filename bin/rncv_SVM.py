@@ -80,7 +80,6 @@ def main(
 
     # initialize the key result collector:
     key_results: Dict[str, List[Any]] = {}
-    key_results['kernel_combination'] = []
     key_results['time'] = []
     key_results['scoring'] = []
     key_results['top_params'] = []
@@ -233,7 +232,6 @@ def main(
         scorings = sorted(result.keys())
         # collect the key results:
         for scoring in scorings:
-            key_results['kernel_combination'].append(combination)
             key_results['time'].append(time)
             key_results['scoring'].append(scoring)
             key_results['top_params'].append(result[scoring]['ranked_best_inner_params'][0])
@@ -508,7 +506,7 @@ def main(
         print('=================================================================================')
         print('')
 
-    filename = f"{combination}_collected_key_results"
+    filename = "collected_key_results"
     fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
     pd.DataFrame(key_results).to_csv(fn, sep='\t', na_rep='nan')
     fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)
@@ -561,7 +559,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # cachedir = mkdtemp()
-    combination = args.combination
 
     try:
         main(
