@@ -15,7 +15,7 @@ Created on: 25.05.2019
 # Feature_Evaluation_from_multitask_SVM_approach_per_timepoint.py method.
 
 import pandas as pd
-from scipy.stats import norm
+from scipy.stats import norm, gamma
 import matplotlib.pyplot as plt
 import numpy as np
 import math
@@ -35,7 +35,7 @@ def extraction_90percentage_of_Data(data):
             Returns: data (matrix): matrix of 95% of evaluated distances per feature
                      excl_ten_per_largest_distances (matrix): matrix of the 5% of features
     """
-    plt.hist(data.loc["|d|"].values, bins=50, density=True, alpha=0.6, color='b')
+    plt.hist(abs(data.loc["|d|"].values), bins=50, density=True, alpha=0.6, color='b')
     plt.xticks(rotation=90)
     title = "Distance distribution of whole data"
     plt.title(title)
@@ -72,27 +72,27 @@ def map_on_normal_distribution(data):
     # plt.show()
 
     # Fit a normal distribution to the data:
-    mu, std = norm.fit(data["|d|"])
-    # print("median: " + str(mu) + 'and std ' + str(std))
+    a, loc, scale = gamma.fit(abs(data["|d|"]))
+    print("a paramter: " + str(a) + 'loc: ' + str(loc) + "scale: " + str(scale))
     # Plot the PDF (probability density function) - normal fitted data.
-    # plt.hist(data["|d|"], bins=50, density=True, alpha=0.6, color='g')
-    # xmin, xmax = plt.xlim()
-    # x = np.linspace(xmin, xmax, 100)
-    # p = norm.pdf(x, mu, std)
-    # plt.plot(x, p, 'k', linewidth=2)
-    # plt.xticks(rotation = 90)
-    # title_b = "Fitted Data on normal distribution with m = %.7f,  std = %.7f" % (mu, std)
-    # plt.title(title_b)
-    # plt.show()
+    plt.hist(abs(data["|d|"]), bins=50, density=True, alpha=0.6, color='g')
+    xmin, xmax = plt.xlim()
+    x = np.linspace(xmin, xmax, 100)
+    p = gamma.pdf(x, a, loc, scale)
+    plt.plot(x, p, 'k', linewidth=2)
+    plt.xticks(rotation = 90)
+    #title_b = "Fitted Data on normal distribution with m = %.7f,  std = %.7f" % (mu, std)
+    #plt.title(title_b)
+    plt.show()
     # Return x-marks for 5% tail on both sides
     # right_tail = norm.ppf(.95, mu, std)
     # left_tail = norm.ppf(.05, mu, std)
     # print("x-marks of tails:", "\n", "right tail = ", right_tail, "\n", "left_tail = ", left_tail)
 
-    return mu, std
+    return a, loc, scale
 
 
-def calc_p_values(data, m, std):
+def calc_p_values(data, a, loc, scale):
     """ Calculate p-values for each feature
 
         calculate p-value for each feature based on normal distribution fitting
@@ -108,24 +108,25 @@ def calc_p_values(data, m, std):
     result_table = pd.DataFrame(data["|d|"])
 
     # calc p-values for Pf-antigen distance
-    p_values = []
+    cum_values = []
     for d in data["|d|"]:
-        p_value = norm.cdf(d, m, std)
-        p_values.append(p_value)
+        cum_value = gamma.cdf(d, a, loc, scale)
+        cum_values.append(cum_value)
 
     # add p-values for Pf-antigen to result table
-    result_table["p-values"] = p_values
+    result_table["cum_values"] = cum_values
 
     # add significance status for p-value
     status = []
-    for p in result_table["p-values"]:
-        if p < 0.05 or p > 0.95:  # (p < 0.05 or p > 0.95):
+    for p in result_table["cum_values"]:
+        if p > 0.95:  # < 0.05: or p > 0.95:  # (p < 0.05 or p > 0.95):
             status.append("significant")
         else:
             status.append("non_significant")
     # add status to result table
     result_table["significant level"] = status
-    # print(result_table)
+    print("sum significant features: ")
+    print(sum(result_table.loc[:, "significant level"].isin(["significant"])))
     return result_table
 
 
@@ -142,11 +143,14 @@ def filter_significant_Pfantigens(data, significant_Pfantigen_table):
                                     number of distances, m = number of features, with p-value < 0.05).
     """
     data = data.T
-    for sl in significant_Pfantigen_table["significant level"]:
-        if sl == "significant":
-            data = data.loc[significant_Pfantigen_table.index, :]
-    # print("Dimension of final significant Pfantigens", data.shape)
-    return data.T
+    array = significant_Pfantigen_table.loc[significant_Pfantigen_table.loc[:, "significant level"].isin(["significant"])]
+    #print(array)
+    data = data.loc[data.index.isin(array.index)]
+    #print(data)
+    print("Dimension of final significant Pfantigens", data.shape)
+    data = data.T
+    data.loc["|d|"] = abs(data.loc["|d|"].values)
+    return data
 
 
 def make_plot(data, name, outputdir):
@@ -158,18 +162,19 @@ def make_plot(data, name, outputdir):
     opacity = 0.6
 
     index = np.arange(len(labels))
-    ax.bar(index, data.loc["|d|"].values, width=w, color="darkblue", align="center", alpha=opacity)
+    ax.bar(index, abs(data.loc["|d|"].values), width=w, color="darkblue", align="center", alpha=opacity)
     ax.xaxis_date()
 
     plt.xlabel('number of features', fontsize=20)
     plt.ylabel('ESPY value', fontsize=20)
-    plt.xticks(index, labels, fontsize=20, rotation=90)
+    plt.xticks(index, labels, fontsize=10, rotation=90)
 
-    plt.savefig(os.path.join(outputdir, name), dpi=600)
+    plt.savefig(os.path.join(outputdir, name + ".png"), dpi=600)
+    plt.savefig(os.path.join(outputdir, name + ".pdf"), format="pdf", bbox_inches="tight")
     plt.show()
 
 
-def main_function(data, outputdir):
+def main_function(data, outputdir, output_name):
     """ MAIN MODUL of the normal distribution fitting approach.
 
                 This main modul fits the evaluated distances of each feature to a normal distribution to determine
@@ -179,17 +184,20 @@ def main_function(data, outputdir):
                 Args: data (matrix): results of Parser_feature_selection.py, a matrix of d x m (d = number of
                                      distance values, m = number of features)
                       outputdir (path): path where the results will be saved
+                      output_name (str): name of output picture
 
 
                 Returns: significant_features (list): list of significant features
                     """
+
     data_90per_extraction, data_10per_extraction = extraction_90percentage_of_Data(data)
-    m, std = map_on_normal_distribution(data_90per_extraction)
-    result_table = calc_p_values(data_10per_extraction, m, std)
-    # print(result_table)
+    a, loc, scale = map_on_normal_distribution(data_90per_extraction)
+    result_table = calc_p_values(data_10per_extraction, a, loc, scale)
+    #result_table.to_csv(os.path.join(outputdir, "Result_p_values.tsv"), sep='\t', na_rep='nan')
+    print(result_table)
 
     significant_features = filter_significant_Pfantigens(data, result_table)
-    make_plot(significant_features.iloc[:, :25], "Evaluated_significant_features.png", outputdir)
+    make_plot(significant_features.iloc[:, :], output_name, outputdir)
     print("Number of evaluated significant features: " + str(len(significant_features.columns)))
 
     return significant_features

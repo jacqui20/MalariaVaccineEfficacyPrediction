@@ -79,8 +79,8 @@ def main():
                                                     "the column 'dosage' as .csv file",
                         type=Path,
                         required=True)
-    parser.add_argument("-results_of_multitask_SVM_approach", "--results_of_multitask_SVM_approach",
-                        help="path to results of the multitask-SVM approach",
+    parser.add_argument("-results-dir", "--results-dir",
+                        help="path to results of parameter combination of the multitask-SVM approach",
                         type=Path)
     parser.add_argument("-uq", "--Upper_quantile", help="define percentage for upper quantile as int, by default 75%",
                         type=int, default=75)  # Upper quantile
@@ -146,6 +146,26 @@ def main():
         print('\n')
         print("ESPY value measurement started on proteome array data:")
         print("\n")
+        # generate feature combinations given by Median, UpperQuantile and LowerQuantile value
+    # over all samples per time point
+    if timePoint == 2:
+        data_t2 = data.loc[data["TimePointOrder"] == 2]
+        print("Dimension of proteome data at time point" + ' ' + str(TimePoint), "is ", data_t2.shape)
+        combinations, all_feature_combinations = make_feature_combination(data_t2, UpperValue, LowerValue)
+        print("Length of matrix of feature combination at time point" + ' ' + str(timePoint) + ' ' +
+              "for importance eval: ", len(all_feature_combinations))
+    elif timePoint == 3:
+        data_t3 = data.loc[data["TimePointOrder"] == 3]
+        print("Dimension of proteome data at time point" + ' ' + str(Time), "is ", data_t3.shape)
+        combinations, all_feature_combinations = make_feature_combination(data_t3, UpperValue, LowerValue)
+        print("Length of matrix of feature combination at time point" + ' ' + str(timePoint) + ' '
+              + "for importance eval: ", len(all_feature_combinations))
+    elif timePoint == 4:
+        data_t4 = data.loc[data["TimePointOrder"] == 4]
+        print("Dimension of proteome data at time point" + ' ' + str(Time), "is ", data_t4.shape)
+        combinations, all_feature_combinations = make_feature_combination(data_t4, UpperValue, LowerValue)
+        print("length of matrix of feature combination at time point" + ' ' + str(timePoint) + ' '
+              + "for importance eval:", len(all_feature_combinations))
 
         distance_result, combination_table, time = Feature_Evaluation_multitask_SVM.feature_evaluation(data,
                                                                                                        kernel_param,
