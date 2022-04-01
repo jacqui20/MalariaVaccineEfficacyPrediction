@@ -1,7 +1,8 @@
 """
-This module contains the main functionality of the feature selection approach.
-First the multitask-SVM classification model is initilaized with the parameter combinations evaluated based
-on the results from Parser_multitask_SVM.py module. Second informative features are evaluated.
+This module contains the main functionality of the ESPY measurment approach.
+First the multitask-SVM classification model is initialized with the kernel matrix based on the evaluated kernel
+parameter from 10time repeated 5-fold grid search CV. Second informative features are evaluated based on the initialized
+multitask-SVM model. 
 Created on: 25.05.2019
 
 @Author: Jacqueline Wistuba-Hamprecht
@@ -342,16 +343,16 @@ def compute_distance_hyper(combinations, model, input_labels, data, kernel_param
     return get_distance_df
 
 
-def ESPY_measurment(target_label,
-                    kernel_parameter,
-                    kernel_matrix,
-                    timePoint,
-                    t_nm,
-                    proteome_data,
-                    uq,
-                    lq,
-                    outputdir,
-                    output_filename):
+def ESPY_measurment(target_label: pd.DataFrame,
+                    kernel_parameter: dict,
+                    kernel_matrix: np.ndarray,
+                    timePoint: str,
+                    t_nm: int,
+                    proteome_data: pd.DataFrame,
+                    uq: int,
+                    lq: int,
+                    outputdir: PATH,
+                    output_filename: str):
     """ MAIN function of the feature evaluation approach.
 
                 the distances of each feature to the classification boundery are evaluated.
