@@ -124,7 +124,7 @@ if __name__ == "__main__":
         "Evaluation of informative features based on SHAP values started"
     )
 
-    SHAP_value(model=rbf_SVM_model, x_train=X_train, x_test=X_test, outputdir=outputdir)
+    SHAP_value(model=rbf_SVM_model, X_train=X_train, X_test=X_test, outputdir=outputdir)
 
     print(
         "Evaluation terminated and results are saved in "
