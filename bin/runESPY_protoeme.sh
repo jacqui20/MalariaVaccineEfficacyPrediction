@@ -47,8 +47,6 @@ combinations_t = (2,3,4) # combinations of timepoints as int to select data per 
         t_nm = t # varies for whole and selecctive proteome data in combination_t
 )
 //  set up output file name for ESPY measurment: "ESPY_value" + time + whole or selective data + '.tsv'
-//  set up output file name for NormalDistribution fitting measurment: "Significant_features" + time +
-    whole or selective data + '.tsv'
 //  pass outputdir_selective or outputdir_whole
 
 
