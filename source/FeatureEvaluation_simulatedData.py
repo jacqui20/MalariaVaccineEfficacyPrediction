@@ -1,11 +1,8 @@
 """
-This module evaluates the informative features from the simulated data
-using the ESPY value measurement.
-Created on: 25.01.2022
+This module contains functions to evaluate the informative features 
+from simulated data using the ESPY value measurement.
 
 @Author: Jacqueline Wistuba-Hamprecht
-
-
 """
 
 #required packages
