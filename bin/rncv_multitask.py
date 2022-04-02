@@ -28,6 +28,25 @@ import nestedcv as ncv
 sys.path.append('/home/breuter/MalariaVaccineEfficacyPrediction')
 from source.utils import DataSelector, CustomPredefinedSplit, assign_folds
 
+warnings.filterwarnings(
+    "ignore",
+    message=(
+        "`np.object` is a deprecated alias for the builtin `object`. "
+        "To silence this warning, use `object` by itself. "
+        "Doing this will not modify any behavior and is safe."
+    ),
+    category=DeprecationWarning,
+    module=r".*nestedcv"
+)
+warnings.filterwarnings(
+    "ignore",
+    message=(
+        "Divide through zero encountered while trying to calculate the MCC. MCC is set to zero."
+    ),
+    category=UserWarning,
+    module=r".*nestedcv"
+)
+
 
 def main(
     ANA_PATH: str,
@@ -145,7 +164,7 @@ def main(
             'reproducible': False,
             'inner_cv': StratifiedGroupKFold(n_splits=5, random_state=rng, shuffle=True),
             'outer_cv': outer_cv,
-            'Nexp1': 5,
+            'Nexp1': 1,
             'Nexp2': Nexp2,
             'n_jobs': 8,
         }
