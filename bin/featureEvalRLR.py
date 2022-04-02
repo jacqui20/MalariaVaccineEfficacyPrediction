@@ -2,8 +2,6 @@
 Evaluation of informative features from RLR models
 
 Will save the results to various .tsv files
-
-
 """
 import numpy as np
 import pandas as pd
@@ -11,24 +9,28 @@ import scipy
 import sklearn
 import sys
 import os
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import make_pipeline
+import argparse
 from source import featureEvaluationRLR
 
 
-def main():
+def main(
+    data_path: str,
+    identifier: str,
+    rgscv_path: str,
+    out_dir: str,
+    timepoint: str,
+):
     """
-    Evaluation of informative features from RLR
-
+    Evaluation of informative features from RLR.
     """
-    coefs = featureEvaluationRLR(proteome_data, results_rgscv, timepoint)
-    pd.DataFrame(data=coefs).to_csv(os.path.join(outputdir, output_file_name + ".tsv"), sep='\t', na_rep='nan')
+    proteome_data = pd.read_table(data_path, sep='\t', index_col=0)
+    rgscv_results = pd.read_table(rgscv_path, sep='\t', index_col=0)
 
-    print(
-        "Results are saved in: "
-        + os.path.join(outputdir, output_file_name + ".tsv")
-    )
+    coefs = featureEvaluationRLR(proteome_data, rgscv_results, timepoint)
+    fn = os.path.join(out_dir, f"RLR_informative_features_{identifier}_data_{timepoint}.tsv")
+    pd.DataFrame(data=coefs).to_csv(fn, sep='\t', na_rep='nan')
+
+    print(f"Results are saved in: {fn}")
 
 
 if __name__ == "__main__":
@@ -38,4 +40,35 @@ if __name__ == "__main__":
     print('numpy version:', np.__version__)
     print('scipy version:', scipy.__version__)
 
-    main()
+    parser = argparse.ArgumentParser(
+        description=('Function to run an analysis of informative features from RLR.')
+    )
+    parser.add_argument(
+        '--data-path', dest='data_path', metavar='FILE', required=True,
+        help='Path to the proteome data file.'
+    )
+    parser.add_argument(
+        '--identifier', dest='identifier', required=True,
+        help=('Prefix to identify the proteome dataset.')
+    )
+    parser.add_argument(
+        '--rgscv-path', dest='rgscv_path', metavar='FILE', required=True,
+        help='Path to the File were the RGSCV results are stored.'
+    )
+    parser.add_argument(
+        '--out-dir', dest='out_dir', metavar='DIR', required=True,
+        help='Path to the directory to wihich the output shall be written.'
+    )
+    parser.add_argument(
+        '--timepoint', dest='timepoint', required=True,
+        help='Time point for which the analysis shall be performed.'
+    )
+    args = parser.parse_args()
+
+    main(
+        args.data_path,
+        args.identifier,
+        args.rgscv_path,
+        args.out_dir,
+        args.timepoint,
+    )

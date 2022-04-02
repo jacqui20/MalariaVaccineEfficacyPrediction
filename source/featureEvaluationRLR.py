@@ -1,83 +1,81 @@
-"""
-Evaluation of informative features from RLR models
-
-Will save the results to various .tsv files
-
-
-"""
 import numpy as np
 import pandas as pd
-import scipy
-import sklearn
-import sys
-import os
+from typing import Dict, Tuple
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 
 
-def get_kernel_parameter(
-        kernel_parameter: np.ndarray
-        ):
-    """ Return combination of kernel parameter to initialize Elastic Net model
-
-        Parameters
-        ----------
-        kernel_parameter : np.ndarray
-            matrix of kernel parameter per time point and the evaluated mean AUC value
-
-        Returns
-        --------
-        pam : dict
-            Dictionary of kernel values
-        """
-    pam_roc_auc = kernel_parameter[kernel_parameter['scoring'].isin(['roc_auc'])]
-    pam = pam_roc_auc['best_params']
-    #print(pam)
-    pam = pam.str.split(" ", expand=True).values
-    #print(pam)
-    return pam
-
-
-def select_time_point(
-        kernel_parameter: np.ndarray,
-        time_point: str
-        ):
-    """ Select time point to evaluate informative features from RLR
-
-    Parameter
-    ---------
-    kernel_parameter : np.ndarrray
-        matrix of kernel parameter per time point and the evaluated mean AUC value
-    time_point : str
-        preferable time point
-
-    Returns
-    --------
-    x: np.ndarray
-        matrix of performance and kernel values per time point
-    """
-    x = kernel_parameter[kernel_parameter['time'].isin([time_point])]
-    #print(X)
-    return x
-
-
-def rearagne_columns(
-        data: pd.DataFrame
-):
-    """ Re-arrange column order of dataframe
-
-    Move column Dose to the start position of features
+def get_RLR_parameters(
+    timepoint_results: pd.DataFrame,
+) -> Dict[str, float]:
+    """Return combination of parameters to initialize RLR.
 
     Parameters
     ----------
-    data: pd.Dataframe
-        dataframe of proteome data
+    timepoint_results : pd.DataFrame
+        DataFrame containing optimal parameters and mean AUROC values
+        for a particular time point as found via Repeated Grid-Search CV (RGSCV).
+
+    Returns
+    --------
+    params : dict
+        Parameter dictionary.
+    """
+    roc_results = timepoint_results[timepoint_results['scoring'].isin(['roc_auc'])]
+    assert roc_results.shape == (1, 4), \
+        f"roc_results.shape != (1, 4): {roc_results.shape} != (1, 4)"
+    params_string = roc_results['best_params'].iloc[0]
+    assert type(params_string) == str, \
+        f"type(params_string) != str: {type(params_string)} != str"
+    params = eval(params_string)
+    assert set(params.keys()) == {'logisticregression__l1_ratio', 'logisticregression__C'}, \
+        ("set(params.keys()) != {'logisticregression__l1_ratio', 'logisticregression__C'}:"
+         f"{set(params.keys())} != {'logisticregression__l1_ratio', 'logisticregression__C'}")
+    return params
+
+
+def select_timepoint(
+    rgscv_results: pd.DataFrame,
+    timepoint: str
+) -> pd.DataFrame:
+    """ Select time point to evaluate informative features from RLR.
+
+    Parameter
+    ---------
+    rgscv_results : pd.DataFrame
+        DataFrame containing optimal parameters and mean AUROC values
+        per time point as found via Repeated Grid-Search CV (RGSCV).
+
+    timepoint : str
+        Time point to extract parameters and AUROC values for.
+
+    Returns
+    --------
+    timepoint_results: pd.DataFrame
+        DataFrame containing optimal parameters and mean AUROC values
+        for the selected time point as found via Repeated Grid-Search CV (RGSCV).
+    """
+    timepoint_results = rgscv_results[rgscv_results['time'].isin([timepoint])]
+    return timepoint_results
+
+
+def rearrange_columns(
+    data: pd.DataFrame
+) -> pd.DataFrame:
+    """ Re-arrange column order of proteome dataframe.
+
+    Move column 'Dose' to the beginning of the feature columns.
+
+    Parameters
+    ----------
+    data : pd.Dataframe
+        Proteome dataframe.
 
     Returns
     --------
     df : pd.Dataframe
-        re-arranged column order of dataframe
+        Proteome dataframe with re-arranged columns.
 
     """
 
@@ -85,51 +83,42 @@ def rearagne_columns(
     dose = df['Dose']
     df = df.drop(columns=['Dose'])
     df.insert(loc=4, column='Dose', value=dose)
-    #print(df)
-
     return df
 
 
 def RLR_model(
         *,
-        X_data: np.ndarray,
-        y_labels: np.ndarray,
-        kernel_parameter: dict,
+        X: np.ndarray,
+        y: np.ndarray,
+        params: dict,
         feature_labels: list
-) -> LogisticRegression:
-    """Initialize Elastic Net model on proteome data
+) -> Tuple[LogisticRegression, pd.DataFrame]:
+    """Fit RLR model on proteome data.
 
-    Initialize Elastic Net model with kernel parameter from grid search on proteome data and
-    evaluate coefficients.
-    Returns the evaluated coefficients.
+    Fit RLR model with parameters given by `params` on
+    proteome data and find non-zero coefficients.
 
     Parameters
     ---------
-    X_data: np.ndarray,
-        matrix of input data
-    y_labels: np.ndarray,
-        y label
-    kernel_parameter: dict,
-        dictionary of kernel parameter to initialize Elastic Net model
-    feature_labels: list
-        list of feature labels
+    X : np.ndarray
+        Data array.
+    y : np.ndarray
+        Label array
+    params : dict
+        Parameter dictionary used to fit RLR.
+    feature_labels : list
+        List of feature labels.
 
     Returns
     -------
-    model: sklearn.linear_model.LogisticRegression object
-        initialized Elastic net model on pre-defined kernel parameter
-    cdf_nonzeros: pd.Dataframe
-        dataframe of features with evaluated non-zero coefficient weights
+    model : sklearn.linear_model.LogisticRegression object
+        Fitted RLR model with parameters given by `params`.
+    coefs_nonzero : pd.Dataframe
+        Non-zero RLR coefficients.
 
     """
-    # get parameter for Elastic Net model
-    c = pd.to_numeric(kernel_parameter[0][1].split(",")[0])
-    print("C-value:" + str(c))
-    print(type(c))
-    l1_value = pd.to_numeric(kernel_parameter[0][3].split("}")[0])
-    print("l1_value:" + str(l1_value))
 
-    # Initialize Elastic Net model
+    # Initialize and fit RLR
     estimator = make_pipeline(
         StandardScaler(
             with_mean=True,
@@ -137,71 +126,74 @@ def RLR_model(
         ),
         LogisticRegression(
             penalty='elasticnet',
-            C=c,
+            C=params['logisticregression__C'],
             solver='saga',
-            l1_ratio=l1_value,
+            l1_ratio=params['logisticregression__l1_ratio'],
             max_iter=10000,
         ),
-        # memory=cachedir,
     )
-    estimator.fit(X_data, y_labels)
+    estimator.fit(X, y)
     print(estimator)
     model = estimator[1]
 
     # Extract non-zero coefficients
-    print("Non Zero weights:", np.count_nonzero(model.coef_))
-    cdf = pd.concat([pd.DataFrame(feature_labels), pd.DataFrame(np.transpose(model.coef_))], axis=1)
-    cdf.columns = ['Pf_antigen_ID', 'weight']
-    cdf = cdf.sort_values(by=['weight'], ascending=True)
-    cdf_nonzeros = cdf[cdf['weight'] != 0]
-    return model, cdf_nonzeros
+    print("Number of non-zero weights:", np.count_nonzero(model.coef_))
+    coefs = pd.concat(
+        [pd.DataFrame(feature_labels), pd.DataFrame(np.transpose(model.coef_))],
+        axis=1
+    )
+    coefs.set_axis(['Pf_antigen_ID', 'weight'], axis='columns')
+    coefs.sort_values(by=['weight'], ascending=True, inplace=True)
+    coefs_nonzero = coefs[coefs['weight'] != 0]
+    return model, coefs_nonzero
 
 
 def featureEvaluationRLR(
         data: pd.DataFrame,
-        results_rgscv: np.ndarray,
-        timepoint: str
+        rgscv_results: pd.DataFrame,
+        timepoint: str,
 ):
-    """Evaluation of informative features from Elastic Net model
+    """Evaluation of informative features from RLR.
 
     Parameter
     ---------
-    data: pd.DataFrame
-        Dataframe of proteome data
-    results_rgscv: np.ndarray
-        kernel combination for Elastic Net model per time point based on mean AUC score
-    timepoint: str
-        time point to evaluate informative features
+    data : pd.DataFrame
+        Dataframe containing proteome data.
+    rgscv_results : pd.DataFrame
+        DataFrame containing optimal parameters and mean AUROC values
+        per time point as found via Repeated Grid-Search CV (RGSCV).
+    timepoint : str
+        Time point to evaluate informative features for.
 
     Returns
     -------
-    coefficients: pd.Dataframe
-        Dataframe of non-zero coefficients
+    coefs : pd.Dataframe
+        Dataframe of non-zero coefficients.
 
     """
 
-    data = rearagne_columns(data)
-
-    print("Paramter combination for best mean AUC at time point" + str(timepoint) + ":")
-
-    time_point = select_time_point(
-        kernel_parameter=results_rgscv,
-        time_point=timepoint)
-    kernel_param = get_kernel_parameter(
-        kernel_parameter=time_point)
-    print(kernel_param)
+    print(f"Parameter combination for best mean AUC at time point {timepoint} :")
+    timepoint_results = select_timepoint(
+        rgscv_results=rgscv_results,
+        timepoint=timepoint)
+    params = get_RLR_parameters(
+        timepoint_results=timepoint_results
+    )
+    print(params)
     print('')
 
-    print("Start feature evaluation with dose as auxellary feature:")
-    X_data = data.iloc[:, 4:].to_numpy()
-    y_labels = data.loc[:, 'Protection'].to_numpy()
-    feature_labels = data.iloc[:, 4:].columns
+    print("Start feature evaluation with dose as auxillary feature:")
+    data = rearrange_columns(data)
+    X = data.iloc[:, 4:].to_numpy()
+    y = data.loc[:, 'Protection'].to_numpy()
+    feature_labels = data.iloc[:, 4:].columns.to_list()
 
-    model, coeffiecients = RLR_model(
-        X_data=X_data,
-        y_labels=y_labels,
-        kernel_parameter=kernel_param,
-        feature_labels=feature_labels)
-    print(coeffiecients)
+    _, coefs = RLR_model(
+        X=X,
+        y=y,
+        params=params,
+        feature_labels=feature_labels,
+    )
+    print(coefs)
 
-    return coeffiecients
+    return coefs
