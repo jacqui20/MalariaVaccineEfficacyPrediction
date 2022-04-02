@@ -29,25 +29,6 @@ import nestedcv as ncv
 sys.path.append('/home/breuter/MalariaVaccineEfficacyPrediction')
 from source.utils import CustomPredefinedSplit, assign_folds
 
-warnings.filterwarnings(
-    "ignore",
-    message=(
-        "`np.object` is a deprecated alias for the builtin `object`. "
-        "To silence this warning, use `object` by itself. "
-        "Doing this will not modify any behavior and is safe."
-    ),
-    category=DeprecationWarning,
-    module=r".*nestedcv"
-)
-warnings.filterwarnings(
-    "ignore",
-    message=(
-        "Divide through zero encountered while trying to calculate the MCC. MCC is set to zero."
-    ),
-    category=UserWarning,
-    module=r".*nestedcv"
-)
-
 
 def main(
     ANA_PATH: str,
@@ -557,6 +538,24 @@ if __name__ == "__main__":
 
     warnings.showwarning = warn_with_traceback
     warnings.simplefilter("default")
+    warnings.filterwarnings(
+        "ignore",
+        message=(
+            "`np.object` is a deprecated alias for the builtin `object`. "
+            "To silence this warning, use `object` by itself. "
+            "Doing this will not modify any behavior and is safe."
+        ),
+        category=DeprecationWarning,
+        module=r".*nestedcv"
+    )
+    warnings.filterwarnings(
+        "ignore",
+        message=(
+            "Divide through zero encountered while trying to calculate the MCC. MCC is set to zero."
+        ),
+        category=UserWarning,
+        module=r".*nestedcv"
+    )
 
     parser = argparse.ArgumentParser(
         description=('Function to run nested cross-validated grid-search for OligoSVM models')
