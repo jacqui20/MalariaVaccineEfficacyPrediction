@@ -50,9 +50,10 @@ def initialize_svm_model(
     """
 
     # Initialize SVM model, rbf kernel
-    C_range = np.logspace(-3, 3, 7)
-    gamma_range = np.logspace(-6, 6, 13)
-    param_grid = dict(gamma=gamma_range, C=C_range)
+    param_grid = {
+        'gamma': [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
+        'C': [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
+    }
     scoring = {"AUC": "roc_auc"}
 
     # grid search on simulated data
