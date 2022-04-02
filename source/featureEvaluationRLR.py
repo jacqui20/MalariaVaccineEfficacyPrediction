@@ -1,63 +1,10 @@
 import numpy as np
 import pandas as pd
-from typing import Dict, Tuple
+from typing import Tuple
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
-
-
-def get_RLR_parameters(
-    timepoint_results: pd.DataFrame,
-) -> Dict[str, float]:
-    """Return combination of parameters to initialize RLR.
-
-    Parameters
-    ----------
-    timepoint_results : pd.DataFrame
-        DataFrame containing optimal parameters and mean AUROC values
-        for a particular time point as found via Repeated Grid-Search CV (RGSCV).
-
-    Returns
-    --------
-    params : dict
-        Parameter dictionary.
-    """
-    roc_results = timepoint_results[timepoint_results['scoring'].isin(['roc_auc'])]
-    assert roc_results.shape == (1, 4), \
-        f"roc_results.shape != (1, 4): {roc_results.shape} != (1, 4)"
-    params_string = roc_results['best_params'].iloc[0]
-    assert type(params_string) == str, \
-        f"type(params_string) != str: {type(params_string)} != str"
-    params = eval(params_string)
-    assert set(params.keys()) == {'logisticregression__l1_ratio', 'logisticregression__C'}, \
-        ("set(params.keys()) != {'logisticregression__l1_ratio', 'logisticregression__C'}:"
-         f"{set(params.keys())} != {'logisticregression__l1_ratio', 'logisticregression__C'}")
-    return params
-
-
-def select_timepoint(
-    rgscv_results: pd.DataFrame,
-    timepoint: str
-) -> pd.DataFrame:
-    """ Select time point to evaluate informative features from RLR.
-
-    Parameter
-    ---------
-    rgscv_results : pd.DataFrame
-        DataFrame containing optimal parameters and mean AUROC values
-        per time point as found via Repeated Grid-Search CV (RGSCV).
-
-    timepoint : str
-        Time point to extract parameters and AUROC values for.
-
-    Returns
-    --------
-    timepoint_results: pd.DataFrame
-        DataFrame containing optimal parameters and mean AUROC values
-        for the selected time point as found via Repeated Grid-Search CV (RGSCV).
-    """
-    timepoint_results = rgscv_results[rgscv_results['time'].isin([timepoint])]
-    return timepoint_results
+from utils import select_timepoint, get_parameters
 
 
 def rearrange_columns(
@@ -176,8 +123,9 @@ def featureEvaluationRLR(
     timepoint_results = select_timepoint(
         rgscv_results=rgscv_results,
         timepoint=timepoint)
-    params = get_RLR_parameters(
-        timepoint_results=timepoint_results
+    params = get_parameters(
+        timepoint_results=timepoint_results,
+        model='RLR',
     )
     print(params)
     print('')
