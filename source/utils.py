@@ -17,7 +17,6 @@
 # ------------------------------------------------------------------------------------------------
 
 import numpy as np
-import os.path
 from typing import Any, Dict, Union, Optional, Tuple, List
 from sklearn.utils import check_X_y
 from sklearn.utils.multiclass import unique_labels
@@ -694,6 +693,72 @@ class DataSelector:
         for parameter, value in parameters.items():
             setattr(self, parameter, value)
         return self
+
+
+def get_parameters(
+    timepoint_results: pd.DataFrame,
+    model: str,
+) -> Dict[str, float]:
+    """Return combination of parameters to initialize RLR.
+
+    Parameters
+    ----------
+    timepoint_results : pd.DataFrame
+        DataFrame containing optimal parameters and mean AUROC values
+        for a particular time point as found via Repeated Grid-Search CV (RGSCV).
+    model : str
+        Model ('multitask' or 'RLR') to select parameters for.
+
+    Returns
+    --------
+    params : dict
+        Parameter dictionary.
+    """
+    roc_results = timepoint_results[timepoint_results['scoring'].isin(['roc_auc'])]
+    assert roc_results.shape == (1, 4), \
+        f"roc_results.shape != (1, 4): {roc_results.shape} != (1, 4)"
+    params_string = roc_results['best_params'].iloc[0]
+    assert type(params_string) == str, \
+        f"type(params_string) != str: {type(params_string)} != str"
+    params = eval(params_string)
+    if model == 'RLR':
+        keys = {'logisticregression__l1_ratio', 'logisticregression__C'}
+        assert set(params.keys()) == keys, \
+            (f"set(params.keys()) != {keys}:"
+             f"{set(params.keys())} != {keys}")
+    elif model == 'multitask':
+        keys = {'P1', 'P2', 'R0', 'R1', 'R2', 'SA', 'SO', 'C'}
+        assert set(params.keys()) == keys, \
+            (f"set(params.keys()) != {keys}:"
+             f"{set(params.keys())} != {keys}")
+    else:
+        raise ValueError("`model` must be set to either 'RLR' or 'multitask'.")
+    return params
+
+
+def select_timepoint(
+    rgscv_results: pd.DataFrame,
+    timepoint: str
+) -> pd.DataFrame:
+    """ Select time point to evaluate informative features from RLR.
+
+    Parameter
+    ---------
+    rgscv_results : pd.DataFrame
+        DataFrame containing optimal parameters and mean AUROC values
+        per time point as found via Repeated Grid-Search CV (RGSCV).
+
+    timepoint : str
+        Time point to extract parameters and AUROC values for.
+
+    Returns
+    --------
+    timepoint_results: pd.DataFrame
+        DataFrame containing optimal parameters and mean AUROC values
+        for the selected time point as found via Repeated Grid-Search CV (RGSCV).
+    """
+    timepoint_results = rgscv_results[rgscv_results['time'].isin([timepoint])]
+    return timepoint_results
 
 
 def make_kernel_combinations(
