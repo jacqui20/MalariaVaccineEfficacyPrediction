@@ -5,10 +5,16 @@ source "/Users/schmidtj/anaconda3/etc/profile.d/conda.sh"
 # This is intended to run in the malaria_env conda environment:
 conda activate malaria_env
 
-# This is intended to run in the bin folder of the MalariaVaccineEfficacyPrediction package:
-cd .. || { echo "Couldn't cd one level up"; exit 1; }
-topdir=$PWD
+# This is intended to run in the bin folder of the MalariaVaccineEfficacyPrediction package.           
+# The MalariaVaccineEfficacyPrediction package should be situated in the users home directory.         
+topdir="${HOME}/MalariaVaccineEfficacyPrediction"
+if [ ! -d "$topdir" ]; then
+    { echo "${topdir} doesn't exists."; exit 1; }
+fi
 maindir="${topdir}/results/RLR"
+if [ ! -d "$maindir" ]; then
+    mkdir "$maindir"
+fi
 data_dir="${topdir}/data/proteome_data"  # is it REALLY intended to run on the whole data and NOT on the timepoint-wise data???
 
 for dataset in 'whole' 'selective'; do
@@ -25,7 +31,9 @@ for dataset in 'whole' 'selective'; do
         err="runFeatureEvalRLR_${dataset}_${timestamp}.err"
         out="runFeatureEvalRLR_${dataset}_${timestamp}.out"
         ana_dir="${maindir}/${dataset}/featureEvaluation"
-        mkdir "${ana_dir}"
+        if [ ! -d "$ana_dir" ]; then
+            mkdir "$ana_dir"
+        fi
         cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
         cp "${topdir}/bin/featureEvalRLR.py" . || { echo "cp ${topdir}/bin/featureEvalRLR.py . failed"; exit 1; }
         python -u featureEvalRLR.py --data-path "${data_dir}/preprocessed_${dataset}_data.csv" --identifier "$dataset" --rgscv-path "$rgscv_path" --out-dir "$ana_dir" --timepoint "$timepoint" 1> "${out}" 2> "${err}"
