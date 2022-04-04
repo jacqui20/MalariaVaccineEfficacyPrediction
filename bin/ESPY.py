@@ -105,7 +105,7 @@ def main(
                 "be one of 'III14', 'C-1', or 'C28'."
             )
 
-        data = pd.read_csv(os.path.join(data_dir, f'preprocessed_{identifier}_data.csv'))
+        data = pd.read_csv(os.path.join(data_dir, f'preprocessed_{identifier}_data_sorted.csv'))
         rgscv_results = pd.read_csv(rgscv_path, delimiter="\t", header=0, index_col=0)
 
         output_filename = f"ESPY_values_on_{identifier}_data_{timepoint}"
