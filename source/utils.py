@@ -23,7 +23,7 @@ from sklearn.utils.multiclass import unique_labels
 from sklearn.model_selection._split import BaseCrossValidator
 from sklearn.utils.validation import column_or_1d
 from sklearn.model_selection import StratifiedKFold
-from sklearn import svm
+from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import roc_auc_score
 import matplotlib.pyplot as plt
@@ -32,7 +32,6 @@ from sklearn.metrics.pairwise import rbf_kernel, sigmoid_kernel, polynomial_kern
 import pandas as pd
 import os
 from sklearn.preprocessing import KernelCenterer
-from sklearn.svm import SVC
 
 
 def normalize(
@@ -685,6 +684,7 @@ class DataSelector:
             'identifier': self.identifier,
             'SA': self.SA,
             'SO': self.SO,
+            'R0': self.R0,
             'R1': self.R1,
             'R2': self.R2,
             'P1': self.P1,
@@ -732,10 +732,23 @@ def get_parameters(
             (f"set(params.keys()) != {keys}:"
              f"{set(params.keys())} != {keys}")
     elif model == 'multitask':
-        keys = {'P1', 'P2', 'R0', 'R1', 'R2', 'SA', 'SO', 'C'}
+        keys = {
+            'svc__C',
+            'dataselector__SA',
+            'dataselector__SO',
+            'dataselector__R0',
+            'dataselector__R1',
+            'dataselector__R2',
+            'dataselector__P1',
+            'dataselector__P2',
+        }
         assert set(params.keys()) == keys, \
             (f"set(params.keys()) != {keys}:"
              f"{set(params.keys())} != {keys}")
+        temp = dict()
+        for key in keys:
+            temp[key.split('__')[1]] = params[key]
+        params = temp
     else:
         raise ValueError("`model` must be set to either 'RLR' or 'multitask'.")
     return params
@@ -897,7 +910,9 @@ def multitask(
 
 def make_kernel_matrix(
     data: pd.DataFrame,
-    model: dict,
+    model: Tuple[Union[float, str], Union[float, str], Union[float, str],
+                 Union[float, str], Union[float, str], Union[float, str],
+                 Union[float, str]],
     kernel_time_series: str,
     kernel_dosage: str,
     kernel_abSignals: str,
@@ -1036,11 +1051,11 @@ def sort_proteome_data(
 
 
 def initialize_svm_model(
-        *,
-        X_train_data: np.ndarray,
-        y_train_data: np.ndarray,
-        X_test_data: np.ndarray,
-        y_test_data: np.ndarray,
+    *,
+    X_train_data: np.ndarray,
+    y_train_data: np.ndarray,
+    X_test_data: np.ndarray,
+    y_test_data: np.ndarray,
 ) -> SVC:
     """ Initialize SVM model on simulated data
     Initialize SVM model with a rbf kernel on simulated data and
@@ -1106,50 +1121,48 @@ def initialize_svm_model(
 
 
 def multitask_model(
-        *,
-        kernel_matrix: np.ndarray,
-        kernel_parameter: dict,
-        y_label: np.ndarray):
+    *,
+    kernel_matrix: np.ndarray,
+    kernel_parameters: Dict[str, Union[str, float]],
+    y_label: np.ndarray
+) -> SVC:
     """Initialize multitask-SVM model based on the output of file of the rgscv_multitask.py.
 
     initialize multitask-SVM model based on evaluated kernel combinations
 
     Parameter
     ---------
-     kernel_matrix: np.ndarray,
+    kernel_matrix : np.ndarray,
         gram matrix
-    kernel_parameter: dict,
+    kernel_parameters : dict,
         parameter combination to initialize multitask-SVM model
-    y_label: np.ndarray
+    y_label : np.ndarray
         y labels
 
     Returns
     --------
     multitaskModel: sklearn.svm.SVC object
         trained multitask-SVM model on evaluated kernel parameter
-
     """
 
-    # extract cost value C
-    #print(kernel_parameter[15])
-    C_reg = pd.to_numeric(kernel_parameter[15].str.split("}", expand=True)[0])
-    #print(C_reg)
-
     # set up multitask model based on evaluated parameter
-    multitaskModel = svm.SVC(kernel="precomputed",
-                             C=C_reg,
-                             probability=True,
-                             random_state=1337,
-                             cache_size=500)
+    multitaskModel = SVC(
+        kernel="precomputed",
+        C=kernel_parameters['C'],
+        probability=True,
+        random_state=1337,
+        cache_size=500,
+    )
     multitaskModel.fit(kernel_matrix, y_label)
 
     return multitaskModel
 
 
 def make_plot(
-        data: pd.DataFrame,
-        name: str,
-        outputdir: str):
+    data: pd.DataFrame,
+    name: str,
+    outputdir: str,
+) -> None:
     """
 
     Paramter
@@ -1169,7 +1182,14 @@ def make_plot(
     opacity = 0.6
 
     index = np.arange(len(labels))
-    ax.bar(index, abs(data.loc["|d|"].values), width=w, color="darkblue", align="center", alpha=opacity)
+    ax.bar(
+        index,
+        abs(data.loc["|d|"].values),
+        width=w,
+        color="darkblue",
+        align="center",
+        alpha=opacity
+    )
     ax.xaxis_date()
 
     plt.xlabel('number of features', fontsize=20)
@@ -1179,4 +1199,3 @@ def make_plot(
     plt.savefig(os.path.join(outputdir, name + ".png"), dpi=600)
     plt.savefig(os.path.join(outputdir, name + ".pdf"), format="pdf", bbox_inches="tight")
     plt.show()
-

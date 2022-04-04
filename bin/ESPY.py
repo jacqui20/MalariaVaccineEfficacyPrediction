@@ -1,32 +1,30 @@
 """
 Parser for the feature selection approach
 
-This module computes the ESPY value of each single feature. The ESPY value is the distances of each single features to
-the classification boundary in the multitask-SVM model and compares the change of the distance with a consensus sample.
+This module computes the ESPY value of each single feature.
+The ESPY value is the distances of each single features to the classification boundary in the
+multitask-SVM model and compares the change of the distance with a consensus sample.
 
-This module requires the output file of the Parser_multitask_SVM.py module and the Feature_Evaluation_multitask_SVM.py
-script.
+This module requires the output file of the Parser_multitask_SVM.py module
+and the Feature_Evaluation_multitask_SVM.py script.
 
 Created on: 25.05.2019
 
 @Author: Jacqueline Wistuba-Hamprecht
-
-
 """
-
-# required packages
 import argparse
 import os
 import pandas as pd
 import numpy as np
-from pathlib import Path
 from sklearn.model_selection import train_test_split
+from typing import Optional
 import sys
 maindir = '/'.join(os.getcwd().split('/')[:-1])
 sys.path.append(maindir)
-from source.FeatureEvaluation import ESPY_measurment, get_kernel_paramter
-from source.utils import initialize_svm_model, make_plot, select_timepoint, get_parameters, sort_proteome_data, \
-    multitask_model
+from source.FeatureEvaluation import ESPY_measurement
+from source.utils import DataSelector, get_parameters, initialize_svm_model
+from source.utils import make_plot, multitask_model, select_timepoint
+# from source.utils import sort_proteome_data
 
 
 cwd = os.getcwd()
@@ -34,192 +32,252 @@ outputdir = '/'.join(cwd.split('/')[:-1]) + '/results'
 
 
 def main(
-        data: pd.DataFrame,
-        identifier: str,
-        uq: int,
-        lq: int,
-        filename: str,
-        target_label=None,
-        kernel_parameter=None,
-        kernel_matrix=None,
-        timePoint=None,
-        t_nm=None
-) -> object:
+    data_dir: str,
+    out_dir: str,
+    identifier: str,
+    uq: int,
+    lq: int,
+    rgscv_path: Optional[str],
+    kernel_dir: Optional[str],
+    timepoint: Optional[str],
+) -> None:
+    """
+    Call ESPY measurement.
+    """
+    print(f"ESPY value measurement started on {identifier} data.")
+    print("with the following parameters:")
+    print("value of upper quantile      = ", str(uq))
+    print("value of lower quantile      = ", str(lq))
+    print("at time point                = ", str(timepoint))
+    print("\n")
 
-        """
-        Call ESPY measurement.
-        """
-        print("ESPY value measurement started on " + str(filename))
-        print("with the following parameters:")
-        print("value of upper quantile      = ", str(uq))
-        print("value of lower quantile      = ", str(lq))
-        print("at time point                = ", str(timePoint))
-        print("\n")
+    if identifier == 'simulated':
 
-        if filename == "simulated_data.csv":
+        data = pd.read_csv(os.path.join(data_dir, 'simulated_data.csv'))
+        output_filename = f"ESPY_values_on_{identifier}_data"
 
-            simulated_data = pd.read_csv(data)
-            output_filename = f"ESPY_value_of_features_on_{identifier}_data"
-            outputdir_s = outputdir + "/simulated_data"
+        X_train, X_test, y_train, y_test = train_test_split(
+            data.iloc[:, :1000].to_numpy(),
+            data.iloc[:, 1000].to_numpy(),
+            test_size=0.3,
+            random_state=123,
+        )
 
-            X_train, X_test, Y_train, Y_test = train_test_split(
-                simulated_data.iloc[:, :1000].to_numpy(),
-                simulated_data.iloc[:, 1000].to_numpy(),
-                test_size=0.3,
-                random_state=123)
+        rbf_svm_model = initialize_svm_model(
+            X_train_data=X_train,
+            y_train_data=y_train,
+            X_test_data=X_test,
+            y_test_data=y_test,
+        )
 
-            rbf_svm_model = initialize_svm_model(X_train_data=X_train,
-                                                 y_train_data=Y_train,
-                                                 X_test_data=X_test,
-                                                 y_test_data=Y_test)
+        distance_result = ESPY_measurement(
+            identifier=identifier,
+            data=pd.DataFrame(X_test),
+            model=rbf_svm_model,
+            lq=lq,
+            up=uq,
+        )
 
-            distance_result = ESPY_measurment(
-                    data=pd.DataFrame(X_test),
-                    model = rbf_svm_model,
-                    lq=lq,
-                    up=uq,
-                    filename=filename)
+        make_plot(
+            data=distance_result.iloc[:, :25],
+            name=output_filename,
+            outputdir=out_dir,
+        )
 
-            make_plot(data=distance_result.iloc[:, :25],
-                      name=output_filename,
-                      outputdir=outputdir_s)
+        distance_result.to_csv(
+            os.path.join(out_dir, output_filename + ".tsv"),
+            sep='\t',
+            na_rep='nan',
+        )
+        print("results are saved in: " + os.path.join(out_dir, output_filename))
 
-            distance_result.to_csv(os.path.join(outputdir_s, output_filename + ".tsv"),
-                                   sep='\t', na_rep='nan')
-            print("results are saved in: " + os.path.join(outputdir_s, output_filename))
+    elif identifier in ['whole', 'selective']:
 
-        elif filename == "preprocessed_whole_data.csv" or "preprocessed_selective_data.csv":
+        if timepoint == 'III14':
+            t = 2
+        elif timepoint == 'C-1':
+            t = 3
+        elif timepoint == 'C28':
+            t = 4
+        else:
+            raise ValueError(
+                "The string given via the '--timepoint' argument must "
+                "be one of 'III14', 'C-1', or 'C28'."
+            )
 
-            proteome_data = pd.read_csv(data)
-            kernel_parameter = pd.read_csv(kernel_parameter, delimiter="\t", header=0, index_col=0)
-            target_label = pd.read_csv(target_label, index_col=0)
-            kernel_matrix = np.load(kernel_matrix)
+        data = pd.read_csv(os.path.join(data_dir, f'preprocessed_{identifier}_data.csv'))
+        rgscv_results = pd.read_csv(rgscv_path, delimiter="\t", header=0, index_col=0)
 
+        output_filename = f"ESPY_values_on_{identifier}_data_{timepoint}"
 
-            output_filename = f"ESPY_value_of_features_on_{identifier}_data_{timePoint}"
-            outputdir_p = outputdir + "/proteome_data"
+        timepoint_results = select_timepoint(rgscv_results, timepoint)
+        params = get_parameters(timepoint_results, "multitask")
 
-            time_point = select_timepoint(kernel_parameter, timePoint)
-            param_combi_RRR = get_kernel_paramter(time_point, "multitask")
+        y = data.loc[:, 'Protection'].to_numpy()
 
-            kernel_pamR0 = pd.to_numeric(param_combi_RRR[5].str.split(",", expand=True)[0])
-            print("gamma value for rbf kernel for time point series " + str(kernel_pamR0))
-            kernel_pamR1 = pd.to_numeric(param_combi_RRR[7].str.split(",", expand=True)[0])
-            print("gamma value for rbf kernel for dose " + str(kernel_pamR1))
-            kernel_pamR2 = pd.to_numeric(param_combi_RRR[9].str.split(",", expand=True)[0])
-            print("gamma value for rbf kernel for ab signals " + str(kernel_pamR2))
-            print('')
+        # initialize running index array for DataSelector
+        assert y.size * y.size < np.iinfo(np.uint32).max, \
+            f"y is to large: y.size * y.size >= {np.iinfo(np.uint32).max}"
+        X = np.array(
+            [x for x in range(y.size * y.size)],
+            dtype=np.uint32
+        ).reshape((y.size, y.size))
 
-            y_label = target_label.loc[:, 'Protection'].to_numpy()
-            multitask_classifier = multitask_model(
-                                    kernel_matrix=kernel_matrix,
-                                    kernel_parameter=param_combi_RRR,
-                                    y_label=y_label)
+        if identifier == 'whole':
+            matrix_identifier = 'kernel_matrix'
+        elif identifier == 'selective':
+            matrix_identifier = 'kernel_matrix_SelectiveSet'
 
-            proteome_data = sort_proteome_data(
-                                data=proteome_data)
+        kernel_matrix = DataSelector(
+            kernel_directory=kernel_dir,
+            identifier=matrix_identifier,
+            SA=params['SA'],
+            SO=params['SO'],
+            R0=params['R0'],
+            R1=params['R1'],
+            R2=params['R2'],
+            P1=params['P1'],
+            P2=params['P2'],
+        ).fit(X, y).transform(X)
 
-            print("Are values in proteome data floats: "
-                  + str(np.all(np.isin(proteome_data.dtypes.to_list()[5:], ['float64']))))
+        multitask_classifier = multitask_model(
+            kernel_matrix=kernel_matrix,
+            kernel_parameters=params,
+            y_label=y,
+        )
 
-            data_at_timePoint = proteome_data.loc[proteome_data["TimePointOrder"] == t_nm]
+        # data = sort_proteome_data(data=data)  # not needed, if we use presorted data
 
-            distance_result = ESPY_measurment(
-                data=data_at_timePoint.iloc[:, 3:],
-                model=multitask_classifier,
-                lq=lq,
-                up=uq,
-                proteome_data=proteome_data,
-                kernel_paramter=param_combi_RRR,
-                filename=filename)
+        print(
+            "Are values in proteome data floats: "
+            f"{np.all(np.isin(data.dtypes.to_list()[5:], ['float64']))}"
+        )
 
-            print("Distances for features:")
-            print(distance_result)
+        data_at_timePoint = data.loc[data["TimePointOrder"] == t]
 
-            make_plot(data=distance_result.iloc[:, :],
-                      name=output_filename,
-                      outputdir=outputdir_p)
+        distance_result = ESPY_measurement(
+            identifier=identifier,
+            data=data_at_timePoint.iloc[:, 3:],
+            model=multitask_classifier,
+            lq=lq,
+            up=uq,
+            proteome_data=data,
+            kernel_parameters=params,
+        )
 
-            distance_result.to_csv(os.path.join(outputdir_p, output_filename + ".tsv"), sep='\t', na_rep='nan')
-            print('results are saved in: ' + os.path.join(outputdir_p, output_filename))
+        print("Distances for features:")
+        print(distance_result)
+
+        make_plot(
+            data=distance_result.iloc[:, :],
+            name=output_filename,
+            outputdir=out_dir,
+        )
+
+        distance_result.to_csv(
+            os.path.join(out_dir, output_filename + ".tsv"),
+            sep='\t',
+            na_rep='nan'
+        )
+        print(f'Results were saved in: {os.path.join(out_dir, output_filename)}')
+
+    else:
+
+        raise ValueError(
+            "The string given via the '--identifier' argument must be "
+            "one of 'whole', 'selective', or 'simulated'."
+        )
 
 
 if __name__ == "__main__":
-    print('sys.path:', sys.path)
     print('pandas version:', pd.__version__)
     print('numpy version:', np.__version__)
 
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
-        "-infile", '--infile',  type=Path,  required=True,
-        help="Path to the directory were the simulated data or preprocessed proteome data is located.")
-
-    parser.add_argument(
-        '-identifier', '--identifier', type=str, required=True,
-        help=('Prefix to identify the proteome dataset.')
+        '--data-dir',
+        dest='data_dir',
+        metavar='DIR',
+        required=True,
+        help=('Path to the directory were the simulated data or '
+              'preprocessed proteome data is located.'),
     )
-
     parser.add_argument(
-        "-uq", "--Upper_quantile", type=int, default=75,
-        help="define percentage for upper quantile as int, by default 75%")
-
-    parser.add_argument(
-        "-lq", "--Lower_quantile", type=int, default=25,
-        help="define percentage for lower quantile as int, by default 25%")
-
-    parser.add_argument(
-        '-target-label-path', '--target-label-path', action='store',
-        help="Path to the File were the target labels of proteome data are stored."
+        '--out-dir',
+        dest='out_dir',
+        metavar='DIR',
+        required=True,
+        help='Path to the directory were the results shall be saved.',
     )
-
     parser.add_argument(
-        '-kernel-matrix-path', '--kernel-matrix-path',  action='store',
-        help="Path to the File were the precomputed kernel matrices are stored.'"
+        '--identifier',
+        dest='identifier',
+        required=True,
+        choices=['whole', 'selective', 'simulated'],
+        help=("String to identify the proteome dataset. "
+              "Must be one of 'whole', 'selective', or 'simulated'."),
     )
-
     parser.add_argument(
-        '-rgscv-path', '--rgscv-path', action='store',
-        help='Path to the File were the RGSCV results are stored.'
+        '--upper-quantile',
+        dest='uq',
+        type=int,
+        default=75,
+        help='Percentage for upper quantile given as int, by default 75%.',
     )
-
     parser.add_argument(
-        '-timepoint', '--timepoint', action='store',
-        help='Time point for which the analysis shall be performed.'
+        '--lower-quantile',
+        dest='lq',
+        type=int,
+        default=25,
+        help='Percentage for lower quantile given as int, by default 25%.',
+    )
+    parser.add_argument(
+        '--kernel-dir',
+        dest='kernel_dir',
+        metavar='DIR',
+        help='Path to the directory were the precomputed kernel matrices are stored.',
+    )
+    parser.add_argument(
+        '--rgscv-path',
+        dest='rgscv_path',
+        metavar='FILEPATH',
+        help='Path to the File were the RGSCV results are stored.',
+    )
+    parser.add_argument(
+        '--timepoint',
+        dest='timepoint',
+        choices=['III14', 'C-1', 'C28'],
+        help='Time point for which the analysis shall be performed.',
     )
 
     args = parser.parse_args()
 
-    if args.infile.name == "simulated_data.csv":
-        main(data=args.infile,
-             identifier=args.identifier,
-             uq = args.Upper_quantile,
-             lq = args.Lower_quantile,
-             filename=args.infile.name)
+    if args.identifier == 'simulated':
+        main(
+            data_dir=args.data_dir,
+            out_dir=args.out_dir,
+            identifier=args.identifier,
+            uq=args.uq,
+            lq=args.lq,
+        )
 
-    elif args.infile.name == "preprocessed_whole_data.csv" or "preprocessed_selective_data.csv":
-        if args.timepoint == 'III14':
-            t = 2
-        elif args.timepoint == 'C-1':
-            t = 3
-        elif args.timepoint == "C28":
-            t = 4
+    elif args.identifier in ['whole', 'selective']:
 
-        main(data=args.infile,
-             identifier=args.identifier,
-             uq=args.Upper_quantile,
-             lq=args.Lower_quantile,
-             filename=args.infile.name,
-             target_label=args.target_label_path,
-             kernel_parameter= args.rgscv_path,
-             kernel_matrix = args.kernel_matrix_path,
-             timePoint = args.timepoint,
-             t_nm = t)
+        main(
+            data_dir=args.data_dir,
+            out_dir=args.out_dir,
+            identifier=args.identifier,
+            uq=args.uq,
+            lq=args.lq,
+            rgscv_path=args.rgscv_path,
+            kernel_dir=args.kernel_dir,
+            timepoint=args.timepoint,
+        )
+
     else:
-        print("not correct input file was loaded - please load either simulated_data.csv, preprocessed_whole_data.csv "
-              "or preprocessed_selective_data.csv")
 
-
-
-
-
+        raise ValueError(
+            "The string given via the '--identifier' argument must be "
+            "one of 'whole', 'selective', or 'simulated'."
+        )
