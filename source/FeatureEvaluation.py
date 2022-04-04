@@ -40,7 +40,10 @@ def make_feature_combination(
     get_features_comb : list
         List of feature combinations.
     """
-    assert isinstance(upperValue)
+    assert isinstance(upperValue, int), "`upperValue` must be int"
+    assert isinstance(lowerValue, int), "`lowerValue` must be int"
+    assert 0 <= upperValue <= 100, "`upperValue` must be in [0, 100]"
+    assert 0 <= lowerValue <= upperValue, "`lowerValue` must be in [0, upperValue]"
 
     feature_comb = X.median().to_frame(name="Median")
     feature_comb["UpperQuantile"] = X.quantile(float(upperValue) / 100.)
