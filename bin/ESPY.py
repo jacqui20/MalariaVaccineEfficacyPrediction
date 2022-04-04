@@ -37,9 +37,9 @@ def main(
     identifier: str,
     uq: int,
     lq: int,
-    rgscv_path: Optional[str],
-    kernel_dir: Optional[str],
-    timepoint: Optional[str],
+    rgscv_path: Optional[str] = None,
+    kernel_dir: Optional[str] = None,
+    timepoint: Optional[str] = None,
 ) -> None:
     """
     Call ESPY measurement.
