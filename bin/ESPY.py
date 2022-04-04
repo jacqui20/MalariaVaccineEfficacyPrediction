@@ -18,6 +18,7 @@ Created on: 25.05.2019
 import argparse
 import os
 import pandas as pd
+import numpy as np
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 import sys
@@ -29,11 +30,12 @@ from source.utils import initialize_svm_model, make_plot, select_timepoint, get_
 
 
 cwd = os.getcwd()
-outputdir = '/'.join(cwd.split('/')[:-1]) + '/results/simulated_data'
+outputdir = '/'.join(cwd.split('/')[:-1]) + '/results'
 
 
 def main(
         data: pd.DataFrame,
+        identifier: str,
         uq: int,
         lq: int,
         filename: str,
@@ -44,9 +46,6 @@ def main(
         t_nm=None
 ) -> object:
 
-
-        data = pd.read_csv(data)
-
         """
         Call ESPY measurement.
         """
@@ -56,12 +55,16 @@ def main(
         print("value of lower quantile      = ", str(lq))
         print("at time point                = ", str(timePoint))
         print("\n")
-        output_filename = "ESPY_value_of_features_on_simulated_data"
 
         if filename == "simulated_data.csv":
+
+            simulated_data = pd.read_csv(data)
+            output_filename = f"ESPY_value_of_features_on_{identifier}_data"
+            outputdir_s = outputdir + "/simulated_data"
+
             X_train, X_test, Y_train, Y_test = train_test_split(
-                data.iloc[:, :1000].to_numpy(),
-                data.iloc[:, 1000].to_numpy(),
+                simulated_data.iloc[:, :1000].to_numpy(),
+                simulated_data.iloc[:, 1000].to_numpy(),
                 test_size=0.3,
                 random_state=123)
 
@@ -75,20 +78,29 @@ def main(
                     model = rbf_svm_model,
                     lq=lq,
                     up=uq,
-                    outputdir=outputdir,
-                    outputname=output_filename,
                     filename=filename)
 
             make_plot(data=distance_result.iloc[:, :25],
                       name=output_filename,
-                      outputdir=outputdir)
+                      outputdir=outputdir_s)
 
-            distance_result.to_csv(os.path.join(outputdir, output_filename + ".tsv"), sep='\t', na_rep='nan')
-            print("results are saved in: " + os.path.join(outputdir, output_filename))
+            distance_result.to_csv(os.path.join(outputdir_s, output_filename + ".tsv"),
+                                   sep='\t', na_rep='nan')
+            print("results are saved in: " + os.path.join(outputdir_s, output_filename))
 
         elif filename == "preprocessed_whole_data.csv" or "preprocessed_selective_data.csv":
+
+            proteome_data = pd.read_csv(data)
+            kernel_parameter = pd.read_csv(kernel_parameter, delimiter="\t", header=0, index_col=0)
+            target_label = pd.read_csv(target_label, index_col=0)
+            kernel_matrix = np.load(kernel_matrix)
+
+
+            output_filename = f"ESPY_value_of_features_on_{identifier}_data_{timePoint}"
+            outputdir_p = outputdir + "/proteome_data"
+
             time_point = select_timepoint(kernel_parameter, timePoint)
-            param_combi_RRR = get_kernel_paramter(time_point)
+            param_combi_RRR = get_kernel_paramter(time_point, "multitask")
 
             kernel_pamR0 = pd.to_numeric(param_combi_RRR[5].str.split(",", expand=True)[0])
             print("gamma value for rbf kernel for time point series " + str(kernel_pamR0))
@@ -105,33 +117,48 @@ def main(
                                     y_label=y_label)
 
             proteome_data = sort_proteome_data(
-                                data=data)
-            print("Are values in proteome data floats: " + str(np.all(np.isin(proteome_data.dtypes.to_list()[5:], ['float64']))))
+                                data=proteome_data)
+
+            print("Are values in proteome data floats: "
+                  + str(np.all(np.isin(proteome_data.dtypes.to_list()[5:], ['float64']))))
+
             data_at_timePoint = proteome_data.loc[proteome_data["TimePointOrder"] == t_nm]
 
             distance_result = ESPY_measurment(
-                data=data_at_timePoint.iloc[:, :3],
-                model = multitask_classifier,
+                data=data_at_timePoint.iloc[:, 3:],
+                model=multitask_classifier,
                 lq=lq,
                 up=uq,
-                outputdir=outputdir,
-                outputname=output_filename,
                 proteome_data=proteome_data,
-                kernel_paramter=param_combi_RRR)
+                kernel_paramter=param_combi_RRR,
+                filename=filename)
 
-            #distance_result.to_csv(os.path.join(outputdir, output_filename), sep='\t', na_rep='nan')
-            #print('results are saved in: ' + os.path.join(outputdir, output_filename))
+            print("Distances for features:")
+            print(distance_result)
+
+            make_plot(data=distance_result.iloc[:, :],
+                      name=output_filename,
+                      outputdir=outputdir_p)
+
+            distance_result.to_csv(os.path.join(outputdir_p, output_filename + ".tsv"), sep='\t', na_rep='nan')
+            print('results are saved in: ' + os.path.join(outputdir_p, output_filename))
 
 
 if __name__ == "__main__":
     print('sys.path:', sys.path)
     print('pandas version:', pd.__version__)
+    print('numpy version:', np.__version__)
 
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
         "-infile", '--infile',  type=Path,  required=True,
         help="Path to the directory were the simulated data or preprocessed proteome data is located.")
+
+    parser.add_argument(
+        '-identifier', '--identifier', type=str, required=True,
+        help=('Prefix to identify the proteome dataset.')
+    )
 
     parser.add_argument(
         "-uq", "--Upper_quantile", type=int, default=75,
@@ -165,6 +192,7 @@ if __name__ == "__main__":
 
     if args.infile.name == "simulated_data.csv":
         main(data=args.infile,
+             identifier=args.identifier,
              uq = args.Upper_quantile,
              lq = args.Lower_quantile,
              filename=args.infile.name)
@@ -178,10 +206,11 @@ if __name__ == "__main__":
             t = 4
 
         main(data=args.infile,
-             uq = args.Upper_quantile,
-             lq = args.Lower_quantile,
+             identifier=args.identifier,
+             uq=args.Upper_quantile,
+             lq=args.Lower_quantile,
              filename=args.infile.name,
-             target_label = args.target_label_path,
+             target_label=args.target_label_path,
              kernel_parameter= args.rgscv_path,
              kernel_matrix = args.kernel_matrix_path,
              timePoint = args.timepoint,

@@ -271,6 +271,7 @@ def compute_distance_hyper_proteome(
 
     # set up final data frame for distance evaluation
     get_distance_df = get_distance_df.rename({0: "UpperQuantile [d]", 1: "LowerQuantile [d]"}, axis='index')
+    get_distance_df.loc['|d|'] = abs(get_distance_df.loc["|d|"].values)
     get_distance_df = get_distance_df.T.sort_values(by="|d|", ascending=False).T
     #sort values by abs-value of |d|
     get_distance_df.loc["sort"] = abs(get_distance_df.loc["|d|"].values)
@@ -369,8 +370,6 @@ def ESPY_measurment(
         lq: int,
         up: int,
         filename: str,
-        outputname: str,
-        outputdir: str,
         proteome_data=None,
         kernel_paramter=None):
     """ESPY measurement
@@ -388,10 +387,6 @@ def ESPY_measurment(
         value of upper quantile
     filename: str
         name of input file
-    outputname: str
-        name of output file
-    outputdir: str
-        path to store output files
 
     Returns
     --------
@@ -403,7 +398,11 @@ def ESPY_measurment(
     start = time.time()
 
     combinations, all_feature_combinations = make_feature_combination(
-        X=data, lowerValue=lq, upperValue=up)
+            X=data,
+            lowerValue=lq,
+            upperValue=up)
+
+    print("Combination of feature")
     print(combinations)
 
     if filename == "simulated_data.csv":
@@ -417,9 +416,8 @@ def ESPY_measurment(
             combinations=all_feature_combinations,
             model=model,
             input_labels=combinations,
-            data=proteome_data,
+            data=proteome_data.iloc[:, 3:],
             kernel_paramter=kernel_paramter)
-        print(distances_for_all_feature_comb)
 
     end = time.time()
     print("end of computation after: ", str(end - start), "seconds")
