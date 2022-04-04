@@ -125,7 +125,7 @@ def featureEvaluationRLR(
 
     print(f"Parameter combination for best mean AUC at time point {timepoint} :")
     timepoint_results = select_timepoint(
-        rgscv_results=rgscv_results,
+        rgscv_results=pd.DataFrame(rgscv_results),
         timepoint=timepoint)
 
     params = get_parameters(

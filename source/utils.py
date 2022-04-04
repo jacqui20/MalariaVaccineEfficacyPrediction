@@ -755,5 +755,7 @@ def select_timepoint(
         DataFrame containing optimal parameters and mean AUROC values
         for the selected time point as found via Repeated Grid-Search CV (RGSCV).
     """
+
     timepoint_results = rgscv_results[rgscv_results['time'].isin([timepoint])]
+
     return timepoint_results
