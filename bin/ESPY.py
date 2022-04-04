@@ -77,6 +77,7 @@ def main(
             lq=lq,
             up=uq,
         )
+        print(distance_result)
 
         make_plot(
             data=distance_result.iloc[:, :25],
