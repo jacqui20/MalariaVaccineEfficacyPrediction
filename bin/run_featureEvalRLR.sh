@@ -5,8 +5,8 @@ source "/Users/schmidtj/anaconda3/etc/profile.d/conda.sh"
 # This is intended to run in the malaria_env conda environment:
 conda activate malaria_env
 
-# This is intended to run in the bin folder of the MalariaVaccineEfficacyPrediction package.           
-# The MalariaVaccineEfficacyPrediction package should be situated in the users home directory.         
+# This is intended to run in the bin folder of the MalariaVaccineEfficacyPrediction package.
+# The MalariaVaccineEfficacyPrediction package should be situated in the users home directory.
 topdir="${HOME}/MalariaVaccineEfficacyPrediction"
 if [ ! -d "$topdir" ]; then
     { echo "${topdir} doesn't exists."; exit 1; }
@@ -15,7 +15,7 @@ maindir="${topdir}/results/RLR"
 if [ ! -d "$maindir" ]; then
     mkdir "$maindir"
 fi
-data_dir="${topdir}/data/proteome_data"  # is it REALLY intended to run on the whole data and NOT on the timepoint-wise data???
+data_dir="${topdir}/data/timepoint-wise"  # is it REALLY intended to run on the whole data and NOT on the timepoint-wise data???
 
 for dataset in 'whole' 'selective'; do
 

@@ -4,7 +4,11 @@ from typing import Tuple
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
-from utils import select_timepoint, get_parameters
+import os
+import sys
+maindir = '/'.join(os.getcwd().split('/')[:-1])
+sys.path.append(maindir)
+from source.utils import select_timepoint, get_parameters
 
 
 def rearrange_columns(
@@ -89,7 +93,7 @@ def RLR_model(
         [pd.DataFrame(feature_labels), pd.DataFrame(np.transpose(model.coef_))],
         axis=1
     )
-    coefs.set_axis(['Pf_antigen_ID', 'weight'], axis='columns')
+    coefs = coefs.set_axis(['Pf_antigen_ID', 'weight'], axis='columns')
     coefs.sort_values(by=['weight'], ascending=True, inplace=True)
     coefs_nonzero = coefs[coefs['weight'] != 0]
     return model, coefs_nonzero
@@ -123,9 +127,10 @@ def featureEvaluationRLR(
     timepoint_results = select_timepoint(
         rgscv_results=rgscv_results,
         timepoint=timepoint)
+
     params = get_parameters(
         timepoint_results=timepoint_results,
-        model='RLR',
+        model="RLR"
     )
     print(params)
     print('')

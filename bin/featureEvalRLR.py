@@ -10,7 +10,9 @@ import sklearn
 import sys
 import os
 import argparse
-from source import featureEvaluationRLR
+maindir = '/'.join(os.getcwd().split('/')[:-1])
+sys.path.append(maindir)
+from source.featureEvaluationRLR import featureEvaluationRLR
 
 
 def main(
@@ -23,10 +25,14 @@ def main(
     """
     Evaluation of informative features from RLR.
     """
-    proteome_data = pd.read_table(data_path, sep='\t', index_col=0)
-    rgscv_results = pd.read_table(rgscv_path, sep='\t', index_col=0)
+    proteome_data = pd.read_csv(data_path, sep=',', index_col=0)
+    rgscv_results = pd.read_csv(rgscv_path, sep="\t", index_col=0)
 
-    coefs = featureEvaluationRLR(proteome_data, rgscv_results, timepoint)
+    coefs = featureEvaluationRLR(
+        data=proteome_data,
+        rgscv_results=rgscv_results,
+        timepoint=timepoint)
+
     fn = os.path.join(out_dir, f"RLR_informative_features_{identifier}_data_{timepoint}.tsv")
     pd.DataFrame(data=coefs).to_csv(fn, sep='\t', na_rep='nan')
 
@@ -60,10 +66,11 @@ if __name__ == "__main__":
         help='Path to the directory to wihich the output shall be written.'
     )
     parser.add_argument(
-        '--timepoint', dest='timepoint', required=True,
+        '--timepoint', dest='timepoint', required=True, type=str,
         help='Time point for which the analysis shall be performed.'
     )
     args = parser.parse_args()
+
 
     main(
         args.data_path,
