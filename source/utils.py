@@ -17,7 +17,6 @@
 # ------------------------------------------------------------------------------------------------
 
 import numpy as np
-import os.path
 from typing import Any, Dict, Union, Optional, Tuple, List
 from sklearn.utils import check_X_y
 from sklearn.utils.multiclass import unique_labels
@@ -25,7 +24,10 @@ from sklearn.model_selection._split import BaseCrossValidator
 from sklearn.utils.validation import column_or_1d
 from sklearn.model_selection import StratifiedKFold
 import warnings
+from sklearn.metrics.pairwise import rbf_kernel, sigmoid_kernel, polynomial_kernel
 import pandas as pd
+import os
+from sklearn.preprocessing import KernelCenterer
 
 
 def normalize(
@@ -678,6 +680,7 @@ class DataSelector:
             'identifier': self.identifier,
             'SA': self.SA,
             'SO': self.SO,
+            'R0': self.R0,
             'R1': self.R1,
             'R2': self.R2,
             'P1': self.P1,
@@ -725,10 +728,23 @@ def get_parameters(
             (f"set(params.keys()) != {keys}:"
              f"{set(params.keys())} != {keys}")
     elif model == 'multitask':
-        keys = {'P1', 'P2', 'R0', 'R1', 'R2', 'SA', 'SO', 'C'}
+        keys = {
+            'svc__C',
+            'dataselector__SA',
+            'dataselector__SO',
+            'dataselector__R0',
+            'dataselector__R1',
+            'dataselector__R2',
+            'dataselector__P1',
+            'dataselector__P2',
+        }
         assert set(params.keys()) == keys, \
             (f"set(params.keys()) != {keys}:"
              f"{set(params.keys())} != {keys}")
+        temp = dict()
+        for key in keys:
+            temp[key.split('__')[1]] = params[key]
+        params = temp
     else:
         raise ValueError("`model` must be set to either 'RLR' or 'multitask'.")
     return params
@@ -755,7 +771,276 @@ def select_timepoint(
         DataFrame containing optimal parameters and mean AUROC values
         for the selected time point as found via Repeated Grid-Search CV (RGSCV).
     """
-
     timepoint_results = rgscv_results[rgscv_results['time'].isin([timepoint])]
-
     return timepoint_results
+
+
+def make_kernel_combinations(
+    meta_data: np.ndarray,
+    kernel_time_series: str,
+    kernel_dosage: str,
+    kernel_abSignal: str
+) -> Dict[str, Union[float, str]]:
+    """Make dictionary of kernel combination values
+
+    For each kernel parameter a range of values is defined.
+
+    Parameters
+    ----------
+    meta_data : np.ndarray
+        Matrix of kernel parameter ranges.
+    kernel_time_series : str
+        Kernel function to compute relationship between individuals based on time points.
+    kernel_dosage : str
+        Pre-defined kernel function for to represent relationship between individuals
+        based on dosage level.
+    kernel_abSignal : str
+        Pre-defined kernel function for to represent relationship between individuals
+        based on ab signal intensity
+
+    Returns
+    -------
+    kernel_comb_param : dict
+        Dictionary of value ranges for each kernel parameter.
+
+    """
+    if (kernel_time_series == "sigmoid_kernel" and kernel_dosage == "rbf_kernel"
+            and kernel_abSignal == "rbf_kernel"):
+        kernel_comb_param = {"SA": np.arange(meta_data[1, 1], 1, meta_data[1, 1]),
+                             "SO": np.arange(meta_data[2, 1], meta_data[2, 2]),
+                             "R0": np.array(['X']),
+                             "R1": 10 ** np.arange(meta_data[3, 1], meta_data[3, 2], dtype=float),
+                             "R2": 10 ** np.arange(meta_data[3, 1], meta_data[3, 2], dtype=float),
+                             "P1": np.array(['X']),
+                             "P2": np.array(['X'])}
+    elif (kernel_time_series == "sigmoid_kernel" and kernel_dosage == "poly_kernel"
+            and kernel_abSignal == "poly_kernel"):
+        kernel_comb_param = {"SA": np.arange(meta_data[1, 1], 1, meta_data[1, 1]),
+                             "SO": np.arange(meta_data[2, 1], meta_data[2, 2], dtype=float),
+                             "R0": np.array(['X']),
+                             "R1": np.array(['X']),
+                             "R2": np.array(['X']),
+                             "P1": np.arange(meta_data[0, 1], meta_data[0, 2]),
+                             "P2": np.arange(meta_data[0, 1], meta_data[0, 2])}
+    elif (kernel_time_series == "sigmoid_kernel" and kernel_dosage == "poly_kernel"
+            and kernel_abSignal == "rbf_kernel"):
+        kernel_comb_param = {"SA": np.arange(meta_data[1, 1], 1, meta_data[1, 1]),
+                             "SO": np.arange(meta_data[2, 1], meta_data[2, 2]),
+                             "R0": np.array(['X']),
+                             "R1": np.array(['X']),
+                             "R2": 10 ** np.arange(meta_data[3, 1], meta_data[3, 2], dtype=float),
+                             "P1": np.arange(meta_data[0, 1], meta_data[0, 2]),
+                             "P2": np.array(['X'])}
+    elif (kernel_time_series == "sigmoid_kernel" and kernel_dosage == "rbf_kernel"
+            and kernel_abSignal == "poly_kernel"):
+        kernel_comb_param = {"SA": np.arange(meta_data[1, 1], 1, meta_data[1, 1]),
+                             "SO": np.arange(meta_data[2, 1], meta_data[2, 2]),
+                             "R0": np.array(['X']),
+                             "R1": 10 ** np.arange(meta_data[3, 1], meta_data[3, 2], dtype=float),
+                             "R2": np.array(['X']),
+                             "P1": np.array(['X']),
+                             "P2": np.arange(meta_data[0, 1], meta_data[0, 2])}
+    elif (kernel_time_series == "rbf_kernel" and kernel_dosage == "rbf_kernel"
+            and kernel_abSignal == "rbf_kernel"):
+        kernel_comb_param = {"SA": np.array(['X']),
+                             "SO": np.array(['X']),
+                             "R0": 10 ** np.arange(meta_data[3, 1], meta_data[3, 2], dtype=float),
+                             "R1": 10 ** np.arange(meta_data[3, 1], meta_data[3, 2], dtype=float),
+                             "R2": 10 ** np.arange(meta_data[3, 1], meta_data[3, 2], dtype=float),
+                             "P1": np.array(['X']),
+                             "P2": np.array(['X'])}
+    elif (kernel_time_series == "rbf_kernel" and kernel_dosage == "poly_kernel"
+            and kernel_abSignal == "poly_kernel"):
+        kernel_comb_param = {"SA": np.array(['X']),
+                             "SO": np.array(['X']),
+                             "R0": 10 ** np.arange(meta_data[3, 1], meta_data[3, 2], dtype=float),
+                             "R1": np.array(['X']),
+                             "R2": np.array(['X']),
+                             "P1": np.arange(meta_data[0, 1], meta_data[0, 2]),
+                             "P2": np.arange(meta_data[0, 1], meta_data[0, 2])}
+    elif (kernel_time_series == "rbf_kernel" and kernel_dosage == "poly_kernel"
+            and kernel_abSignal == "rbf_kernel"):
+        kernel_comb_param = {"SA": np.array(['X']),
+                             "SO": np.array(['X']),
+                             "R0": 10 ** np.arange(meta_data[3, 1], meta_data[3, 2], dtype=float),
+                             "R1": np.array(['X']),
+                             "R2": 10 ** np.arange(meta_data[3, 1], meta_data[3, 2], dtype=float),
+                             "P1": np.arange(meta_data[0, 1], meta_data[0, 2]),
+                             "P2": np.array(['X'])}
+    elif (kernel_time_series == "rbf_kernel" and kernel_dosage == "rbf_kernel"
+            and kernel_abSignal == "poly_kernel"):
+        kernel_comb_param = {"SA": np.array(['X']),
+                             "SO": np.array(['X']),
+                             "R0": 10 ** np.arange(meta_data[3, 1], meta_data[3, 2], dtype=float),
+                             "R1": 10 ** np.arange(meta_data[3, 1], meta_data[3, 2], dtype=float),
+                             "R2": np.array(['X']),
+                             "P1": np.array(['X']),
+                             "P2": np.arange(meta_data[0, 1], meta_data[0, 2])}
+
+    return kernel_comb_param
+
+
+def multitask(
+    a: np.ndarray,
+    b: np.ndarray,
+) -> np.ndarray:
+    """ Multitask approach
+
+    Combination of two kernel matrices are combined by
+    element-wise multiplication to one kernel matrix.
+
+    Parameters
+    ----------
+    a : np.ndarray
+        Kernel matrix a.
+    b : np.ndarray
+        Kernel matrix b.
+
+    Returns
+    -------
+    a * b : np.ndarray
+        Element-wise multiplicated kernel matrix a * b.
+    """
+    return a * b
+
+
+def make_kernel_matrix(
+    data: pd.DataFrame,
+    model: Tuple[Union[float, str], Union[float, str], Union[float, str],
+                 Union[float, str], Union[float, str], Union[float, str],
+                 Union[float, str]],
+    kernel_time_series: str,
+    kernel_dosage: str,
+    kernel_abSignals: str,
+    scale: bool = False,
+) -> Tuple[np.ndarray, List[float], List[str]]:
+    """ Compute combined kernel matrix.
+
+    for each task, time, PfSPZ dose and antibody signal intensity a kernel matrix
+    is pre-computed given the pre-defined kernel function and combined to one
+    matrix by the multitask approach.
+
+    Parameters
+    ----------
+    data : pd.Dataframe
+        Pre-processed proteome data.
+    model : dict
+        Combination of kernel parameters.
+    kernel_time_series : str
+        Kernel function to compute relationship between individuals based on time points.
+    kernel_dosage : str
+        Kernel function to compute relationship between individuals based on dosage level.
+    kernel_abSignals : str
+        Kernel function to compute relationship between individuals
+        based on antibody signal intensity.
+    scale : bool, default=False
+        If True, scale the combined matrix by first centering it followed by normalization.
+
+    Returns
+    -------
+    multi_AB_signals_time_dose_kernel_matrix : np.ndarray
+        Returns a combined matrix.
+    """
+
+    # get start point of antibody reactivity signals in data (n_p)
+    AB_signal_start = data.columns.get_loc("TimePointOrder") + 1
+    AB_signals = data[data.columns[AB_signal_start:]]
+
+    # extract time points to vector (y_t)
+    time_series = data["TimePointOrder"]
+
+    # extract dosage to vector (y_d)
+    dose = data["Dose"]
+
+    # pre-computed kernel matrix of time points K(n_t,n_t')
+    if kernel_time_series == 'sigmoid_kernel':
+        time_series_kernel_matrix = sigmoid_kernel(
+                time_series.values.reshape(len(time_series), 1),
+                gamma=model[0],
+                coef0=model[1],
+        )
+    elif kernel_time_series == 'rbf_kernel':
+        time_series_kernel_matrix = rbf_kernel(
+            time_series.values.reshape(len(time_series), 1), gamma=model[2]
+        )
+
+    # pre-computed kernel matrix of antibody reactivity K(n_p,n_p')
+    if kernel_abSignals == "rbf_kernel":
+        AB_signals_kernel_matrix = rbf_kernel(AB_signals, gamma=model[4])
+    elif kernel_abSignals == "poly_kernel":
+        AB_signals_kernel_matrix = polynomial_kernel(AB_signals, degree=model[6])
+
+    # pre-computed kernel matrix of dosage K(n_d,n_d')
+    if kernel_dosage == "rbf_kernel":
+        dose_kernel_matrix = rbf_kernel(dose.values.reshape(len(dose), 1), gamma=model[3])
+    elif kernel_dosage == "poly_kernel":
+        dose_kernel_matrix = polynomial_kernel(dose.values.reshape(len(dose), 1), degree=model[5])
+
+    # pre-compute multitask kernel matrix K((np, nt),(np', nt'))
+    multi_AB_signals_time_series_kernel_matrix = multitask(
+        AB_signals_kernel_matrix,
+        time_series_kernel_matrix,
+    )
+
+    # pre-compute multitask kernel matrix K((np, nt, nd),(np', nt', nd'))
+    multi_AB_signals_time_dose_kernel_matrix, c_list, info_list = make_symmetric_matrix_psd(
+        multitask(
+            multi_AB_signals_time_series_kernel_matrix,
+            dose_kernel_matrix,
+        )
+    )
+    if c_list:
+        print(
+            "multi_AB_signals_time_dose_kernel_matrix kernel had to be corrected.\n"
+            f"model: {model}"
+        )
+
+    if scale:
+        multi_AB_signals_time_dose_kernel_matrix, warn, _ = make_symmetric_matrix_psd(
+            normalize(
+                KernelCenterer().fit_transform(multi_AB_signals_time_dose_kernel_matrix)
+            )
+        )
+        if warn:
+            print(
+                "Scaled multi_AB_signals_time_dose_kernel_matrix kernel had to be corrected.\n"
+                f"model: {model}"
+            )
+        if np.max(np.diag(multi_AB_signals_time_dose_kernel_matrix)) > 1.1:
+            print(
+                "Scaled multi_AB_signals_time_dose_kernel_matrix "
+                "kernel had diagonal elements > 1.1.\n"
+                f"model: {model}"
+            )
+
+    # proof Dimension and rank of kernel matrix
+    print("Dimension of final multitask kernel matrix:")
+    print(multi_AB_signals_time_dose_kernel_matrix.shape)
+    print("Rank of final multitask kernel matrix:")
+    print(np.linalg.matrix_rank(multi_AB_signals_time_dose_kernel_matrix))
+    print('\n\n')
+
+    return multi_AB_signals_time_dose_kernel_matrix, c_list, info_list
+
+
+def sort_proteome_data(
+    data: pd.DataFrame,
+) -> pd.DataFrame:
+    """ Sorting
+
+    Input data is sorted by time point to keep same patient over all four time points in order.
+
+    Parameters
+    ----------
+    data : pd.DataFrame
+        Raw proteome data, n x m pd.DataFrame (n = samples as rows, m = features as columns)
+
+    Returns
+    -------
+    data : pd.DataFrame
+        Returns sorted DataFrame
+    """
+    data.sort_values(by=["TimePointOrder", "Patient"], inplace=True)
+    data.reset_index(inplace=True)
+    data.drop(columns=['index'], inplace=True)
+    return data
