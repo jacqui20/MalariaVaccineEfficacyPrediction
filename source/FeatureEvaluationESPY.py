@@ -319,6 +319,11 @@ def compute_distance_hyper(
     )
     get_distance_df.loc['|d|'] = abs(get_distance_df.loc["|d|"].values)
     get_distance_df = get_distance_df.T.sort_values(by="|d|", ascending=False).T
+    # Norm distance value by distance_nome = distance_value/sum(distance_values)
+    sum_of_distance = get_distance_df.loc[['|d|'], :].sum(axis=1)
+    for col in get_distance_df.columns:
+        get_distance_df.loc[['|d|'], col] = get_distance_df.loc[['|d|'], col]/sum_of_distance
+
     # sort values by abs-value of |d|
     get_distance_df.loc["sort"] = abs(get_distance_df.loc["|d|"].values)
     print("Dimension of distance matrix:")
