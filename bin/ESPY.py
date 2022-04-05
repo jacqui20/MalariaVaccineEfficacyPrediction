@@ -143,8 +143,6 @@ def main(
             y_label=y,
         )
 
-        # data = sort_proteome_data(data=data)  # not needed, if we use presorted data
-
         print(
             "Are values in proteome data floats: "
             f"{np.all(np.isin(data.dtypes.to_list()[5:], ['float64']))}"
