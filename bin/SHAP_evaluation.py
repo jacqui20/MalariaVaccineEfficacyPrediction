@@ -19,7 +19,7 @@ datadir = '/'.join(cwd.split('/')[:-1]) + '/data/simulated_data'
 outputdir = '/'.join(cwd.split('/')[:-1]) + '/results/simulated_data'
 
 
-def initialize_svm_model(
+def svm_model(
     *,
     X_train_data: np.ndarray,
     y_train_data: np.ndarray,
@@ -29,24 +29,24 @@ def initialize_svm_model(
     """ Initialize SVM model on simulated data
 
     Initialize SVM model with a rbf kernel on simulated data and
-    perform a grid search for kernel parameter evaluation
-    Returns the SVM model with the best parameters based on the highest mean AUC score
+    perform a grid search for kernel parameter evaluation.
+    Returns the SVM model with the best parameters based on the highest mean AUC score.
 
     Parameters
     ----------
     X_train_data : np.ndarray
-        matrix of trainings data
+        Training data.
     y_train_data : np.ndarray
-        y label for training
+        y labels for training.
     X_test_data : np.ndarray
-        matrix of test data
+        Test data.
     y_test_data : np.ndarray
-        y label for testing
+        y labels for testing.
 
     Returns
     -------
     model : sklearn.svm.SVC object
-        trained SVM model on evaluated kernel parameter
+        Trained SVM model with best kernel parameters found via GridSearchCV.
     """
 
     # Initialize SVM model, rbf kernel
@@ -108,26 +108,26 @@ if __name__ == "__main__":
     data_path = os.path.join(datadir, 'simulated_data.csv')
     simulated_data = pd.read_csv(data_path)
 
-    X_train, X_test, Y_train, Y_test = train_test_split(
+    X_train, X_test, y_train, y_test = train_test_split(
         simulated_data.iloc[:, :1000].to_numpy(),
         simulated_data.iloc[:, 1000].to_numpy(),
         test_size=0.3,
         random_state=123
     )
-    rbf_SVM_model = initialize_svm_model(
+    rbf_SVM_model = svm_model(
         X_train_data=X_train,
-        y_train_data=Y_train,
+        y_train_data=y_train,
         X_test_data=X_test,
-        y_test_data=Y_test
+        y_test_data=y_test
     )
 
     print(
-        "Evaluation of informative features based on SHAP values started"
+        "Evaluation of informative features based on SHAP values has started."
     )
 
     SHAP_value(model=rbf_SVM_model, X_train=X_train, X_test=X_test, outputdir=outputdir)
 
     print(
-        "Evaluation terminated and results are saved in "
+        "Evaluation has terminated and results are saved in "
         "./results as SHAP_value_simulated_data.png."
     )
