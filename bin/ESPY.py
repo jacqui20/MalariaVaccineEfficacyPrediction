@@ -21,7 +21,7 @@ from typing import Optional
 # import sys
 # maindir = '/'.join(os.getcwd().split('/')[:-1])
 # sys.path.append(maindir)
-from source.FeatureEvaluation import ESPY_measurement, svm_model, multitask_model
+from source.FeatureEvaluationESPY import ESPY_measurement, svm_model, multitask_model
 from source.utils import DataSelector, get_parameters
 from source.utils import make_plot, select_timepoint
 # from source.utils import sort_proteome_data
