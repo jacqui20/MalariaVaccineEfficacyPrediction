@@ -1,13 +1,13 @@
 import numpy as np
 import pandas as pd
-from typing import Tuple
+from typing import Dict, List, Tuple
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
-import os
-import sys
-maindir = '/'.join(os.getcwd().split('/')[:-1])
-sys.path.append(maindir)
+# import os
+# import sys
+# maindir = '/'.join(os.getcwd().split('/')[:-1])
+# sys.path.append(maindir)
 from source.utils import select_timepoint, get_parameters
 
 
@@ -41,8 +41,8 @@ def RLR_model(
         *,
         X: np.ndarray,
         y: np.ndarray,
-        params: dict,
-        feature_labels: list
+        params: Dict[str, float],
+        feature_labels: List[str],
 ) -> Tuple[LogisticRegression, pd.DataFrame]:
     """Fit RLR model on proteome data.
 

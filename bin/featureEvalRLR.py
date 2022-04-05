@@ -10,8 +10,8 @@ import sklearn
 import sys
 import os
 import argparse
-maindir = '/'.join(os.getcwd().split('/')[:-1])
-sys.path.append(maindir)
+# maindir = '/'.join(os.getcwd().split('/')[:-1])
+# sys.path.append(maindir)
 from source.featureEvaluationRLR import featureEvaluationRLR
 
 
@@ -70,7 +70,6 @@ if __name__ == "__main__":
         help='Time point for which the analysis shall be performed.'
     )
     args = parser.parse_args()
-
 
     main(
         args.data_path,

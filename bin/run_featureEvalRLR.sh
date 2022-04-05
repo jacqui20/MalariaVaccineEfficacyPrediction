@@ -15,7 +15,7 @@ maindir="${topdir}/results/RLR"
 if [ ! -d "$maindir" ]; then
     mkdir "$maindir"
 fi
-data_dir="${topdir}/data/timepoint-wise"  # is it REALLY intended to run on the whole data and NOT on the timepoint-wise data???
+data_dir="${topdir}/data/timepoint-wise"
 
 for dataset in 'whole' 'selective'; do
 
@@ -36,7 +36,7 @@ for dataset in 'whole' 'selective'; do
         fi
         cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
         cp "${topdir}/bin/featureEvalRLR.py" . || { echo "cp ${topdir}/bin/featureEvalRLR.py . failed"; exit 1; }
-        python -u featureEvalRLR.py --data-path "${data_dir}/preprocessed_${dataset}_data.csv" --identifier "$dataset" --rgscv-path "$rgscv_path" --out-dir "$ana_dir" --timepoint "$timepoint" 1> "${out}" 2> "${err}"
+        python -u featureEvalRLR.py --data-path "${data_dir}/${dataset}_data_${timepoint}.csv" --identifier "$dataset" --rgscv-path "$rgscv_path" --out-dir "$ana_dir" --timepoint "$timepoint" 1> "${out}" 2> "${err}"
 
     done
 
