@@ -14,7 +14,7 @@ from sklearn.metrics import roc_auc_score
 # import sys
 # maindir = '/'.join(os.getcwd().split('/')[:-1])
 # sys.path.append(maindir)
-from source.utils import make_kernel_matrix
+from source.utils import make_kernel_matrix, make_plot
 
 
 def svm_model(
@@ -247,8 +247,8 @@ def compute_distance_hyper(
                 kernel_dosage='rbf_kernel',
                 kernel_abSignals='rbf_kernel',
             )
-            single_feature_sample = gram_matrix[-1, :len(gram_matrix[0])-1]
-            # print(single_feature_sample.reshape(1,-1))
+
+            single_feature_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
 
             distance = model.decision_function(single_feature_sample.reshape(1, -1))
             # print(distance)
@@ -268,7 +268,7 @@ def compute_distance_hyper(
                 kernel_dosage='rbf_kernel',
                 kernel_abSignals='rbf_kernel',
             )
-            feature_consensus_sample = gram_matrix[-1, :len(gram_matrix[0])-1]
+            feature_consensus_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
             # print(feature_consensus_sample.shape)
 
             # compute distance for consensus sample
@@ -334,6 +334,8 @@ def ESPY_measurement(
     model: SVC,
     lq: int,
     up: int,
+    outdir: str,
+    out_filename: str,
     proteome_data: Optional[pd.DataFrame] = None,
     kernel_parameters: Optional[pd.DataFrame] = None,
  ) -> pd.DataFrame:
@@ -354,6 +356,10 @@ def ESPY_measurement(
         Lower percentile value.
     up : int
         Upper percentile value.
+    outdir : str,
+        path where the results are stored
+    out_filename : str
+        name of output file
     proteome_data : pd.DataFrame, default=None
         Full proteome dataset.
     kernel_parameters : pd.DataFrame, default=None
@@ -385,6 +391,12 @@ def ESPY_measurement(
             simulated=True,
         )
 
+        make_plot(
+            data=distance_matrix_for_all_feature_comb.iloc[:, :25],
+            name=out_filename,
+            outputdir=outdir,
+        )
+
     elif identifier in ['whole', 'selective']:
 
         distance_matrix_for_all_feature_comb = compute_distance_hyper(
@@ -393,6 +405,12 @@ def ESPY_measurement(
             labels=combinations.columns.to_list(),
             data=proteome_data.iloc[:, 3:],
             kernel_parameters=kernel_parameters,
+        )
+
+        make_plot(
+            data=distance_matrix_for_all_feature_comb.iloc[:, :50],
+            name=out_filename,
+            outputdir=outdir,
         )
 
     else:
