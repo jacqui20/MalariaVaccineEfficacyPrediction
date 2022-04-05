@@ -1,8 +1,9 @@
-# Copyright (c) 2020 Bernhard Reuter.
+# Copyright (c) 2022 Jacqueline Wistuba-Hamprecht and Bernhard Reuter.
 # ------------------------------------------------------------------------------------------------
 # If you use this code or parts of it, cite the following reference:
 # ------------------------------------------------------------------------------------------------
-# XXXXXX
+# Jacqueline Wistuba-Hamprecht and Bernhard Reuter (2022)
+# https://github.com/jacqui20/MalariaVaccineEfficacyPrediction
 # ------------------------------------------------------------------------------------------------
 # This is free software: you can redistribute it and/or modify it under the terms of the GNU
 # Lesser General Public License as published by the Free Software Foundation, either version 3
@@ -15,6 +16,11 @@
 # You should have received a copy of the GNU Lesser General Public License along with this program.
 # If not, see <http://www.gnu.org/licenses/>.
 # ------------------------------------------------------------------------------------------------
+
+"""
+@Author: Jacqueline Wistuba-Hamprecht and Bernhard Reuter
+
+"""
 
 import numpy as np
 from typing import Any, Dict, Union, Optional, Tuple, List

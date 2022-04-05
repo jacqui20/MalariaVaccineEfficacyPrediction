@@ -8,15 +8,6 @@ https://github.com/pypa/sampleproject
 from setuptools import setup, find_packages
 import pathlib
 
-
-try:
-    from source import __email__, __author__, __version__, __maintainer__, __credits__
-except ImportError:
-    __author__ = __maintainer__ = "Jacqueline Wistuba-Hamprecht"
-    __version__ = "0.0.0"
-    __email__ = "jacqueline.wistuba-hamprecht@uni-tuebingen.de"
-    __credits__ = "Bernhard Reuter"
-
 here = pathlib.Path(__file__).parent.resolve()
 
 # Get the long description from the README file
@@ -84,15 +75,15 @@ setup(
 
     # This should be your name or the name of the organization which owns the
     # project.
-    author=__author__,  # Optional
+    author="Jacqueline Wistuba-Hamprecht and Bernhard Reuter",  # Optional
 
     # This should be a valid email address corresponding to the author listed
     # above.
-    author_email=__email__,  # Optional
+    author_email="jacqueline.wistuba-hamprecht@uni-tuebingen.de",  # Optional
 
-    maintainer=__maintainer__,
+    maintainer="Jacqueline Wistuba-Hamprecht and Bernhard Reuter",
 
-    maintainer_email=__email__,
+    maintainer_email="jacqueline.wistuba-hamprecht@uni-tuebingen.de",
 
     # Classifiers help users find your project by categorizing it.
     #
