@@ -50,8 +50,8 @@ for dataset in 'whole' 'selective'; do
     for timepoint in 'III14' 'C-1' 'C28'; do
 
         timestamp=$(date +%d-%m-%Y_%H-%M-%S)
-        err="runESPY_${dataset}_${timestamp}.err"
-        out="runESPY_${dataset}_${timestamp}.out"
+        err="runESPY_${dataset}_${timepoint}_${timestamp}.err"
+        out="runESPY_${dataset}_${timepoint}_${timestamp}.out"
         ana_dir="${maindir}/${dataset}/RRR/unscaled/featureEvaluation"
         if [ ! -d "$ana_dir" ]; then
             mkdir "$ana_dir"
