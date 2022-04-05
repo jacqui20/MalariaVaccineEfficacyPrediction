@@ -14,7 +14,7 @@ from sklearn.metrics import roc_auc_score
 # import sys
 # maindir = '/'.join(os.getcwd().split('/')[:-1])
 # sys.path.append(maindir)
-from source.utils import make_kernel_matrix, make_plot
+from source.utils import make_kernel_matrix
 
 
 def svm_model(
@@ -326,6 +326,48 @@ def compute_distance_hyper(
 
     return get_distance_df
 
+def make_plot(
+        data: pd.DataFrame,
+        name: str,
+        outputdir: str,
+) -> None:
+    """
+
+    Paramter
+    ---------
+    data : pd.DataFrame
+        Dataframe of distances.
+    name : str
+        Output filename.
+    outputdir : str
+        Directory where the plots are stored as .png and .pdf.
+    """
+    plt.figure(figsize=(20, 10))
+    labels = data.columns
+
+    ax = plt.subplot(111)
+    w = 0.3
+    opacity = 0.6
+
+    index = np.arange(len(labels))
+    ax.bar(
+        index,
+        abs(data.loc["|d|"].values),
+        width=w,
+        color="darkblue",
+        align="center",
+        alpha=opacity
+    )
+    ax.xaxis_date()
+
+    plt.xlabel('number of features', fontsize=20)
+    plt.ylabel('ESPY value', fontsize=20)
+    plt.xticks(index, labels, fontsize=10, rotation=90)
+
+    plt.savefig(os.path.join(outputdir, name + ".png"), dpi=600)
+    plt.savefig(os.path.join(outputdir, name + ".pdf"), format="pdf", bbox_inches="tight")
+    plt.show()
+
 
 def ESPY_measurement(
     *,
@@ -334,8 +376,6 @@ def ESPY_measurement(
     model: SVC,
     lq: int,
     up: int,
-    outdir: str,
-    out_filename: str,
     proteome_data: Optional[pd.DataFrame] = None,
     kernel_parameters: Optional[pd.DataFrame] = None,
  ) -> pd.DataFrame:
@@ -356,10 +396,6 @@ def ESPY_measurement(
         Lower percentile value.
     up : int
         Upper percentile value.
-    outdir : str,
-        path where the results are stored
-    out_filename : str
-        name of output file
     proteome_data : pd.DataFrame, default=None
         Full proteome dataset.
     kernel_parameters : pd.DataFrame, default=None
@@ -406,13 +442,6 @@ def ESPY_measurement(
             data=proteome_data.iloc[:, 3:],
             kernel_parameters=kernel_parameters,
         )
-
-        make_plot(
-            data=distance_matrix_for_all_feature_comb.iloc[:, :50],
-            name=out_filename,
-            outputdir=outdir,
-        )
-
     else:
 
         raise ValueError(

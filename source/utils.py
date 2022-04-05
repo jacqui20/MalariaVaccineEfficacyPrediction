@@ -1047,44 +1047,4 @@ def sort_proteome_data(
     return data
 
 
-def make_plot(
-    data: pd.DataFrame,
-    name: str,
-    outputdir: str,
-) -> None:
-    """
 
-    Paramter
-    ---------
-    data : pd.DataFrame
-        Dataframe of distances.
-    name : str
-        Output filename.
-    outputdir : str
-        Directory where the plots are stored as .png and .pdf.
-    """
-    plt.figure(figsize=(20, 10))
-    labels = data.columns
-
-    ax = plt.subplot(111)
-    w = 0.3
-    opacity = 0.6
-
-    index = np.arange(len(labels))
-    ax.bar(
-        index,
-        abs(data.loc["|d|"].values),
-        width=w,
-        color="darkblue",
-        align="center",
-        alpha=opacity
-    )
-    ax.xaxis_date()
-
-    plt.xlabel('number of features', fontsize=20)
-    plt.ylabel('ESPY value', fontsize=20)
-    plt.xticks(index, labels, fontsize=10, rotation=90)
-
-    plt.savefig(os.path.join(outputdir, name + ".png"), dpi=600)
-    plt.savefig(os.path.join(outputdir, name + ".pdf"), format="pdf", bbox_inches="tight")
-    plt.show()
