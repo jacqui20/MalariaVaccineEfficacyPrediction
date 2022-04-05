@@ -22,7 +22,7 @@
 # @Author: Bernhard Reuter
 
 # Replace the following line by the path of your own conda.sh file:
-source "/Users/schmidtj/anaconda3/etc/profile.d/conda.sh"
+source "/Users/schmidtj/opt/anaconda3/etc/profile.d/conda.sh"
 # This is intended to run in the malaria_env conda environment:
 conda activate malaria_env
 
