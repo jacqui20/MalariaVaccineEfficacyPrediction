@@ -220,18 +220,18 @@ if __name__ == "__main__":
               "Must be one of 'whole', 'selective', or 'simulated'."),
     )
     parser.add_argument(
-        '--upper-percentile',
-        dest='uq',
-        type=int,
-        default=75,
-        help='Upper percentile given as int, by default 75%.',
-    )
-    parser.add_argument(
         '--lower-percentile',
         dest='lq',
         type=int,
         default=25,
         help='Lower percentile given as int, by default 25%.',
+    )
+    parser.add_argument(
+        '--upper-percentile',
+        dest='uq',
+        type=int,
+        default=75,
+        help='Upper percentile given as int, by default 75%.',
     )
     parser.add_argument(
         '--kernel-dir',

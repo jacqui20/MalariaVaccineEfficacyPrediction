@@ -1,56 +1,44 @@
 #!/bin/bash
 
+# Replace the following line by the path of your own conda.sh file:
 source "/Users/schmidtj/anaconda3/etc/profile.d/conda.sh"
+# This is intended to run in the malaria_env conda environment:
 conda activate malaria_env
 
-maindir='/Users/schmidtj/Documents/GitHub/MalariaVaccineEfficacyPrediction'
-data_maindir='/Users/schmidtj/Documents/GitHub/MalariaVaccineEfficacyPrediction/data/proteome_data'
-kernelmatrix_maindir='/Users/schmidtj/Documents/GitHub/MalariaVaccineEfficacyPrediction/data/
-                      precomputed_multitask_kernels/unscaled'
-kernel_pam_maindir= "/Users/schmidtj/Documents/GitHub/MalariaVaccineEfficacyPrediction/results/multitaskSVM"
+# This is intended to run in the bin folder of the MalariaVaccineEfficacyPrediction package.
+# The MalariaVaccineEfficacyPrediction package should be situated in the users home directory.
+topdir="${HOME}/MalariaVaccineEfficacyPrediction"
+if [ ! -d "$topdir" ]; then
+    { echo "${topdir} doesn't exists."; exit 1; }
+fi
+maindir="${topdir}/results/multitaskSVM"
+if [ ! -d "$maindir" ]; then
+    mkdir "$maindir"
+fi
+data_dir="${topdir}/data/proteome_data"
+kernel_dir="${topdir}/data/precomputed_multitask_kernels/unscaled"
 
+for dataset in 'whole' 'selective'; do
 
-outputdir_whole = '/Users/schmidtj/Documents/GitHub/MalariaVaccineEfficacyPrediction/results/multitaskSVM/whole/RRR'
-outputdir_selective = '/Users/schmidtj/Documents/GitHub/MalariaVaccineEfficacyPrediction/results/multitaskSVM/selective/
-                        RRR'
+    if [ "$dataset" = 'whole' ]; then
+        rgscv_path="${maindir}/${dataset}/RRR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_16-16-36.tsv"
+    else
+        rgscv_path="${maindir}/${dataset}/RRR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_19-19-18.tsv"
+    fi
 
+    for timepoint in 'III14' 'C-1' 'C28'; do
 
+        timestamp=$(date +%d-%m-%Y_%H-%M-%S)
+        err="runESPY_${dataset}_${timestamp}.err"
+        out="runESPY_${dataset}_${timestamp}.out"
+        ana_dir="${maindir}/${dataset}/RRR/unscaled/featureEvaluation"
+        if [ ! -d "$ana_dir" ]; then
+            mkdir "$ana_dir"
+        fi
+        cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
+        cp "${topdir}/bin/ESPY.py" . || { echo "cp ${topdir}/bin/ESPY.py . failed"; exit 1; }
+        python -u ESPY.py --data-dir "$data_dir" --out-dir "$ana_dir" --identifier "$dataset" --lower-percentile 25 --upper-percentile 75 --kernel-dir "$kernel_dir" --rgscv-path "$rgscv_path" --timepoint "$timepoint" 1> "${out}" 2> "${err}"
 
-combinations_timePoints = ('III14', "C-1", "C28") # cobinations of timepoints as str to get kernel parameter combination
-combinations_t = (2,3,4) # combinations of timepoints as int to select data per time point
+    done
 
-// get target label from kernelmatrix_maindir
-// get kernel parameter combination for whole or selective data from kernel_pam_maindir
-// get kernelmatrix for selected kernel parameter per data set (whole or selective) from kernelmatrix_maindir
-
-// extract kernel parameter from kernelmatrix description and from kernel parameter combination file --> compare those
-// parameter and check if they are the same
-
-// get proteome data for whole and seletive data from data_maindir
-
-// set up output folder "Informative features" to outputdir_whole and outputdir_selective
-
-
-// run ESPY measurment with ESPY_proteome.py
-    for selective or whole proteome data
-    for time in combinations_timePoints
-    for t in combinations_t #(where "III14" has to run with '2',
-                          #"C-1" has to run with '3' and "C28" has to run with '4')
-//  ESPY_proteome.ESPY_measrument(
-        target_label = target_label, # is the same for all time points for whole/ selective data
-        kernel_parameter= kernel_parameter, # is the same for all time points for whole/ selective data
-        proteome_data = proteome_data, # is the same for all time points for whole/ selective data
-        uq = 75, # is the same for all runs
-        lq = 25, # is the same for all runs
-        kernel_matrix = kernel_matrix # varies for kernel_parameter combination at time point time and proteome data
-        TimePoint = time, # varies for whole and selecctive proteome data in combination_TimePoints
-        t_nm = t # varies for whole and selecctive proteome data in combination_t
-)
-//  set up output file name for ESPY measurment: "ESPY_value" + time + whole or selective data + '.tsv'
-//  pass outputdir_selective or outputdir_whole
-
-
-
-
-
-
+done
