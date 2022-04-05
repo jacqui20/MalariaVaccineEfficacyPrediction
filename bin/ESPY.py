@@ -18,10 +18,10 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from typing import Optional
-# import sys
-# maindir = '/'.join(os.getcwd().split('/')[:-1])
-# sys.path.append(maindir)
-from source.FeatureEvaluationESPY import ESPY_measurement, svm_model, multitask_model
+import sys
+maindir = '/'.join(os.getcwd().split('/')[:-1])
+sys.path.append(maindir)
+from source.FeatureEvaluationESPY import ESPY_measurement, svm_model, multitask_model, make_plot
 from source.utils import DataSelector, get_parameters
 from source.utils import select_timepoint
 # from source.utils import sort_proteome_data
@@ -76,10 +76,14 @@ def main(
             model=rbf_svm_model,
             lq=lq,
             up=uq,
-            outdir=out_dir,
-            out_filename=output_filename,
         )
         print(distance_result)
+
+        make_plot(
+            data=distance_result.iloc[:, :25],
+            name=output_filename,
+            outputdir=out_dir,
+        )
 
         distance_result.to_csv(
             os.path.join(out_dir, output_filename + ".tsv"),
@@ -158,14 +162,18 @@ def main(
             model=multitask_classifier,
             lq=lq,
             up=uq,
-            outdir=out_dir,
-            out_filename=output_filename,
             proteome_data=data,
             kernel_parameters=params,
         )
 
         print("Distances for features:")
         print(distance_result)
+
+        make_plot(
+            data=distance_result.iloc[:, :],
+            name=output_filename,
+            outputdir=out_dir,
+        )
 
         distance_result.to_csv(
             os.path.join(out_dir, output_filename + ".tsv"),

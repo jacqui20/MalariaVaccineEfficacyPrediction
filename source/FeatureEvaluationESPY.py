@@ -10,7 +10,8 @@ from typing import Dict, List, Optional, Tuple, Union
 import time
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import roc_auc_score
-# import os
+import matplotlib.pyplot as plt
+import os
 # import sys
 # maindir = '/'.join(os.getcwd().split('/')[:-1])
 # sys.path.append(maindir)
@@ -247,8 +248,8 @@ def compute_distance_hyper(
                 kernel_dosage='rbf_kernel',
                 kernel_abSignals='rbf_kernel',
             )
-
             single_feature_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
+            # print(single_feature_sample.reshape(1,-1))
 
             distance = model.decision_function(single_feature_sample.reshape(1, -1))
             # print(distance)
@@ -425,12 +426,6 @@ def ESPY_measurement(
             model=model,
             labels=combinations.columns.to_list(),
             simulated=True,
-        )
-
-        make_plot(
-            data=distance_matrix_for_all_feature_comb.iloc[:, :25],
-            name=out_filename,
-            outputdir=outdir,
         )
 
     elif identifier in ['whole', 'selective']:

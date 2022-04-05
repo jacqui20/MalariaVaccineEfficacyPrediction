@@ -23,7 +23,6 @@ from sklearn.utils.multiclass import unique_labels
 from sklearn.model_selection._split import BaseCrossValidator
 from sklearn.utils.validation import column_or_1d
 from sklearn.model_selection import StratifiedKFold
-import matplotlib.pyplot as plt
 import warnings
 from sklearn.metrics.pairwise import rbf_kernel, sigmoid_kernel, polynomial_kernel
 import pandas as pd
