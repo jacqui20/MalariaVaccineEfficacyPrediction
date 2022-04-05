@@ -66,12 +66,13 @@ def make_feature_combination(
     return feature_comb, get_features_comb
 
 
-def compute_distance_hyper_proteome(
-    combinations: List[float],
-    model: SVC,
-    input_labels: pd.DataFrame,
-    data: pd.DataFrame,
-    kernel_parameters: Dict[str, Union[float, str]],
+def compute_distance_hyper(
+        combinations: List[float],
+        model: SVC,
+        input_labels: pd.DataFrame,
+        data: Optional[pd.DataFrame] = None,
+        kernel_parameters: Optional[Dict[str, Union[float, str]]] = None,
+        simulated: bool = False,
 ):
     """Evaluate distance of each single feature to classification boundary
 
@@ -90,21 +91,14 @@ def compute_distance_hyper_proteome(
         pre-processed proteome data, n x m matrix (n = samples as rows, m = features as columns)
     kernel_paramters : dict
         combination of kernel parameter
+    simulated: boolean
+        if true ESPY measurement is done on simulated data
 
     Returns
     --------
     get_distance_df : pd.DataFrame
      dataframe of distance values for each feature per time point
     """
-    params = (
-        kernel_parameters['SA'],
-        kernel_parameters['SO'],
-        kernel_parameters['R0'],
-        kernel_parameters['R1'],
-        kernel_parameters['R2'],
-        kernel_parameters['P1'],
-        kernel_parameters['P2'],
-    )
 
     # get labels, start with first PF-Antigen name
     labels = list(input_labels.columns.values)
@@ -116,43 +110,63 @@ def compute_distance_hyper_proteome(
     # calc distances for all combinations
     for m in range(1, len(combinations)):
 
-        # add test combination as new sample to
-        data.loc["eval_feature", :] = combinations[m]
+        if simulated:
+            distance = model.decision_function(combinations[m].reshape(1, -1))
+            if m % 2:
+                get_distance_upper.append(distance[0])
+            else:
+                get_distance_lower.append(distance[0])
 
-        gram_matrix = make_kernel_matrix(
-            data=data,
-            model=params,
-            kernel_time_series='rbf_kernel',
-            kernel_dosage='rbf_kernel',
-            kernel_abSignals='rbf_kernel',
-        )
-        single_feature_sample = gram_matrix[-1, :len(gram_matrix[0])-1]
-        # print(single_feature_sample.reshape(1,-1))
+            d_cons = model.decision_function(combinations[0].reshape(1, -1))
 
-        distance = model.decision_function(single_feature_sample.reshape(1, -1))
-        # print(distance)
-        if m % 2:
-            get_distance_upper.append(distance[0])
         else:
-            get_distance_lower.append(distance[0])
-        # print(m)
-        # print(distance)
+            params = (
+                kernel_parameters['SA'],
+                kernel_parameters['SO'],
+                kernel_parameters['R0'],
+                kernel_parameters['R1'],
+                kernel_parameters['R2'],
+                kernel_parameters['P1'],
+                kernel_parameters['P2'],
+            )
 
-    # generate consensus feature
-    data.loc["eval_feature", :] = combinations[0]
-    gram_matrix = make_kernel_matrix(
-            data=data,
-            model=params,
-            kernel_time_series='rbf_kernel',
-            kernel_dosage='rbf_kernel',
-            kernel_abSignals='rbf_kernel',
-        )
-    feature_consensus_sample = gram_matrix[-1, :len(gram_matrix[0])-1]
-    # print(feature_consensus_sample.shape)
+            # add test combination as new sample to
+            data.loc["eval_feature", :] = combinations[m]
 
-    # compute distance for consensus sample
-    d_cons = model.decision_function(feature_consensus_sample.reshape(1, -1))
-    # print(d_cons)
+            gram_matrix = make_kernel_matrix(
+                data=data,
+                model=params,
+                kernel_time_series='rbf_kernel',
+                kernel_dosage='rbf_kernel',
+                kernel_abSignals='rbf_kernel',
+            )
+            single_feature_sample = gram_matrix[-1, :len(gram_matrix[0])-1]
+            # print(single_feature_sample.reshape(1,-1))
+
+            distance = model.decision_function(single_feature_sample.reshape(1, -1))
+            # print(distance)
+            if m % 2:
+                get_distance_upper.append(distance[0])
+            else:
+                get_distance_lower.append(distance[0])
+            # print(m)
+            # print(distance)
+
+            # generate consensus feature
+            data.loc["eval_feature", :] = combinations[0]
+            gram_matrix = make_kernel_matrix(
+                data=data,
+                model=params,
+                kernel_time_series='rbf_kernel',
+                kernel_dosage='rbf_kernel',
+                kernel_abSignals='rbf_kernel',
+            )
+            feature_consensus_sample = gram_matrix[-1, :len(gram_matrix[0])-1]
+            # print(feature_consensus_sample.shape)
+
+            # compute distance for consensus sample
+            d_cons = model.decision_function(feature_consensus_sample.reshape(1, -1))
+            # print(d_cons)
 
     # get data frame of distances values for median, lower and upper quantile
     # print("Matrix of distances for Upper-/Lower- quantile per feature")
@@ -206,91 +220,6 @@ def compute_distance_hyper_proteome(
     return get_distance_df
 
 
-def compute_disctance_hyper_simulateddata(
-        combinations: List[float],
-        model: SVC,
-        input_labels: pd.DataFrame,
-):
-    """Evaluate distance of each single feature to classification boundary
-
-    Compute distance of support vectors to classification boundary for each feature
-    and the change of each feature by upper and lower quantile on simulated data
-
-    Paramter
-    --------
-    combinations : list
-        dataframe of combination of feature value, itself, upper and lower quantile
-    model : sklearn.svm.SVC
-        SVC model
-    input-labels : pd.DatFrame
-        list of feature labels
-
-    Returns
-    -------
-    get_distance_df : pd.Dataframe
-     dataframe of ESPY values for each feature per time point
-    """
-    # reshape test data
-    combinations = np.asarray(combinations)
-    # print(combinations)
-    # get labels
-    labels = list(input_labels)
-    # get distance
-    get_distance_lower = []
-    get_distance_upper = []
-    # calc distances for all combinations
-    for m in range(1, len(combinations)):
-        distance = model.decision_function(combinations[m].reshape(1, -1))
-        if m % 2:
-            get_distance_upper.append(distance[0])
-        else:
-            get_distance_lower.append(distance[0])
-        # print(distance)
-
-    # calc distance for consensus sample
-    d_cons = model.decision_function(combinations[0].reshape(1, -1))
-    # print(d_cons)
-    # get data frame of distances values for median, lower and upper quantile
-    get_distance_df = pd.DataFrame([get_distance_upper, get_distance_lower], columns=labels)
-
-    # add median
-    get_distance_df.loc["Median"] = np.repeat(d_cons, len(get_distance_df.columns))
-    # print(get_distance_df)
-
-    # calculate absolute distance value |d| from lower and upper quantile
-    for col in get_distance_df:
-        # print(col)
-        # distance_%75
-        val_1 = get_distance_df[col].iloc[0] - get_distance_df[col].iloc[2]
-        # print(val_1)
-        # distance_%75
-        val_2 = get_distance_df[col].iloc[1] - get_distance_df[col].iloc[2]
-        # print(val_2)
-
-        # calculate maximal distance value from distance_25% and distance_75%
-        # TODO what if both values are the same size?
-        if val_1 > 0 or val_1 < 0 and val_2 > 0 or val_2 < 0:
-            a = max(abs(val_1), abs(val_2))
-
-        if a == abs(val_1):
-            d_value = abs(val_1)
-        else:
-            d_value = abs(val_2)
-        # print(d_value)
-        get_distance_df.loc["|d|", col] = d_value
-    # rename dataframe rows
-
-    get_distance_df = get_distance_df.rename(
-        {0: "UpperQuantile", 1: "LowerQuantile"},
-        axis='index'
-    )
-    get_distance_df = get_distance_df.T.sort_values(by="|d|", ascending=False).T
-    # sort values by abs-value of |d|
-    get_distance_df.loc["sort"] = abs(get_distance_df.loc["|d|"].values)
-
-    return get_distance_df
-
-
 def ESPY_measurement(
         *,
         identifier: str,
@@ -298,8 +227,8 @@ def ESPY_measurement(
         model: SVC,
         lq: int,
         up: int,
-        proteome_data: Optional[pd.DataFrame],
-        kernel_parameters: Optional[pd.DataFrame],
+        proteome_data: Optional[pd.DataFrame] = None,
+        kernel_parameters: Optional[pd.DataFrame] = None,
  ) -> pd.DataFrame:
     """ESPY measurement
     Calculate ESPY value for each feature on simulated data
@@ -341,19 +270,21 @@ def ESPY_measurement(
 
     if identifier == 'simulated':
 
-        distance_matrix_for_all_feature_comb = compute_disctance_hyper_simulateddata(
+        distance_matrix_for_all_feature_comb = compute_distance_hyper(
             combinations=all_feature_combinations,
             model=model,
-            input_labels=combinations)
+            input_labels=combinations,
+            simulated=True,
+        )
 
     elif identifier in ['whole', 'selective']:
 
-        distance_matrix_for_all_feature_comb = compute_distance_hyper_proteome(
+        distance_matrix_for_all_feature_comb = compute_distance_hyper(
             combinations=all_feature_combinations,
             model=model,
             input_labels=combinations,
             data=proteome_data.iloc[:, 3:],
-            kernel_paramter=kernel_parameters
+            kernel_parameters=kernel_parameters,
         )
 
     else:
