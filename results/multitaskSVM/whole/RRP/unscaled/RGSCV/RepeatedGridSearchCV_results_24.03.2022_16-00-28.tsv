@@ -1,0 +1,10 @@
+	time	scoring	best_params	best_score
+0	III14	mcc	{'dataselector__P1': 'X', 'dataselector__P2': 2.0, 'dataselector__R0': 10.0, 'dataselector__R1': 1.0, 'dataselector__R2': 'X', 'dataselector__SA': 'X', 'dataselector__SO': 'X', 'svc__C': 1.0}	0.6008019443394275
+1	III14	precision_recall_auc	{'dataselector__P1': 'X', 'dataselector__P2': 2.0, 'dataselector__R0': 0.0001, 'dataselector__R1': 0.1, 'dataselector__R2': 'X', 'dataselector__SA': 'X', 'dataselector__SO': 'X', 'svc__C': 10.0}	0.8372345891190532
+2	III14	roc_auc	{'dataselector__P1': 'X', 'dataselector__P2': 2.0, 'dataselector__R0': 0.0001, 'dataselector__R1': 1.0, 'dataselector__R2': 'X', 'dataselector__SA': 'X', 'dataselector__SO': 'X', 'svc__C': 1.0}	0.8545454545454545
+3	C-1	mcc	{'dataselector__P1': 'X', 'dataselector__P2': 2.0, 'dataselector__R0': 0.1, 'dataselector__R1': 0.01, 'dataselector__R2': 'X', 'dataselector__SA': 'X', 'dataselector__SO': 'X', 'svc__C': 0.0001}	0.5743445012241694
+4	C-1	precision_recall_auc	{'dataselector__P1': 'X', 'dataselector__P2': 3.0, 'dataselector__R0': 0.001, 'dataselector__R1': 1.0, 'dataselector__R2': 'X', 'dataselector__SA': 'X', 'dataselector__SO': 'X', 'svc__C': 0.01}	0.8281979919298823
+5	C-1	roc_auc	{'dataselector__P1': 'X', 'dataselector__P2': 3.0, 'dataselector__R0': 0.001, 'dataselector__R1': 1.0, 'dataselector__R2': 'X', 'dataselector__SA': 'X', 'dataselector__SO': 'X', 'svc__C': 0.01}	0.8719696969696971
+6	C28	mcc	{'dataselector__P1': 'X', 'dataselector__P2': 2.0, 'dataselector__R0': 1.0, 'dataselector__R1': 1.0, 'dataselector__R2': 'X', 'dataselector__SA': 'X', 'dataselector__SO': 'X', 'svc__C': 1.0}	0.7209814533691201
+7	C28	precision_recall_auc	{'dataselector__P1': 'X', 'dataselector__P2': 2.0, 'dataselector__R0': 10.0, 'dataselector__R1': 1.0, 'dataselector__R2': 'X', 'dataselector__SA': 'X', 'dataselector__SO': 'X', 'svc__C': 1.0}	0.8851885291293617
+8	C28	roc_auc	{'dataselector__P1': 'X', 'dataselector__P2': 2.0, 'dataselector__R0': 10.0, 'dataselector__R1': 1.0, 'dataselector__R2': 'X', 'dataselector__SA': 'X', 'dataselector__SO': 'X', 'svc__C': 1.0}	0.9169191919191919

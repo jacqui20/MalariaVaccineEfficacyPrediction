@@ -1,0 +1,68 @@
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:375: UserWarning: Divide through zero encountered while trying to calculate the negative predictive value (NPV). NPV is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rncv_RLR.py", line 584, in <module>
+    args.identifier,
+  File "rncv_RLR.py", line 203, in main
+    clf_grid.fit(X, y, None, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 2865, in fit
+    y_p['proba'][key], scoring=inner_key
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 2235, in _score
+    score = markedness(y, y_pred)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 414, in markedness
+    npv = negative_predictive_value(y_true, y_pred)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 375, in negative_predictive_value
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rncv_RLR.py", line 534, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:375: UserWarning: Divide through zero encountered while trying to calculate the negative predictive value (NPV). NPV is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rncv_RLR.py", line 584, in <module>
+    args.identifier,
+  File "rncv_RLR.py", line 203, in main
+    clf_grid.fit(X, y, None, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 2865, in fit
+    y_p['proba'][key], scoring=inner_key
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 2248, in _score
+    score = negative_predictive_value(y, y_pred)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 375, in negative_predictive_value
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rncv_RLR.py", line 534, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:375: UserWarning: Divide through zero encountered while trying to calculate the negative predictive value (NPV). NPV is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rncv_RLR.py", line 584, in <module>
+    args.identifier,
+  File "rncv_RLR.py", line 203, in main
+    clf_grid.fit(X, y, None, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 2865, in fit
+    y_p['proba'][key], scoring=inner_key
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 2235, in _score
+    score = markedness(y, y_pred)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 414, in markedness
+    npv = negative_predictive_value(y_true, y_pred)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 375, in negative_predictive_value
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rncv_RLR.py", line 534, in warn_with_traceback
+    traceback.print_stack(file=warning_file)
+/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py:375: UserWarning: Divide through zero encountered while trying to calculate the negative predictive value (NPV). NPV is set to zero.
+  warnings.warn("Divide through zero encountered while trying to calculate "
+  File "rncv_RLR.py", line 584, in <module>
+    args.identifier,
+  File "rncv_RLR.py", line 203, in main
+    clf_grid.fit(X, y, None, groups)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 2865, in fit
+    y_p['proba'][key], scoring=inner_key
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 2248, in _score
+    score = negative_predictive_value(y, y_pred)
+  File "/home/breuter/NestedGridSearchCV/nestedcv/_nestedcv.py", line 375, in negative_predictive_value
+    warnings.warn("Divide through zero encountered while trying to calculate "
+  File "/home/breuter/anaconda3/envs/malaria_env/lib/python3.7/warnings.py", line 110, in _showwarnmsg
+    msg.file, msg.line)
+  File "rncv_RLR.py", line 534, in warn_with_traceback
+    traceback.print_stack(file=warning_file)

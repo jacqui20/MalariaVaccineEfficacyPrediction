@@ -66,7 +66,7 @@ python Datapreprocessing.py
 ```
 Output:
 ```
-the preprocessed data is now saved in ./Data as:
+the preprocessed data is now saved in ./data/proteome_data as:
 
 preprocessed_whole_data.csv and preprocessed_selective_data.csv
 ```
