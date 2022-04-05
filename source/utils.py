@@ -1044,6 +1044,3 @@ def sort_proteome_data(
     data.reset_index(inplace=True)
     data.drop(columns=['index'], inplace=True)
     return data
-
-
-

@@ -327,14 +327,15 @@ def compute_distance_hyper(
 
     return get_distance_df
 
+
 def make_plot(
-        data: pd.DataFrame,
-        name: str,
-        outputdir: str,
+    data: pd.DataFrame,
+    name: str,
+    outputdir: str,
 ) -> None:
     """
 
-    Paramter
+    Parameter
     ---------
     data : pd.DataFrame
         Dataframe of distances.

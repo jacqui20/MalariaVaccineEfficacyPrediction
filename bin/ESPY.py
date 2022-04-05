@@ -27,10 +27,6 @@ from source.utils import select_timepoint
 # from source.utils import sort_proteome_data
 
 
-cwd = os.getcwd()
-outputdir = '/'.join(cwd.split('/')[:-1]) + '/results'
-
-
 def main(
     data_dir: str,
     out_dir: str,
