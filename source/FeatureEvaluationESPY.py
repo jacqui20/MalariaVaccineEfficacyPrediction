@@ -33,9 +33,6 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import roc_auc_score
 import matplotlib.pyplot as plt
 import os
-# import sys
-# maindir = '/'.join(os.getcwd().split('/')[:-1])
-# sys.path.append(maindir)
 from source.utils import make_kernel_matrix
 
 

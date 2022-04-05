@@ -39,14 +39,10 @@ import sklearn
 import sys
 import traceback
 import warnings
-# from shutil import rmtree
 from sklearn.svm import SVC
 from sklearn.pipeline import make_pipeline
 from typing import Dict, List, Any, Union
-# from tempfile import mkdtemp
-sys.path.append('/home/breuter/NestedGridSearchCV')
 import nestedcv as ncv
-sys.path.append('/home/breuter/MalariaVaccineEfficacyPrediction')
 from source.utils import DataSelector, CustomPredefinedSplit, assign_folds
 
 
@@ -127,7 +123,6 @@ def main(
                 random_state=1337,
                 cache_size=500,
             ),
-            # memory=cachedir,
         )
 
         # initialize running index array for DataSelector
@@ -233,7 +228,6 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    # cachedir = mkdtemp()
     combination = args.combination
     if combination == 'SPP':
         param_grid = {
@@ -335,4 +329,3 @@ if __name__ == "__main__":
     finally:
 
         warning_file.close()
-        # rmtree(cachedir)

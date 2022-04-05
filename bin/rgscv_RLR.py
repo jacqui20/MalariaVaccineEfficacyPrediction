@@ -39,14 +39,10 @@ import sklearn
 import sys
 import traceback
 import warnings
-# from shutil import rmtree
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
-# from tempfile import mkdtemp
-sys.path.append('/home/breuter/NestedGridSearchCV')
 import nestedcv as ncv
-sys.path.append('/home/breuter/MalariaVaccineEfficacyPrediction')
 from source.utils import CustomPredefinedSplit, assign_folds
 
 
@@ -158,7 +154,6 @@ def main(
                 solver='saga',
                 max_iter=10000,
             ),
-            # memory=cachedir,
         )
 
         gs = ncv.RepeatedGridSearchCV(
@@ -250,8 +245,6 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    # cachedir = mkdtemp()
-
     try:
         main(
             args.analysis_dir,
@@ -261,4 +254,3 @@ if __name__ == "__main__":
     finally:
 
         warning_file.close()
-        # rmtree(cachedir)

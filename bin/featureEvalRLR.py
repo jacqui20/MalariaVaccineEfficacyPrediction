@@ -33,8 +33,6 @@ import sklearn
 import sys
 import os
 import argparse
-# maindir = '/'.join(os.getcwd().split('/')[:-1])
-# sys.path.append(maindir)
 from source.featureEvaluationRLR import featureEvaluationRLR
 
 

@@ -40,16 +40,12 @@ import sklearn
 import sys
 import traceback
 import warnings
-# from shutil import rmtree
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import StratifiedGroupKFold
 from typing import Dict, List, Any
-# from tempfile import mkdtemp
-sys.path.append('/home/breuter/NestedGridSearchCV')
 import nestedcv as ncv
-sys.path.append('/home/breuter/MalariaVaccineEfficacyPrediction')
 from source.utils import CustomPredefinedSplit, assign_folds
 
 
@@ -215,7 +211,6 @@ def main(
                 solver='saga',
                 max_iter=10000,
             ),
-            # memory=cachedir,
         )
 
         clf_grid = ncv.RepeatedStratifiedNestedCV(
@@ -535,7 +530,6 @@ def main(
     pd.DataFrame(key_results).to_excel(fn, na_rep='nan')
 
     print('End:', ncv.generate_timestamp())
-    # return key_results
 
 
 if __name__ == "__main__":
@@ -574,7 +568,8 @@ if __name__ == "__main__":
     warnings.filterwarnings(
         "ignore",
         message=(
-            "Divide through zero encountered while trying to calculate the MCC. MCC is set to zero."
+            "Divide through zero encountered while trying to calculate the MCC. "
+            "MCC is set to zero."
         ),
         category=UserWarning,
         module=r".*nestedcv"
@@ -598,8 +593,6 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    # cachedir = mkdtemp()
-
     try:
         main(
             args.analysis_dir,
@@ -609,4 +602,3 @@ if __name__ == "__main__":
     finally:
 
         warning_file.close()
-        # rmtree(cachedir)
