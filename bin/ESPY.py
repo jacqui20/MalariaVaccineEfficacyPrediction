@@ -46,8 +46,8 @@ def main(
     """
     print(f"ESPY value measurement started on {identifier} data.")
     print("with the following parameters:")
-    print("value of upper quantile      = ", str(uq))
-    print("value of lower quantile      = ", str(lq))
+    print("value of upper percentile      = ", str(uq))
+    print("value of lower percentile      = ", str(lq))
     print("at time point                = ", str(timepoint))
     print("\n")
 
@@ -220,18 +220,18 @@ if __name__ == "__main__":
               "Must be one of 'whole', 'selective', or 'simulated'."),
     )
     parser.add_argument(
-        '--upper-quantile',
+        '--upper-percentile',
         dest='uq',
         type=int,
         default=75,
-        help='Percentage for upper quantile given as int, by default 75%.',
+        help='Upper percentile given as int, by default 75%.',
     )
     parser.add_argument(
-        '--lower-quantile',
+        '--lower-percentile',
         dest='lq',
         type=int,
         default=25,
-        help='Percentage for lower quantile given as int, by default 25%.',
+        help='Lower percentile given as int, by default 25%.',
     )
     parser.add_argument(
         '--kernel-dir',
