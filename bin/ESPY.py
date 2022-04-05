@@ -124,9 +124,9 @@ def main(
         ).reshape((y.size, y.size))
 
         if identifier == 'whole':
-            matrix_identifier = 'kernel_matrix'
+            matrix_identifier = 'kernel_matrix_RRR'
         elif identifier == 'selective':
-            matrix_identifier = 'kernel_matrix_SelectiveSet'
+            matrix_identifier = 'kernel_matrix_SelectiveSet_RRR'
 
         kernel_matrix = DataSelector(
             kernel_directory=kernel_dir,
