@@ -166,7 +166,7 @@ def main(
         print(distance_result)
 
         make_plot(
-            data=distance_result.iloc[:, :],
+            data=distance_result.iloc[:, :50],
             name=output_filename,
             outputdir=out_dir,
         )
