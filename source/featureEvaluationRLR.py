@@ -130,23 +130,29 @@ def featureEvaluationRLR(
 
     params = get_parameters(
         timepoint_results=timepoint_results,
-        model="RLR"
+        model='RLR',
     )
-    print(params)
+    print(f"Parameters: {params}")
     print('')
 
-    print("Start feature evaluation with dose as auxillary feature:")
-    data = rearrange_columns(data)
-    X = data.iloc[:, 4:].to_numpy()
-    y = data.loc[:, 'Protection'].to_numpy()
-    feature_labels = data.iloc[:, 4:].columns.to_list()
+    if all(isinstance(x, float) for x in params.values()):
 
-    _, coefs = RLR_model(
-        X=X,
-        y=y,
-        params=params,
-        feature_labels=feature_labels,
-    )
-    print(coefs)
+        print("Start feature evaluation with dose as auxillary feature:")
+        data = rearrange_columns(data)
+        X = data.iloc[:, 4:].to_numpy()
+        y = data.loc[:, 'Protection'].to_numpy()
+        feature_labels = data.iloc[:, 4:].columns.to_list()
+
+        _, coefs = RLR_model(
+            X=X,
+            y=y,
+            params=params,
+            feature_labels=feature_labels,
+        )
+        print(coefs)
+
+    else:
+
+        raise ValueError("All parameter values must be of type float.")
 
     return coefs
