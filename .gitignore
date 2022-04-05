@@ -3,4 +3,4 @@ __pycache__/
 .DS_Store
 .ipynb_checkpoints
 .idea/
-
+MalariaVaccineEfficacyPrediction.egg-info/
