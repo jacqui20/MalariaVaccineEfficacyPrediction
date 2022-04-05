@@ -18,12 +18,12 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from typing import Optional
-import sys
-maindir = '/'.join(os.getcwd().split('/')[:-1])
-sys.path.append(maindir)
-from source.FeatureEvaluation import ESPY_measurement
-from source.utils import DataSelector, get_parameters, initialize_svm_model
-from source.utils import make_plot, multitask_model, select_timepoint
+# import sys
+# maindir = '/'.join(os.getcwd().split('/')[:-1])
+# sys.path.append(maindir)
+from source.FeatureEvaluation import ESPY_measurement, svm_model, multitask_model
+from source.utils import DataSelector, get_parameters
+from source.utils import make_plot, select_timepoint
 # from source.utils import sort_proteome_data
 
 
@@ -63,7 +63,7 @@ def main(
             random_state=123,
         )
 
-        rbf_svm_model = initialize_svm_model(
+        rbf_svm_model = svm_model(
             X_train_data=X_train,
             y_train_data=y_train,
             X_test_data=X_test,

@@ -8,11 +8,121 @@ import numpy as np
 from sklearn.svm import SVC
 from typing import Dict, List, Optional, Tuple, Union
 import time
-import os
-import sys
-maindir = '/'.join(os.getcwd().split('/')[:-1])
-sys.path.append(maindir)
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import roc_auc_score
+# import os
+# import sys
+# maindir = '/'.join(os.getcwd().split('/')[:-1])
+# sys.path.append(maindir)
 from source.utils import make_kernel_matrix
+
+
+def svm_model(
+    *,
+    X_train_data: np.ndarray,
+    y_train_data: np.ndarray,
+    X_test_data: np.ndarray,
+    y_test_data: np.ndarray,
+) -> SVC:
+    """ Initialize SVM model on simulated data
+    Initialize SVM model with a rbf kernel on simulated data and
+    perform a grid search for kernel parameter evaluation
+    Returns the SVM model with the best parameters based on the highest mean AUC score
+    Parameters
+    ----------
+    X_train_data : np.ndarray
+        matrix of trainings data
+    y_train_data : np.ndarray
+        y label for training
+    X_test_data : np.ndarray
+        matrix of test data
+    y_test_data : np.ndarray
+        y label for testing
+    Returns
+    -------
+    model : sklearn.svm.SVC object
+        trained SVM model on evaluated kernel parameter
+    """
+
+    # Initialize SVM model, rbf kernel
+    C_range = np.logspace(-3, 3, 7)
+    gamma_range = np.logspace(-6, 6, 13)
+    param_grid = dict(gamma=gamma_range, C=C_range)
+    scoring = {"AUC": "roc_auc"}
+
+    svm = SVC(kernel="rbf")
+
+    # grid search on simulated data
+    # grid search on simulated data
+    clf = GridSearchCV(
+        SVC(kernel="rbf"),
+        param_grid,
+        scoring=scoring,
+        refit="AUC"
+    )
+    clf.fit(X_train_data, y_train_data)
+
+    print(
+        "The best parameters are %s with a mean AUC score of %0.2f"
+        % (clf.best_params_, clf.best_score_)
+    )
+
+    # run rbf SVM with parameters fromm grid search,
+    # probability has to be TRUE to evaluate features via SHAP
+    svm = SVC(
+        kernel="rbf",
+        gamma=clf.best_params_.get("gamma"),
+        C=clf.best_params_.get("C"),
+        probability=True
+    )
+
+    model = svm.fit(X_train_data, y_train_data)
+
+    y_pred = model.predict(X_test_data)
+
+    AUC = roc_auc_score(y_test_data, y_pred)
+
+    print("AUC score on unseen data:" + " " + str(AUC))
+
+    return model
+
+
+def multitask_model(
+    *,
+    kernel_matrix: np.ndarray,
+    kernel_parameters: Dict[str, Union[str, float]],
+    y_label: np.ndarray
+) -> SVC:
+    """Initialize multitask-SVM model based on the output of file of the rgscv_multitask.py.
+
+    initialize multitask-SVM model based on evaluated kernel combinations
+
+    Parameter
+    ---------
+    kernel_matrix : np.ndarray,
+        gram matrix
+    kernel_parameters : dict,
+        parameter combination to initialize multitask-SVM model
+    y_label : np.ndarray
+        y labels
+
+    Returns
+    --------
+    multitaskModel: sklearn.svm.SVC object
+        trained multitask-SVM model on evaluated kernel parameter
+    """
+
+    # set up multitask model based on evaluated parameter
+    multitaskModel = SVC(
+        kernel="precomputed",
+        C=kernel_parameters['C'],
+        probability=True,
+        random_state=1337,
+        cache_size=500,
+    )
+    multitaskModel.fit(kernel_matrix, y_label)
+
+    return multitaskModel
 
 
 def make_feature_combination(
@@ -29,9 +139,9 @@ def make_feature_combination(
     X : pd.DataFrame
         Data (n_samples x n_features).
     upperValue : int
-        Upper quantile in percent given as int.
+        Upper percentile given as int.
     lowerValue : int
-        Lower quantile in precent given as int.
+        Lower percentile given as int.
 
     Returns
     --------
@@ -50,7 +160,7 @@ def make_feature_combination(
     feature_comb["LowerQuantile"] = X.quantile(float(lowerValue) / 100.)
     feature_comb = feature_comb.T
 
-    feature_comb_arr = feature_comb.values.copy()
+    feature_comb_arr = feature_comb.to_numpy().copy()
 
     get_features_comb = []
     get_features_comb.append(feature_comb_arr[0])
@@ -67,41 +177,38 @@ def make_feature_combination(
 
 
 def compute_distance_hyper(
-        combinations: List[float],
-        model: SVC,
-        input_labels: pd.DataFrame,
-        data: Optional[pd.DataFrame] = None,
-        kernel_parameters: Optional[Dict[str, Union[float, str]]] = None,
-        simulated: bool = False,
-):
-    """Evaluate distance of each single feature to classification boundary
+    combinations: List[float],
+    model: SVC,
+    labels: List[str],
+    data: Optional[pd.DataFrame] = None,
+    kernel_parameters: Optional[Dict[str, Union[float, str]]] = None,
+    simulated: bool = False,
+) -> pd.DataFrame:
+    """Evaluate distance of each single feature to the classification boundary.
 
     Compute distance of support vectors to classification boundary for each feature
-    and the change of each feature by upper and lower quantile on proteome data
+    and the change of each feature by upper and lower quantile on proteome data.
 
     Parameter
     ---------
     combinations : list
-        combination of feature value and its upper and lower quantile
+        List of combinations of feature values and their upper and lower percentile.
     model : sklearn.svm.SVC
-        SVC model
-    input_labels : pd.DataFrame
-        list of feature labels
+        SVC model.
+    labels : list
+        List of feature labels.
     data : pd.DataFrame
-        pre-processed proteome data, n x m matrix (n = samples as rows, m = features as columns)
-    kernel_paramters : dict
-        combination of kernel parameter
-    simulated: boolean
-        if true ESPY measurement is done on simulated data
+        Preprocessed proteome data (n_samples x n_features).
+    kernel_parameters : dict
+        Combination of kernel parameters.
+    simulated: bool, default=False
+        If True, the ESPY measurement is performed on simulated data.
 
     Returns
     --------
     get_distance_df : pd.DataFrame
-     dataframe of distance values for each feature per time point
+        Dataframe of distance values for each feature per time point.
     """
-
-    # get labels, start with first PF-Antigen name
-    labels = list(input_labels.columns.values)
 
     # empty array for lower and upper quantile
     get_distance_lower = []
@@ -130,7 +237,7 @@ def compute_distance_hyper(
                 kernel_parameters['P2'],
             )
 
-            # add test combination as new sample to
+            # add test combination as new sample to data
             data.loc["eval_feature", :] = combinations[m]
 
             gram_matrix = make_kernel_matrix(
@@ -221,17 +328,18 @@ def compute_distance_hyper(
 
 
 def ESPY_measurement(
-        *,
-        identifier: str,
-        data: pd.DataFrame,
-        model: SVC,
-        lq: int,
-        up: int,
-        proteome_data: Optional[pd.DataFrame] = None,
-        kernel_parameters: Optional[pd.DataFrame] = None,
+    *,
+    identifier: str,
+    data: pd.DataFrame,
+    model: SVC,
+    lq: int,
+    up: int,
+    proteome_data: Optional[pd.DataFrame] = None,
+    kernel_parameters: Optional[pd.DataFrame] = None,
  ) -> pd.DataFrame:
-    """ESPY measurement
-    Calculate ESPY value for each feature on simulated data
+    """ESPY measurement.
+
+    Calculate ESPY value for each feature on proteome or simulated data.
 
     Parameter
     -----------
@@ -239,21 +347,21 @@ def ESPY_measurement(
         A str that defines, if the input data is real ('whole', 'selective')
         proteome data or simulated ('simulated') data.
     data : pd.Dataframe
-        dataframe of input data
+        Dataframe of input data.
     model : sklearn.svm.SVC
-        SVC model
-    lq:  int
-        value of lower quantile
+        SVC model.
+    lq : int
+        Lower percentile value.
     up : int
-        value of upper quantile
-    proteome_data : Optional[pd.DataFrame]
+        Upper percentile value.
+    proteome_data : pd.DataFrame, default=None
         Full proteome dataset.
-    kernel_parameters : Optional[pd.DataFrame]
+    kernel_parameters : pd.DataFrame, default=None
         Kernel parameters for real data.
     Returns
     --------
     distance_matrix_for_all_feature_comb : pd.Dataframe
-        dataframe of ESPY value |d| for each feature in simulated data
+        Dataframe of ESPY values |d| for each feature in simulated data.
 
     """
 
@@ -265,7 +373,7 @@ def ESPY_measurement(
         upperValue=up
     )
 
-    print("Combination of feature")
+    print("Combination of features:")
     print(combinations)
 
     if identifier == 'simulated':
@@ -273,7 +381,7 @@ def ESPY_measurement(
         distance_matrix_for_all_feature_comb = compute_distance_hyper(
             combinations=all_feature_combinations,
             model=model,
-            input_labels=combinations,
+            labels=combinations.columns.to_list(),
             simulated=True,
         )
 
@@ -282,7 +390,7 @@ def ESPY_measurement(
         distance_matrix_for_all_feature_comb = compute_distance_hyper(
             combinations=all_feature_combinations,
             model=model,
-            input_labels=combinations,
+            labels=combinations.columns.to_list(),
             data=proteome_data.iloc[:, 3:],
             kernel_parameters=kernel_parameters,
         )

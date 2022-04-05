@@ -23,9 +23,6 @@ from sklearn.utils.multiclass import unique_labels
 from sklearn.model_selection._split import BaseCrossValidator
 from sklearn.utils.validation import column_or_1d
 from sklearn.model_selection import StratifiedKFold
-from sklearn.svm import SVC
-from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import roc_auc_score
 import matplotlib.pyplot as plt
 import warnings
 from sklearn.metrics.pairwise import rbf_kernel, sigmoid_kernel, polynomial_kernel
@@ -1050,114 +1047,6 @@ def sort_proteome_data(
     return data
 
 
-def initialize_svm_model(
-    *,
-    X_train_data: np.ndarray,
-    y_train_data: np.ndarray,
-    X_test_data: np.ndarray,
-    y_test_data: np.ndarray,
-) -> SVC:
-    """ Initialize SVM model on simulated data
-    Initialize SVM model with a rbf kernel on simulated data and
-    perform a grid search for kernel parameter evaluation
-    Returns the SVM model with the best parameters based on the highest mean AUC score
-    Parameters
-    ----------
-    X_train_data : np.ndarray
-        matrix of trainings data
-    y_train_data : np.ndarray
-        y label for training
-    X_test_data : np.ndarray
-        matrix of test data
-    y_test_data : np.ndarray
-        y label for testing
-    Returns
-    -------
-    model : sklearn.svm.SVC object
-        trained SVM model on evaluated kernel parameter
-    """
-
-    # Initialize SVM model, rbf kernel
-    C_range = np.logspace(-3, 3, 7)
-    gamma_range = np.logspace(-6, 6, 13)
-    param_grid = dict(gamma=gamma_range, C=C_range)
-    scoring = {"AUC": "roc_auc"}
-
-    svm = SVC(kernel="rbf")
-
-    # grid search on simulated data
-    # grid search on simulated data
-    clf = GridSearchCV(
-        SVC(kernel="rbf"),
-        param_grid,
-        scoring=scoring,
-        refit="AUC"
-    )
-    clf.fit(X_train_data, y_train_data)
-
-    print(
-        "The best parameters are %s with a mean AUC score of %0.2f"
-        % (clf.best_params_, clf.best_score_)
-    )
-
-    # run rbf SVM with parameters fromm grid search,
-    # probability has to be TRUE to evaluate features via SHAP
-    svm = SVC(
-        kernel="rbf",
-        gamma=clf.best_params_.get("gamma"),
-        C=clf.best_params_.get("C"),
-        probability=True
-    )
-
-    model = svm.fit(X_train_data, y_train_data)
-
-    y_pred = model.predict(X_test_data)
-
-    AUC = roc_auc_score(y_test_data, y_pred)
-
-    print("AUC score on unseen data:" + " " + str(AUC))
-
-    return model
-
-
-def multitask_model(
-    *,
-    kernel_matrix: np.ndarray,
-    kernel_parameters: Dict[str, Union[str, float]],
-    y_label: np.ndarray
-) -> SVC:
-    """Initialize multitask-SVM model based on the output of file of the rgscv_multitask.py.
-
-    initialize multitask-SVM model based on evaluated kernel combinations
-
-    Parameter
-    ---------
-    kernel_matrix : np.ndarray,
-        gram matrix
-    kernel_parameters : dict,
-        parameter combination to initialize multitask-SVM model
-    y_label : np.ndarray
-        y labels
-
-    Returns
-    --------
-    multitaskModel: sklearn.svm.SVC object
-        trained multitask-SVM model on evaluated kernel parameter
-    """
-
-    # set up multitask model based on evaluated parameter
-    multitaskModel = SVC(
-        kernel="precomputed",
-        C=kernel_parameters['C'],
-        probability=True,
-        random_state=1337,
-        cache_size=500,
-    )
-    multitaskModel.fit(kernel_matrix, y_label)
-
-    return multitaskModel
-
-
 def make_plot(
     data: pd.DataFrame,
     name: str,
@@ -1167,12 +1056,12 @@ def make_plot(
 
     Paramter
     ---------
-    data: pd.DataFrame
-        dataframe of distances
-    name: str
-        name of outputfile
-    outputdir: str
-        Path where the plots are stored as .png and .pdf
+    data : pd.DataFrame
+        Dataframe of distances.
+    name : str
+        Output filename.
+    outputdir : str
+        Directory where the plots are stored as .png and .pdf.
     """
     plt.figure(figsize=(20, 10))
     labels = data.columns
