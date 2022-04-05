@@ -18,9 +18,9 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from typing import Optional
-import sys
-maindir = '/'.join(os.getcwd().split('/')[:-1])
-sys.path.append(maindir)
+# import sys
+# maindir = '/'.join(os.getcwd().split('/')[:-1])
+# sys.path.append(maindir)
 from source.FeatureEvaluationESPY import ESPY_measurement, svm_model, multitask_model, make_plot
 from source.utils import DataSelector, get_parameters
 from source.utils import select_timepoint
