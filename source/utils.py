@@ -699,7 +699,7 @@ class DataSelector:
 def get_parameters(
     timepoint_results: pd.DataFrame,
     model: str,
-) -> Dict[str, float]:
+) -> Dict[str, Union[str, float]]:
     """Return combination of parameters to initialize RLR.
 
     Parameters
