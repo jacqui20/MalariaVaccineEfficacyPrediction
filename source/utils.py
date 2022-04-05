@@ -913,7 +913,7 @@ def make_kernel_matrix(
     kernel_dosage: str,
     kernel_abSignals: str,
     scale: bool = False,
-) -> Tuple[np.ndarray, List[float], List[float]]:
+) -> Tuple[np.ndarray, List[float], List[str]]:
     """ Compute combined kernel matrix.
 
     for each task, time, PfSPZ dose and antibody signal intensity a kernel matrix

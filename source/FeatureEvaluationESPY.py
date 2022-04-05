@@ -130,7 +130,7 @@ def make_feature_combination(
     X: pd.DataFrame,
     upperValue: int,
     lowerValue: int,
-) -> Tuple[pd.DataFrame, List[float]]:
+) -> Tuple[pd.DataFrame, np.ndarray, Dict[str, List[np.ndarray]]]:
     """Generate vector of feature combination.
 
     Generate for each single feature a vector based on upper- and lower quantile value.
@@ -146,39 +146,56 @@ def make_feature_combination(
 
     Returns
     --------
-    feature_comb : pd.Dataframe
-        Combination of features.
-    get_features_comb : list
-        List of feature combinations.
+    statistics : pd.Dataframe
+        Statistics (median, lower and upper percentile) of features.
+    median : np.ndarray
+        The median vector `m`.
+    combinations : dict
+        Dict of feature combinations.
+        `combinations["lower_combinations"]` is a list of length n_features,
+        with `combinations["lower_combinations"][i]` equal the median vector
+        but having the i-th element `m[i]` replaced by the lower percentile,
+        `combinations["upper_combinations"]` is a list of length n_features,
+        with `combinations["upper_combinations"][i]` equal the median vector
+        but having the i-th element `m[i]` replaced by the upper percentile.
     """
     assert isinstance(upperValue, int), "`upperValue` must be int"
     assert isinstance(lowerValue, int), "`lowerValue` must be int"
     assert 0 <= upperValue <= 100, "`upperValue` must be in [0, 100]"
     assert 0 <= lowerValue <= upperValue, "`lowerValue` must be in [0, upperValue]"
 
-    feature_comb = X.median().to_frame(name="Median")
-    feature_comb["UpperQuantile"] = X.quantile(float(upperValue) / 100.)
-    feature_comb["LowerQuantile"] = X.quantile(float(lowerValue) / 100.)
-    feature_comb = feature_comb.T
+    statistics = X.median().to_frame(name="Median")
+    statistics["UpperQuantile"] = X.quantile(float(upperValue) / 100.)
+    statistics["LowerQuantile"] = X.quantile(float(lowerValue) / 100.)
+    statistics = statistics.T
 
-    feature_comb_arr = feature_comb.to_numpy().copy()
+    median = statistics.loc["Median", :].to_numpy().copy()
+    lower_quantile = statistics.loc["LowerQuantile", :].to_numpy().copy()
+    upper_quantile = statistics.loc["UpperQuantile", :].to_numpy().copy()
 
-    get_features_comb = []
-    get_features_comb.append(feature_comb_arr[0])
-    for i in range(len(feature_comb_arr[0])):
-        temp1 = feature_comb_arr[0].copy()
-        temp1[i] = feature_comb_arr[1][i]
-        get_features_comb.append(temp1)
+    temp_lq = []
+    temp_uq = []
+    for i in range(len(median)):
 
-        temp2 = feature_comb_arr[0].copy()
-        temp2[i] = feature_comb_arr[2][i]
-        get_features_comb.append(temp2)
+        temp1 = median.copy()
+        temp1[i] = upper_quantile[i]
+        temp_uq.append(temp1)
 
-    return feature_comb, get_features_comb
+        temp2 = median.copy()
+        temp2[i] = lower_quantile[i]
+        temp_lq.append(temp2)
+
+    combinations = {
+        "lower_combinations": temp_lq,
+        "upper_combinations": temp_uq,
+    }
+
+    return statistics, median, combinations
 
 
 def compute_distance_hyper(
-    combinations: List[float],
+    median: np.ndarray,
+    combinations: Dict[str, List[np.ndarray]],
     model: SVC,
     labels: List[str],
     data: Optional[pd.DataFrame] = None,
@@ -216,65 +233,82 @@ def compute_distance_hyper(
     get_distance_upper = []
 
     # calc distances for all combinations
-    for m in range(1, len(combinations)):
+    for m in range(len(median)):
 
         if simulated:
-            distance = model.decision_function(combinations[m].reshape(1, -1))
-            if m % 2:
-                get_distance_upper.append(distance[0])
-            else:
-                get_distance_lower.append(distance[0])
 
-            d_cons = model.decision_function(combinations[0].reshape(1, -1))
+            get_distance_lower.append(
+                model.decision_function(combinations["lower_combinations"][m].reshape(1, -1))[0]
+            )
+            get_distance_upper.append(
+                model.decision_function(combinations["upper_combinations"][m].reshape(1, -1))[0]
+            )
+
+            d_cons = model.decision_function(median.reshape(1, -1))
 
         else:
-            params = (
-                kernel_parameters['SA'],
-                kernel_parameters['SO'],
-                kernel_parameters['R0'],
-                kernel_parameters['R1'],
-                kernel_parameters['R2'],
-                kernel_parameters['P1'],
-                kernel_parameters['P2'],
-            )
 
-            # add test combination as new sample to data
-            data.loc["eval_feature", :] = combinations[m]
+            if isinstance(data, pd.DataFrame) and isinstance(kernel_parameters, dict):
 
-            gram_matrix = make_kernel_matrix(
-                data=data,
-                model=params,
-                kernel_time_series='rbf_kernel',
-                kernel_dosage='rbf_kernel',
-                kernel_abSignals='rbf_kernel',
-            )
-            single_feature_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
-            # print(single_feature_sample.reshape(1,-1))
+                params = (
+                    kernel_parameters['SA'],
+                    kernel_parameters['SO'],
+                    kernel_parameters['R0'],
+                    kernel_parameters['R1'],
+                    kernel_parameters['R2'],
+                    kernel_parameters['P1'],
+                    kernel_parameters['P2'],
+                )
 
-            distance = model.decision_function(single_feature_sample.reshape(1, -1))
-            # print(distance)
-            if m % 2:
-                get_distance_upper.append(distance[0])
-            else:
+                # for lower quantile combination:
+                # add test combination as new sample to data
+                data.loc["eval_feature", :] = combinations["lower_combinations"][m]
+                # calculate gram matrix
+                gram_matrix = make_kernel_matrix(
+                    data=data,
+                    model=params,
+                    kernel_time_series='rbf_kernel',
+                    kernel_dosage='rbf_kernel',
+                    kernel_abSignals='rbf_kernel',
+                )
+                single_feature_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
+                distance = model.decision_function(single_feature_sample.reshape(1, -1))
                 get_distance_lower.append(distance[0])
-            # print(m)
-            # print(distance)
 
-            # generate consensus feature
-            data.loc["eval_feature", :] = combinations[0]
-            gram_matrix = make_kernel_matrix(
-                data=data,
-                model=params,
-                kernel_time_series='rbf_kernel',
-                kernel_dosage='rbf_kernel',
-                kernel_abSignals='rbf_kernel',
-            )
-            feature_consensus_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
-            # print(feature_consensus_sample.shape)
+                # for upper quantile combination:
+                # add test combination as new sample to data
+                data.loc["eval_feature", :] = combinations["upper_combinations"][m]
+                # calculate gram matrix
+                gram_matrix = make_kernel_matrix(
+                    data=data,
+                    model=params,
+                    kernel_time_series='rbf_kernel',
+                    kernel_dosage='rbf_kernel',
+                    kernel_abSignals='rbf_kernel',
+                )
+                single_feature_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
+                distance = model.decision_function(single_feature_sample.reshape(1, -1))
+                get_distance_upper.append(distance[0])
 
-            # compute distance for consensus sample
-            d_cons = model.decision_function(feature_consensus_sample.reshape(1, -1))
-            # print(d_cons)
+                # generate consensus feature
+                data.loc["eval_feature", :] = median
+                gram_matrix = make_kernel_matrix(
+                    data=data,
+                    model=params,
+                    kernel_time_series='rbf_kernel',
+                    kernel_dosage='rbf_kernel',
+                    kernel_abSignals='rbf_kernel',
+                )
+                feature_consensus_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
+                # print(feature_consensus_sample.shape)
+
+                # compute distance for consensus sample
+                d_cons = model.decision_function(feature_consensus_sample.reshape(1, -1))
+                # print(d_cons)
+
+            else:
+
+                raise ValueError("You must supply `data` and `kernel_parameters`.")
 
     # get data frame of distances values for median, lower and upper quantile
     # print("Matrix of distances for Upper-/Lower- quantile per feature")
@@ -319,13 +353,6 @@ def compute_distance_hyper(
     )
     get_distance_df.loc['|d|'] = abs(get_distance_df.loc["|d|"].values)
     get_distance_df = get_distance_df.T.sort_values(by="|d|", ascending=False).T
-    # Norm distance value by distance_nome = distance_value/sum(distance_values)
-    sum_of_distance = get_distance_df.loc['|d|', :].sum()
-
-    for col in get_distance_df.columns:
-        get_distance_df.loc['|d|', col] = get_distance_df.loc['|d|', col]/sum_of_distance
-
-    assert get_distance_df.loc['|d|', :].sum() == 1.0, "get_distance_df.loc['|d|', :].sum() != 1.0"
     # sort values by abs-value of |d|
     get_distance_df.loc["sort"] = abs(get_distance_df.loc["|d|"].values)
     print("Dimension of distance matrix:")
@@ -386,7 +413,7 @@ def ESPY_measurement(
     lq: int,
     up: int,
     proteome_data: Optional[pd.DataFrame] = None,
-    kernel_parameters: Optional[pd.DataFrame] = None,
+    kernel_parameters: Optional[Dict[str, Union[str, float]]] = None,
  ) -> pd.DataFrame:
     """ESPY measurement.
 
@@ -418,33 +445,44 @@ def ESPY_measurement(
 
     start = time.time()
 
-    combinations, all_feature_combinations = make_feature_combination(
+    statistics, median, combinations = make_feature_combination(
         X=data,
         lowerValue=lq,
         upperValue=up
     )
 
-    print("Combination of features:")
-    print(combinations)
+    print("Statistics of features:")
+    print(statistics)
 
     if identifier == 'simulated':
 
         distance_matrix_for_all_feature_comb = compute_distance_hyper(
-            combinations=all_feature_combinations,
+            median=median,
+            combinations=combinations,
             model=model,
-            labels=combinations.columns.to_list(),
+            labels=statistics.columns.to_list(),
             simulated=True,
         )
 
     elif identifier in ['whole', 'selective']:
 
-        distance_matrix_for_all_feature_comb = compute_distance_hyper(
-            combinations=all_feature_combinations,
-            model=model,
-            labels=combinations.columns.to_list(),
-            data=proteome_data.iloc[:, 3:],
-            kernel_parameters=kernel_parameters,
-        )
+        if isinstance(proteome_data, pd.DataFrame) and isinstance(kernel_parameters, dict):
+
+            distance_matrix_for_all_feature_comb = compute_distance_hyper(
+                median=median,
+                combinations=combinations,
+                model=model,
+                labels=statistics.columns.to_list(),
+                data=proteome_data.iloc[:, 3:],
+                kernel_parameters=kernel_parameters,
+            )
+
+        else:
+
+            raise ValueError(
+                "`proteome_data` and `kernel_parameters` must be supplied."
+            )
+
     else:
 
         raise ValueError(
