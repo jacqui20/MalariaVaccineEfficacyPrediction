@@ -51,8 +51,8 @@ def svm_model(
 
     # Initialize SVM model, rbf kernel
     param_grid = {
-        'gamma': [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5],
-        'C': [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
+        'gamma': [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5, 1e6],
+        'C': [1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3],
     }
     scoring = {"AUC": "roc_auc"}
 
