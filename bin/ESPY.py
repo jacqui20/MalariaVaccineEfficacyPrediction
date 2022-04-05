@@ -24,7 +24,6 @@ from typing import Optional
 from source.FeatureEvaluationESPY import ESPY_measurement, svm_model, multitask_model, make_plot
 from source.utils import DataSelector, get_parameters
 from source.utils import select_timepoint
-# from source.utils import sort_proteome_data
 
 
 def main(

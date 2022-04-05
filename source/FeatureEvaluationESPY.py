@@ -300,25 +300,19 @@ def compute_distance_hyper(
                     kernel_abSignals='rbf_kernel',
                 )
                 feature_consensus_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
-                # print(feature_consensus_sample.shape)
 
                 # compute distance for consensus sample
                 d_cons = model.decision_function(feature_consensus_sample.reshape(1, -1))
-                # print(d_cons)
 
             else:
 
                 raise ValueError("You must supply `data` and `kernel_parameters`.")
 
     # get data frame of distances values for median, lower and upper quantile
-    # print("Matrix of distances for Upper-/Lower- quantile per feature")
     get_distance_df = pd.DataFrame([get_distance_upper, get_distance_lower], columns=labels)
-    # print(get_distance_df.shape)
 
     # add distance of consensus feature
     get_distance_df.loc["consensus [d]"] = np.repeat(d_cons, len(get_distance_df.columns))
-    # print(get_distance_df["med"].iloc[0])
-    # print(get_distance_df.shape)
     print("Number of evaluated features:")
     print(len(get_distance_df.columns))
 
@@ -327,12 +321,10 @@ def compute_distance_hyper(
     for col in get_distance_df:
         # get evaluated distance based on upper quantile minus consensus
         val_1 = get_distance_df[col].iloc[0] - get_distance_df[col].iloc[2]
-        # print(val_1)
         get_distance_df.loc["UQ - consensus [d]", col] = val_1
 
         # get evaluated distance based on lower quantile minus consensus
         val_2 = get_distance_df[col].iloc[1] - get_distance_df[col].iloc[2]
-        # print(val_2)
         get_distance_df.loc["LQ - consensus [d]", col] = val_2
 
         # calculate maximal distance value from distance_based on lower quantile
