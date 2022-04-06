@@ -49,6 +49,7 @@ def main(
     lq: int,
     rgscv_path: Optional[str] = None,
     kernel_dir: Optional[str] = None,
+    kernel_identifier: Optional[str] = None,
     timepoint: Optional[str] = None,
 ) -> None:
     """
@@ -104,6 +105,13 @@ def main(
 
     elif identifier in ['whole', 'selective']:
 
+        assert isinstance(rgscv_path, str) and isinstance(kernel_dir, str), \
+            ("`rgscv_path` and `kernel_dir` must be of type str, "
+             "if `identifier` is 'whole' or 'selective'")
+        assert isinstance(kernel_identifier, str) and isinstance(timepoint, str), \
+            ("`kernel_identifier` and `timepoint` must be of type str, "
+             "if `identifier` is 'whole' or 'selective'")
+
         if timepoint == 'III14':
             t = 2
         elif timepoint == 'C-1':
@@ -134,14 +142,9 @@ def main(
             dtype=np.uint32
         ).reshape((y.size, y.size))
 
-        if identifier == 'whole':
-            matrix_identifier = 'kernel_matrix_RRR'
-        elif identifier == 'selective':
-            matrix_identifier = 'kernel_matrix_SelectiveSet_RRR'
-
         kernel_matrix = DataSelector(
             kernel_directory=kernel_dir,
-            identifier=matrix_identifier,
+            identifier=kernel_identifier,
             SA=params['SA'],
             SO=params['SO'],
             R0=params['R0'],
@@ -245,7 +248,12 @@ if __name__ == "__main__":
         '--kernel-dir',
         dest='kernel_dir',
         metavar='DIR',
-        help='Path to the directory were the precomputed kernel matrices are stored.',
+        help='Path to the directory were the precomputed kernel matrix is stored.',
+    )
+    parser.add_argument(
+        '--kernel-identifier',
+        dest='kernel_identifier',
+        help='Filename prefix of the precomputed kernel matrix.',
     )
     parser.add_argument(
         '--rgscv-path',
@@ -281,6 +289,7 @@ if __name__ == "__main__":
             lq=args.lq,
             rgscv_path=args.rgscv_path,
             kernel_dir=args.kernel_dir,
+            kernel_identifier=args.kernel_identifier,
             timepoint=args.timepoint,
         )
 

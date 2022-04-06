@@ -47,17 +47,21 @@ for dataset in 'whole' 'selective'; do
             if [ "$timepoint" = 'III14' ] || [ "$timepoint" = 'C-1' ]; then
                 rgscv_path="${maindir}/${dataset}/RPR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_15-44-43.tsv"
                 ana_dir="${maindir}/${dataset}/RPR/unscaled/featureEvaluation"
+                kernel_identifier='kernel_matrix_RPR'
             else
                 rgscv_path="${maindir}/${dataset}/RRR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_16-16-36.tsv"
                 ana_dir="${maindir}/${dataset}/RRR/unscaled/featureEvaluation"
+                kernel_identifier='kernel_matrix_RRR'
             fi
         else
             if [ "$timepoint" = 'III14' ] || [ "$timepoint" = 'C-1' ]; then
                 rgscv_path="${maindir}/${dataset}/RPR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_18-47-33.tsv"
                 ana_dir="${maindir}/${dataset}/RPR/unscaled/featureEvaluation"
+                kernel_identifier='kernel_matrix_SelectiveSet_RPR'
             else
                 rgscv_path="${maindir}/${dataset}/RRR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_19-19-18.tsv"
                 ana_dir="${maindir}/${dataset}/RRR/unscaled/featureEvaluation"
+                kernel_identifier='kernel_matrix_SelectiveSet_RRR'
             fi
         fi
 
@@ -69,7 +73,7 @@ for dataset in 'whole' 'selective'; do
         fi
         cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
         cp "${topdir}/bin/ESPY.py" . || { echo "cp ${topdir}/bin/ESPY.py . failed"; exit 1; }
-        python -u ESPY.py --data-dir "$data_dir" --out-dir "$ana_dir" --identifier "$dataset" --lower-percentile 25 --upper-percentile 75 --kernel-dir "$kernel_dir" --rgscv-path "$rgscv_path" --timepoint "$timepoint" 1> "${out}" 2> "${err}"
+        python -u ESPY.py --data-dir "$data_dir" --out-dir "$ana_dir" --identifier "$dataset" --lower-percentile 25 --upper-percentile 75 --kernel-dir "$kernel_dir" --kernel-identifier "$kernel_identifier" --rgscv-path "$rgscv_path" --timepoint "$timepoint" 1> "${out}" 2> "${err}"
 
     done
 
