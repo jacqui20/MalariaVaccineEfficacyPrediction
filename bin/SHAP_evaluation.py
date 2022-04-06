@@ -28,7 +28,7 @@ the SHAP (SHapley Additive exPlanations) framework on simulated data.
 import numpy as np
 import pandas as pd
 import os
-import os.path
+import pathlib
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.svm import SVC
 from sklearn.metrics import roc_auc_score
@@ -124,6 +124,7 @@ if __name__ == "__main__":
     cwd = os.getcwd()
     datadir = '/'.join(cwd.split('/')[:-1]) + '/data/simulated_data'
     outputdir = '/'.join(cwd.split('/')[:-1]) + '/results/SVM/simulated/SHAP'
+    pathlib.Path(outputdir).mkdir(parents=True, exist_ok=True)
     simulated_data = pd.read_csv(os.path.join(datadir, 'simulated_data.csv'))
 
     X_train, X_test, y_train, y_test = train_test_split(
