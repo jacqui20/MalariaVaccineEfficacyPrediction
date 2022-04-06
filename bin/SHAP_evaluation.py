@@ -34,9 +34,6 @@ from sklearn.svm import SVC
 from sklearn.metrics import roc_auc_score
 import matplotlib.pyplot as plt
 import shap
-cwd = os.getcwd()
-datadir = '/'.join(cwd.split('/')[:-1]) + '/data/simulated_data'
-outputdir = '/'.join(cwd.split('/')[:-1]) + '/results/simulated_data'
 
 
 def svm_model(
@@ -124,8 +121,10 @@ def SHAP_value(
 
 
 if __name__ == "__main__":
-    data_path = os.path.join(datadir, 'simulated_data.csv')
-    simulated_data = pd.read_csv(data_path)
+    cwd = os.getcwd()
+    datadir = '/'.join(cwd.split('/')[:-1]) + '/data/simulated_data'
+    outputdir = '/'.join(cwd.split('/')[:-1]) + '/results/SVM/simulated/SHAP'
+    simulated_data = pd.read_csv(os.path.join(datadir, 'simulated_data.csv'))
 
     X_train, X_test, y_train, y_test = train_test_split(
         simulated_data.iloc[:, :1000].to_numpy(),
