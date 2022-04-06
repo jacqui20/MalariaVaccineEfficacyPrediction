@@ -74,14 +74,13 @@ def svm_model(
         'gamma': [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5, 1e6],
         'C': [1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3],
     }
-    scoring = {"AUC": "roc_auc"}
 
     # grid search on simulated data
     clf = GridSearchCV(
-        SVC(kernel="rbf"),
+        SVC(kernel='rbf', probability=True),
         param_grid,
-        scoring=scoring,
-        refit="AUC"
+        scoring='roc_auc',
+        refit=True,
     )
     clf.fit(X_train_data, y_train_data)
 
@@ -93,9 +92,9 @@ def svm_model(
     # run rbf SVM with parameters fromm grid search,
     # probability has to be TRUE to evaluate features via SHAP
     svm = SVC(
-        kernel="rbf",
-        gamma=clf.best_params_.get("gamma"),
-        C=clf.best_params_.get("C"),
+        kernel='rbf',
+        gamma=clf.best_params_.get('gamma'),
+        C=clf.best_params_.get('C'),
         probability=True
     )
 
@@ -105,7 +104,7 @@ def svm_model(
 
     AUC = roc_auc_score(y_test_data, y_pred)
 
-    print("AUC score on unseen data:" + " " + str(AUC))
+    print(f"AUC score on unseen data: {AUC}")
 
     return model
 
