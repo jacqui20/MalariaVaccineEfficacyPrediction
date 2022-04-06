@@ -41,18 +41,29 @@ kernel_dir="${topdir}/data/precomputed_multitask_kernels/unscaled"
 
 for dataset in 'whole' 'selective'; do
 
-    if [ "$dataset" = 'whole' ]; then
-        rgscv_path="${maindir}/${dataset}/RRR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_16-16-36.tsv"
-    else
-        rgscv_path="${maindir}/${dataset}/RRR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_19-19-18.tsv"
-    fi
-
     for timepoint in 'III14' 'C-1' 'C28'; do
+
+        if [ "$dataset" = 'whole' ]; then
+            if [ "$timepoint" = 'III14' ] || [ "$timepoint" = 'C-1' ]; then
+                rgscv_path="${maindir}/${dataset}/RPR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_15-44-43.tsv"
+                ana_dir="${maindir}/${dataset}/RPR/unscaled/featureEvaluation"
+            else
+                rgscv_path="${maindir}/${dataset}/RRR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_16-16-36.tsv"
+                ana_dir="${maindir}/${dataset}/RRR/unscaled/featureEvaluation"
+            fi
+        else
+            if [ "$timepoint" = 'III14' ] || [ "$timepoint" = 'C-1' ]; then
+                rgscv_path="${maindir}/${dataset}/RPR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_18-47-33.tsv"
+                ana_dir="${maindir}/${dataset}/RPR/unscaled/featureEvaluation"
+            else
+                rgscv_path="${maindir}/${dataset}/RRR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_19-19-18.tsv"
+                ana_dir="${maindir}/${dataset}/RRR/unscaled/featureEvaluation"
+            fi
+        fi
 
         timestamp=$(date +%d-%m-%Y_%H-%M-%S)
         err="runESPY_${dataset}_${timepoint}_${timestamp}.err"
         out="runESPY_${dataset}_${timepoint}_${timestamp}.out"
-        ana_dir="${maindir}/${dataset}/RRR/unscaled/featureEvaluation"
         if [ ! -d "$ana_dir" ]; then
             mkdir "$ana_dir"
         fi
