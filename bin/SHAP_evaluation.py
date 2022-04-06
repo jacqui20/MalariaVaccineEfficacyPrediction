@@ -34,9 +34,6 @@ from sklearn.svm import SVC
 from sklearn.metrics import roc_auc_score
 import matplotlib.pyplot as plt
 import shap
-cwd = os.getcwd()
-datadir = '/'.join(cwd.split('/')[:-1]) + '/data/simulated_data'
-outputdir = '/'.join(cwd.split('/')[:-1]) + '/results/simulated_data'
 
 
 def svm_model(
@@ -74,14 +71,13 @@ def svm_model(
         'gamma': [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 1e1, 1e2, 1e3, 1e4, 1e5, 1e6],
         'C': [1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3],
     }
-    scoring = {"AUC": "roc_auc"}
 
     # grid search on simulated data
     clf = GridSearchCV(
-        SVC(kernel="rbf"),
+        SVC(kernel='rbf', probability=True),
         param_grid,
-        scoring=scoring,
-        refit="AUC"
+        scoring='roc_auc',
+        refit=True,
     )
     clf.fit(X_train_data, y_train_data)
 
@@ -93,9 +89,9 @@ def svm_model(
     # run rbf SVM with parameters fromm grid search,
     # probability has to be TRUE to evaluate features via SHAP
     svm = SVC(
-        kernel="rbf",
-        gamma=clf.best_params_.get("gamma"),
-        C=clf.best_params_.get("C"),
+        kernel='rbf',
+        gamma=clf.best_params_.get('gamma'),
+        C=clf.best_params_.get('C'),
         probability=True
     )
 
@@ -105,7 +101,7 @@ def svm_model(
 
     AUC = roc_auc_score(y_test_data, y_pred)
 
-    print("AUC score on unseen data:" + " " + str(AUC))
+    print(f"AUC score on unseen data: {AUC}")
 
     return model
 
@@ -117,7 +113,7 @@ def SHAP_value(
     outputdir: str,
 ) -> None:
     explainer = shap.KernelExplainer(model.predict_proba, X_train)
-    shap_values = explainer.shap_values(X_test)
+    shap_values = explainer.shap_values(X_test, l1_reg='num_features(25)')
 
     shap.initjs()
     shap.summary_plot(shap_values, X_test, show=False)
@@ -125,20 +121,22 @@ def SHAP_value(
 
 
 if __name__ == "__main__":
-    data_path = os.path.join(datadir, 'simulated_data.csv')
-    simulated_data = pd.read_csv(data_path)
+    cwd = os.getcwd()
+    datadir = '/'.join(cwd.split('/')[:-1]) + '/data/simulated_data'
+    outputdir = '/'.join(cwd.split('/')[:-1]) + '/results/SVM/simulated/SHAP'
+    simulated_data = pd.read_csv(os.path.join(datadir, 'simulated_data.csv'))
 
     X_train, X_test, y_train, y_test = train_test_split(
         simulated_data.iloc[:, :1000].to_numpy(),
         simulated_data.iloc[:, 1000].to_numpy(),
         test_size=0.3,
-        random_state=123
+        random_state=123,
     )
     rbf_SVM_model = svm_model(
         X_train_data=X_train,
         y_train_data=y_train,
         X_test_data=X_test,
-        y_test_data=y_test
+        y_test_data=y_test,
     )
 
     print(
