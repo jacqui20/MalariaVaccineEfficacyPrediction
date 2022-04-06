@@ -278,6 +278,30 @@ def compute_distance_hyper(
                     kernel_parameters['P2'],
                 )
 
+                if (params[0] == 'X' or params[1] == 'X') and params[2] != 'X':
+                    if params[0] == params[1]:
+                        kernel_time_series = 'rbf_kernel'
+                    else:
+                        raise ValueError("Time series kernel is neither rbf nor sigmoid.")
+                elif params[0] != 'X' and params[1] != 'X' and params[2] == 'X':
+                    kernel_time_series = 'sigmoid_kernel'
+                else:
+                    raise ValueError("Time series kernel is neither rbf nor sigmoid.")
+
+                if params[3] != 'X' and params[5] == 'X':
+                    kernel_dosage = 'rbf_kernel'
+                elif params[3] == 'X' and params[5] != 'X':
+                    kernel_dosage = 'poly_kernel'
+                else:
+                    raise ValueError("Dosage kernel is neither rbf nor polynomial.")
+
+                if params[4] != 'X' and params[6] == 'X':
+                    kernel_abSignals = 'rbf_kernel'
+                elif params[4] == 'X' and params[6] != 'X':
+                    kernel_abSignals = 'poly_kernel'
+                else:
+                    raise ValueError("Antibody signal kernel is neither rbf nor polynomial.")
+
                 # for lower quantile combination:
                 # add test combination as new sample to data
                 data.loc["eval_feature", :] = combinations["lower_combinations"][m]
@@ -285,9 +309,9 @@ def compute_distance_hyper(
                 gram_matrix = make_kernel_matrix(
                     data=data,
                     model=params,
-                    kernel_time_series='rbf_kernel',
-                    kernel_dosage='rbf_kernel',
-                    kernel_abSignals='rbf_kernel',
+                    kernel_time_series=kernel_time_series,
+                    kernel_dosage=kernel_dosage,
+                    kernel_abSignals=kernel_abSignals,
                 )
                 single_feature_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
                 distance = model.decision_function(single_feature_sample.reshape(1, -1))
@@ -300,9 +324,9 @@ def compute_distance_hyper(
                 gram_matrix = make_kernel_matrix(
                     data=data,
                     model=params,
-                    kernel_time_series='rbf_kernel',
-                    kernel_dosage='rbf_kernel',
-                    kernel_abSignals='rbf_kernel',
+                    kernel_time_series=kernel_time_series,
+                    kernel_dosage=kernel_dosage,
+                    kernel_abSignals=kernel_abSignals,
                 )
                 single_feature_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
                 distance = model.decision_function(single_feature_sample.reshape(1, -1))
@@ -313,9 +337,9 @@ def compute_distance_hyper(
                 gram_matrix = make_kernel_matrix(
                     data=data,
                     model=params,
-                    kernel_time_series='rbf_kernel',
-                    kernel_dosage='rbf_kernel',
-                    kernel_abSignals='rbf_kernel',
+                    kernel_time_series=kernel_time_series,
+                    kernel_dosage=kernel_dosage,
+                    kernel_abSignals=kernel_abSignals,
                 )
                 feature_consensus_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
 

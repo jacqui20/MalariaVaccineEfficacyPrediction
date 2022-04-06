@@ -740,17 +740,17 @@ def make_kernel_matrix(
             time_series.values.reshape(len(time_series), 1), gamma=model[2]
         )
 
-    # pre-computed kernel matrix of antibody reactivity K(n_p,n_p')
-    if kernel_abSignals == "rbf_kernel":
-        AB_signals_kernel_matrix = rbf_kernel(AB_signals, gamma=model[4])
-    elif kernel_abSignals == "poly_kernel":
-        AB_signals_kernel_matrix = polynomial_kernel(AB_signals, degree=model[6])
-
     # pre-computed kernel matrix of dosage K(n_d,n_d')
     if kernel_dosage == "rbf_kernel":
         dose_kernel_matrix = rbf_kernel(dose.values.reshape(len(dose), 1), gamma=model[3])
     elif kernel_dosage == "poly_kernel":
         dose_kernel_matrix = polynomial_kernel(dose.values.reshape(len(dose), 1), degree=model[5])
+
+    # pre-computed kernel matrix of antibody reactivity K(n_p,n_p')
+    if kernel_abSignals == "rbf_kernel":
+        AB_signals_kernel_matrix = rbf_kernel(AB_signals, gamma=model[4])
+    elif kernel_abSignals == "poly_kernel":
+        AB_signals_kernel_matrix = polynomial_kernel(AB_signals, degree=model[6])
 
     # pre-compute multitask kernel matrix K((np, nt),(np', nt'))
     multi_AB_signals_time_series_kernel_matrix = multitask(
