@@ -117,7 +117,7 @@ def SHAP_value(
     outputdir: str,
 ) -> None:
     explainer = shap.KernelExplainer(model.predict_proba, X_train)
-    shap_values = explainer.shap_values(X_test)
+    shap_values = explainer.shap_values(X_test, l1_reg='num_features(25)')
 
     shap.initjs()
     shap.summary_plot(shap_values, X_test, show=False)
@@ -132,13 +132,13 @@ if __name__ == "__main__":
         simulated_data.iloc[:, :1000].to_numpy(),
         simulated_data.iloc[:, 1000].to_numpy(),
         test_size=0.3,
-        random_state=123
+        random_state=123,
     )
     rbf_SVM_model = svm_model(
         X_train_data=X_train,
         y_train_data=y_train,
         X_test_data=X_test,
-        y_test_data=y_test
+        y_test_data=y_test,
     )
 
     print(
