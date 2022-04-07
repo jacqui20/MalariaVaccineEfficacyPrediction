@@ -148,5 +148,5 @@ if __name__ == "__main__":
 
     print(
         "Evaluation has terminated and results are saved in "
-        "./results as SHAP_value_simulated_data.png."
+        "../results/SVM/simulated/SHAP as SHAP_value_simulated_data.png."
     )
