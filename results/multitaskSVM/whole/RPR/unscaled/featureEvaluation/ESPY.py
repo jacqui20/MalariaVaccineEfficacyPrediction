@@ -57,7 +57,7 @@ def main(
     Call ESPY measurement.
     """
     print(f"ESPY value measurement started on {identifier} data.")
-    print("with the following parameters:")
+    print("With the following parameters:")
     print("value of upper percentile      = ", str(uq))
     print("value of lower percentile      = ", str(lq))
     print("at time point                = ", str(timepoint))
@@ -100,11 +100,12 @@ def main(
         )
 
         distance_result.to_csv(
-            os.path.join(out_dir, output_filename + ".tsv"),
+            os.path.join(out_dir, f"{output_filename}.tsv"),
             sep='\t',
             na_rep='nan',
         )
-        print("results are saved in: " + os.path.join(out_dir, output_filename))
+        print("Results were saved in: ", os.path.join(out_dir, f"{output_filename}.tsv"))
+        print('')
 
     elif identifier in ['whole', 'selective']:
 
@@ -164,8 +165,8 @@ def main(
         )
 
         print(
-            "Are values in proteome data floats: "
-            f"{np.all(np.isin(data.dtypes.to_list()[5:], ['float64']))}"
+            "Are all values in proteome data floats: "
+            f"{np.all(np.isin(data.dtypes.to_list()[5:], ['float64']))}\n"
         )
 
         data_at_timePoint = data.loc[data["TimePointOrder"] == t]
@@ -182,6 +183,7 @@ def main(
 
         print("Distances for features:")
         print(distance_result)
+        print('')
 
         make_plot(
             data=distance_result.iloc[:, :50],
@@ -190,11 +192,12 @@ def main(
         )
 
         distance_result.to_csv(
-            os.path.join(out_dir, output_filename + ".tsv"),
+            os.path.join(out_dir, f"{output_filename}.tsv"),
             sep='\t',
             na_rep='nan'
         )
-        print(f'Results were saved in: {os.path.join(out_dir, output_filename)}')
+        print('Results were saved in:', os.path.join(out_dir, f"{output_filename}.tsv"))
+        print('')
 
     else:
 

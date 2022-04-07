@@ -377,20 +377,35 @@ def compute_distance_hyper(
         # calculate maximal distance value from distance_based on lower quantile
         # and distance_based on upper quantile
         # if val_1 >= 0 or val_1 < 0 and val_2 > 0 or val_2 <= 0:  # REMOVE
-        if d_up >= 0 and d_down < 0:
+        if d_up > 0 and d_down < 0:
             direction = 1.
-        elif d_up < 0 and d_down >= 0:
+            d_value = direction * (abs(d_up) + abs(d_down))
+        elif d_up < 0 and d_down > 0:
             direction = -1.
-        get_distance_df.loc['d', col] = direction * (abs(d_up) + abs(d_down))
+            d_value = direction * (abs(d_up) + abs(d_down))
+        else:
+            d_value = np.nan
+        get_distance_df.loc['d', col] = d_value
 
     # set up final data frame for distance evaluation
     get_distance_df.loc['|d|'] = abs(get_distance_df.loc['d'].values)
     # sort values by abs-value of |d|
-    get_distance_df = get_distance_df.T.sort_values(by='|d|', axis=0, ascending=False).T
-    # get_distance_df.loc["sort"] = abs(get_distance_df.loc["|d|"].values)  # REMOVE
+    get_distance_df = get_distance_df.T.sort_values(
+        by='|d|', axis=0, kind='stable', ascending=False, na_position='last'
+    ).T
+
+    # Normalize the distance values
+    bool_idx = get_distance_df.loc['d'].notna()
+    sum_of_distance = get_distance_df.loc['|d|', :].sum(skipna=True)
+    for col in get_distance_df.columns[bool_idx]:
+        get_distance_df.loc['d_norm', col] = get_distance_df.loc['d', col] / sum_of_distance
+    get_distance_df.loc['|d_norm|'] = abs(get_distance_df.loc['d_norm'].values)
+    assert np.allclose(get_distance_df.loc['|d_norm|', :].sum(skipna=True), 1.0), \
+        "np.allclose(get_distance_df.loc['|d_norm|', :].sum(skipna=True), 1.0) is False."
+
     print("Dimension of distance matrix:")
     print(get_distance_df.shape)
-    print("end computation")
+    print('')
 
     return get_distance_df
 
@@ -421,7 +436,7 @@ def make_plot(
     index = np.arange(len(labels))
     ax.bar(
         index,
-        abs(data.loc["|d|"].values),
+        abs(data.loc["|d_norm|"].values),
         width=w,
         color="darkblue",
         align="center",
@@ -435,7 +450,7 @@ def make_plot(
 
     plt.savefig(os.path.join(outputdir, name + ".png"), dpi=600)
     plt.savefig(os.path.join(outputdir, name + ".pdf"), format="pdf", bbox_inches="tight")
-    plt.show()
+    plt.close()
 
 
 def ESPY_measurement(
@@ -486,6 +501,7 @@ def ESPY_measurement(
 
     print("Statistics of features:")
     print(statistics)
+    print('')
 
     if identifier == 'simulated':
 
@@ -523,6 +539,6 @@ def ESPY_measurement(
         )
 
     end = time.time()
-    print("end of computation after: ", str(end - start), "seconds")
+    print(f"end of computation after: {end - start} seconds.\n")
 
     return distance_matrix_for_all_feature_comb
