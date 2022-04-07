@@ -127,9 +127,9 @@ def SHAP_values(
                 format="pdf", bbox_inches="tight")
 
     if isinstance(shap_values, np.ndarray):
-        np.save(f"SHAP_values_simulated_data_{timestamp}.npy", shap_values)
+        np.save(os.path.join(outputdir, f"SHAP_values_simulated_data_{timestamp}.npy"), shap_values)
     elif isinstance(shap_values, list):
-        np.savez(f"SHAP_values_simulated_data_{timestamp}.npyz", *shap_values)
+        np.savez(os.path.join(outputdir, f"SHAP_values_simulated_data_{timestamp}.npz"), *shap_values)
     else:
         warnings.warn("Couldn't save shap values, since they were of "
                       f"unexpected type {type(shap_values)}.")
@@ -157,7 +157,7 @@ if __name__ == "__main__":
 
     timestamp = datetime.now().strftime("%d.%m.%Y_%H-%M-%S")
     print(
-        "Evaluation of informative features based on SHAP values has started at {timestamp}."
+        f"Evaluation of informative features based on SHAP values has started at {timestamp}."
     )
 
     SHAP_values(model=rbf_SVM_model, X_train=X_train, X_test=X_test, outputdir=outputdir)
