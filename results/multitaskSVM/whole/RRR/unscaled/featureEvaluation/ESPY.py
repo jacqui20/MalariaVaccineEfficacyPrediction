@@ -31,6 +31,7 @@ and the Feature_Evaluation_multitask_SVM.py script.
 """
 
 import argparse
+from datetime import datetime
 import os
 import pandas as pd
 import numpy as np
@@ -62,10 +63,12 @@ def main(
     print("at time point                = ", str(timepoint))
     print("\n")
 
+    timestamp = datetime.now().strftime("%d.%m.%Y_%H-%M-%S")
+
     if identifier == 'simulated':
 
         data = pd.read_csv(os.path.join(data_dir, 'simulated_data.csv'))
-        output_filename = f"ESPY_values_on_{identifier}_data"
+        output_filename = f"ESPY_values_on_{identifier}_data_{timestamp}"
 
         X_train, X_test, y_train, y_test = train_test_split(
             data.iloc[:, :1000].to_numpy(),
@@ -127,7 +130,7 @@ def main(
         data = pd.read_csv(os.path.join(data_dir, f'preprocessed_{identifier}_data_sorted.csv'))
         rgscv_results = pd.read_csv(rgscv_path, delimiter="\t", header=0, index_col=0)
 
-        output_filename = f"ESPY_values_on_{identifier}_data_{timepoint}"
+        output_filename = f"ESPY_values_on_{identifier}_data_{timepoint}_{timestamp}"
 
         timepoint_results = select_timepoint(rgscv_results, timepoint)
         params = get_parameters(timepoint_results, "multitask")
