@@ -370,8 +370,8 @@ def compute_distance_hyper(
         get_distance_df.loc["UQ - consensus [d]", col] = d_up
 
         # get evaluated distance based on lower quantile minus consensus
-        d_down = (get_distance_df[col].iloc["LowerQuantile [d]"] -
-                  get_distance_df[col].iloc["consensus [d]"])
+        d_down = (get_distance_df[col].loc["LowerQuantile [d]"] -
+                  get_distance_df[col].loc["consensus [d]"])
         get_distance_df.loc["LQ - consensus [d]", col] = d_down
 
         # calculate maximal distance value from distance_based on lower quantile
