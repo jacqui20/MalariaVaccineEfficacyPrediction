@@ -34,6 +34,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import roc_auc_score
 import matplotlib.pyplot as plt
 import shap
+import warnings
 
 
 def svm_model(
@@ -106,7 +107,7 @@ def svm_model(
     return model
 
 
-def SHAP_value(
+def SHAP_values(
     model: SVC,
     X_train: np.ndarray,
     X_test: np.ndarray,
@@ -117,7 +118,17 @@ def SHAP_value(
 
     shap.initjs()
     shap.summary_plot(shap_values, X_test, show=False)
-    plt.savefig(os.path.join(outputdir, "SHAP_value_simulated_data.png"), dpi=600)
+    plt.savefig(os.path.join(outputdir, "SHAP_values_simulated_data.png"), dpi=600)
+    plt.savefig(os.path.join(outputdir, "SHAP_values_simulated_data.pdf"),
+                format="pdf", bbox_inches="tight")
+
+    if isinstance(shap_values, np.ndarray):
+        np.save("SHAP_values_simulated_data.npy", shap_values)
+    elif isinstance(shap_values, list):
+        np.savez("SHAP_values_simulated_data.npyz", *shap_values)
+    else:
+        warnings.warn("Couldn't save shap values, since they were of "
+                      f"unexpected type {type(shap_values)}.")
 
 
 if __name__ == "__main__":
@@ -144,7 +155,7 @@ if __name__ == "__main__":
         "Evaluation of informative features based on SHAP values has started."
     )
 
-    SHAP_value(model=rbf_SVM_model, X_train=X_train, X_test=X_test, outputdir=outputdir)
+    SHAP_values(model=rbf_SVM_model, X_train=X_train, X_test=X_test, outputdir=outputdir)
 
     print(
         "Evaluation has terminated and results are saved in "
