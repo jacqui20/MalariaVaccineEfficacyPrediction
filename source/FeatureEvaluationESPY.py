@@ -351,7 +351,11 @@ def compute_distance_hyper(
                 raise ValueError("You must supply `data` and `kernel_parameters`.")
 
     # get data frame of distances values for median, lower and upper quantile
-    get_distance_df = pd.DataFrame([get_distance_upper, get_distance_lower], columns=labels)
+    get_distance_df = pd.DataFrame(
+        [get_distance_upper, get_distance_lower],
+        columns=labels,
+        index=["UpperQuantile [d]", "LowerQuantile [d]"],
+    )
 
     # add distance of consensus feature
     get_distance_df.loc["consensus [d]"] = np.repeat(d_cons, len(get_distance_df.columns))
@@ -359,36 +363,31 @@ def compute_distance_hyper(
     print(len(get_distance_df.columns))
 
     # calculate absolute distance value |d| based on lower and upper quantile
-    d_value = 0
-    for col in get_distance_df:
+    for col in get_distance_df.columns:
         # get evaluated distance based on upper quantile minus consensus
-        val_1 = get_distance_df[col].iloc[0] - get_distance_df[col].iloc[2]
-        get_distance_df.loc["UQ - consensus [d]", col] = val_1
+        d_up = (get_distance_df[col].loc["UpperQuantile [d]"] -
+                get_distance_df[col].loc["consensus [d]"])
+        get_distance_df.loc["UQ - consensus [d]", col] = d_up
 
         # get evaluated distance based on lower quantile minus consensus
-        val_2 = get_distance_df[col].iloc[1] - get_distance_df[col].iloc[2]
-        get_distance_df.loc["LQ - consensus [d]", col] = val_2
+        d_down = (get_distance_df[col].iloc["LowerQuantile [d]"] -
+                  get_distance_df[col].iloc["consensus [d]"])
+        get_distance_df.loc["LQ - consensus [d]", col] = d_down
 
         # calculate maximal distance value from distance_based on lower quantile
         # and distance_based on upper quantile
-        if val_1 >= 0 or val_1 < 0 and val_2 > 0 or val_2 <= 0:
-            a = max(abs(val_1), abs(val_2))
-            if a == abs(val_1):
-                d_value = val_1
-            else:
-                d_value = val_2
-
-        get_distance_df.loc["|d|", col] = d_value
+        # if val_1 >= 0 or val_1 < 0 and val_2 > 0 or val_2 <= 0:  # REMOVE
+        if d_up >= 0 and d_down < 0:
+            direction = 1.
+        elif d_up < 0 and d_down >= 0:
+            direction = -1.
+        get_distance_df.loc['d', col] = direction * (abs(d_up) + abs(d_down))
 
     # set up final data frame for distance evaluation
-    get_distance_df = get_distance_df.rename(
-        {0: "UpperQuantile [d]", 1: "LowerQuantile [d]"},
-        axis='index'
-    )
-    get_distance_df.loc['|d|'] = abs(get_distance_df.loc["|d|"].values)
-    get_distance_df = get_distance_df.T.sort_values(by="|d|", ascending=False).T
+    get_distance_df.loc['|d|'] = abs(get_distance_df.loc['d'].values)
     # sort values by abs-value of |d|
-    get_distance_df.loc["sort"] = abs(get_distance_df.loc["|d|"].values)
+    get_distance_df = get_distance_df.T.sort_values(by='|d|', axis=0, ascending=False).T
+    # get_distance_df.loc["sort"] = abs(get_distance_df.loc["|d|"].values)  # REMOVE
     print("Dimension of distance matrix:")
     print(get_distance_df.shape)
     print("end computation")

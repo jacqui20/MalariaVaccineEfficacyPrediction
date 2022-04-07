@@ -103,7 +103,7 @@ def make_symmetric_matrix_psd(
 ) -> Tuple[np.ndarray, List[float], List[str]]:
     """ Spectral Translation approach
     Tests, if a given symmetric matrix is positive semi-definite (psd) and, if not,
-    a damping value c is iteratively added to the matrix diagonal, i.e. `X = X + c * I`,
+    a damping value `c` is iteratively added to the matrix diagonal, i.e. `X = X + c * I`,
     until the kernel matrix becomes positive semi-definite.
     Non-positive-semi-definiteness will be tested via a spectral criterion:
     If `X` has negative or complex eigenvalues, `X` can not be psd.
@@ -118,13 +118,20 @@ def make_symmetric_matrix_psd(
         Symmetric matrix to test and make psd, if necessary.
     epsilon_factor : float, default = 1e3
         Factor `epsilon_factor` to multiply the machine precision `np.finfo(X.dtype).eps` with,
-        resulting in `c = epsilon_factor * np.finfo(X.dtype).eps` beinig the mimimum value
+        resulting in `epsilon = epsilon_factor * np.finfo(X.dtype).eps` being the mimimum value
         to add to the diagonal of `X`, if `X` is not psd.
 
     Returns
     -------
     X_psd : np.ndarray
         Symmetric positive semi-definite matrix.
+    c_list : list
+        List of damping_values `c` added to the diagonal.
+    info_list : list
+        List of strings telleing, if the damping was applied due to a negative real part
+        ('negative') or a imaginary part ('imaginary') of an eigenvalue. If the damping value `c`
+        is smaller than `epsilon`, i.e. `c < epsilon = epsilon_factor * np.finfo(X.dtype).eps`,
+        a str '_epsilon' will be appended resulting in 'negative_epsilon' or 'imaginary_epsilon'.
     """
     epsilon = epsilon_factor * np.finfo(X.dtype).eps
     c_list = []
@@ -716,6 +723,13 @@ def make_kernel_matrix(
     -------
     multi_AB_signals_time_dose_kernel_matrix : np.ndarray
         Returns a combined matrix.
+    c_list : list
+        List of damping_values `c` added to the diagonal.
+    info_list : list
+        List of strings telleing, if the damping was applied due to a negative real part
+        ('negative') or a imaginary part ('imaginary') of an eigenvalue. If the damping value `c`
+        is smaller than `epsilon`, i.e. `c < epsilon = epsilon_factor * np.finfo(X.dtype).eps`,
+        a str '_epsilon' will be appended resulting in 'negative_epsilon' or 'imaginary_epsilon'.
     """
 
     # get start point of antibody reactivity signals in data (n_p)
