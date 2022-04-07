@@ -25,6 +25,7 @@ the SHAP (SHapley Additive exPlanations) framework on simulated data.
 
 """
 
+from datetime import datetime
 import numpy as np
 import pandas as pd
 import os
@@ -113,19 +114,22 @@ def SHAP_values(
     X_test: np.ndarray,
     outputdir: str,
 ) -> None:
+
+    timestamp = datetime.now().strftime("%d.%m.%Y_%H-%M-%S")
+
     explainer = shap.KernelExplainer(model.predict_proba, X_train)
     shap_values = explainer.shap_values(X_test, l1_reg='num_features(25)')
 
     shap.initjs()
     shap.summary_plot(shap_values, X_test, show=False)
-    plt.savefig(os.path.join(outputdir, "SHAP_values_simulated_data.png"), dpi=600)
-    plt.savefig(os.path.join(outputdir, "SHAP_values_simulated_data.pdf"),
+    plt.savefig(os.path.join(outputdir, f"SHAP_values_simulated_data_{timestamp}.png"), dpi=600)
+    plt.savefig(os.path.join(outputdir, f"SHAP_values_simulated_data_{timestamp}.pdf"),
                 format="pdf", bbox_inches="tight")
 
     if isinstance(shap_values, np.ndarray):
-        np.save("SHAP_values_simulated_data.npy", shap_values)
+        np.save(f"SHAP_values_simulated_data_{timestamp}.npy", shap_values)
     elif isinstance(shap_values, list):
-        np.savez("SHAP_values_simulated_data.npyz", *shap_values)
+        np.savez(f"SHAP_values_simulated_data_{timestamp}.npyz", *shap_values)
     else:
         warnings.warn("Couldn't save shap values, since they were of "
                       f"unexpected type {type(shap_values)}.")
@@ -151,13 +155,15 @@ if __name__ == "__main__":
         y_test_data=y_test,
     )
 
+    timestamp = datetime.now().strftime("%d.%m.%Y_%H-%M-%S")
     print(
-        "Evaluation of informative features based on SHAP values has started."
+        "Evaluation of informative features based on SHAP values has started at {timestamp}."
     )
 
     SHAP_values(model=rbf_SVM_model, X_train=X_train, X_test=X_test, outputdir=outputdir)
 
+    timestamp = datetime.now().strftime("%d.%m.%Y_%H-%M-%S")
     print(
-        "Evaluation has terminated and results are saved in "
+        f"Evaluation has terminated at {timestamp} and results are saved in "
         "../results/SVM/simulated/SHAP as SHAP_value_simulated_data.png."
     )
