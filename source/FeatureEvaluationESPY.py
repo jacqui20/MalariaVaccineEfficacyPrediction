@@ -376,13 +376,18 @@ def compute_distance_hyper(
 
         # calculate maximal distance value from distance_based on lower quantile
         # and distance_based on upper quantile
-        # if val_1 >= 0 or val_1 < 0 and val_2 > 0 or val_2 <= 0:  # REMOVE
         if d_up > 0 and d_down < 0:
             direction = 1.
             d_value = direction * (abs(d_up) + abs(d_down))
         elif d_up < 0 and d_down > 0:
             direction = -1.
             d_value = direction * (abs(d_up) + abs(d_down))
+        elif d_up != 0 and d_down == 0:
+            d_value = d_up
+        elif d_up == 0 and d_down != 0:
+            d_value = d_down
+        elif d_up == d_down == 0:
+            d_value = 0.0
         else:
             d_value = np.nan
         get_distance_df.loc['d', col] = d_value
