@@ -127,9 +127,11 @@ def SHAP_values(
                 format="pdf", bbox_inches="tight")
 
     if isinstance(shap_values, np.ndarray):
-        np.save(os.path.join(outputdir, f"SHAP_values_simulated_data_{timestamp}.npy"), shap_values)
+        np.save(os.path.join(outputdir, f"SHAP_values_simulated_data_{timestamp}.npy"),
+                shap_values)
     elif isinstance(shap_values, list):
-        np.savez(os.path.join(outputdir, f"SHAP_values_simulated_data_{timestamp}.npz"), *shap_values)
+        np.savez(os.path.join(outputdir, f"SHAP_values_simulated_data_{timestamp}.npz"),
+                 *shap_values)
     else:
         warnings.warn("Couldn't save shap values, since they were of "
                       f"unexpected type {type(shap_values)}.")
