@@ -438,12 +438,15 @@ def make_plot(
     w = 0.3
     opacity = 0.6
 
+    values = np.array(data.T.d_norm)
+    clrs = ['red' if (x > 0) else 'blue' for x in values ]
+
     index = np.arange(len(labels))
     ax.bar(
         index,
         abs(data.loc["|d_norm|"].values),
         width=w,
-        color="darkblue",
+        color=clrs,
         align="center",
         alpha=opacity
     )
