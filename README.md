@@ -1,52 +1,48 @@
-# Multitask-SVM
+# Multitask-SVM 
 This repository contains the source code for the adapted Multitask-SVM approach,
 a method for classifying and interpreting the immunisation status of PfSPZ-CVac
 vaccinated volunteers based on antibody profiles recovered from protein arrays.
 
-The details of the method are published here:
-
 ## Overview of the Multitask-SVM approach
-
-The **Multitask-SVM** model is structured into **three methods**:<br>
-1) **the prediction model** multitask_SVM_for_time_series.py, which set-up
-the Multitask-SVM model based on the antibody profiles. The prediction model
-can be executed using the Parser_multitask_SVM.py parser. <br>
-2) **the feature selection method** Feature_Evaluation_multitask_SVM.py,
-which apply the informative distance measurement to evaluate informative features based on their respective
-ESPY score. The underlying multitask-SVM
-model for evaluating the informative features uses the evaluated parameters
-from part 1). The feature selection method can be executed using
-the Parser_feature_selection.py parser.<br>
-3) **the normal distribution fitting model** Normal_Distribution_Fitting.py,
-which fits the evaluated absolute distances for each features from part 2)
-to a normal distribution to determine significant features by their respective
-p-value < 0.05. The normal distribution fitting model can be executed using
-the Parser_normal_distribution_fitting.py parser.
+The multitask-SVM approach is set up into two main parts. The first part is the
+assessment of performance measurement in comparison to state-of-the-art methods. 
+In the second part the ESPY method is used to quantify informative features from 
+the non-linear multitask-SVM model in comparison to the state-of-the art methods. 
+All executable code can be found in the 
+[./bin](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/bin) folder.
 
 ## Requirements
 
-This project requires python == 3.6.5
+This project requires the malaria_environment.yml environment. Please install 
+and activate the malaria_environment.yml environment before executing any code. <br>
+All code can be executed via the terminal from the ./bin folder.
 
-## Structure of input data
-The following data table gives an overview of the input data structure: <br>
+```
+conda env create -f malaria_environment.yml
+conda activate malaria_environment
+```
+
+## Structure of proteome data
+The following data table gives an overview of the data structure of
+the proteome raw data: <br>
 (file format: .csv file)
 
-| Patient | group | Protection | Dose | TimePointOrder | feature 1 | ... | feature n|
---------| ------| ---------- | ---- | ---------------| -------- | ----| ---------|
-| ID-01 III14  | 01 | 1   | 1 | 2 | 300.5 |... |... |
-| ID-01 C1  | 01    | 1   | 1 | 3 | 320.0 |... |... |
-| ID-01 C28  | 01   | 1   | 1 | 4 | 400.0 |... |... |
-| ID-02 III14  | 02 | 0   | 0 | 2 | 1000.5 |... |... |
-| ID-02 C1  | 02    | 0   | 0 | 3 | 1200.0 |... |... |
-| ID-02 C28  | 02   | 0   | 0 | 4 | 1100.5 |... |... |
-| ID-03 III14  | 03 | 1   | 4 | 2 | 600.3 |... |... |
-| ID-03 C1  | 03    | 1   | 4 | 3 | 400.3 |... |... |
-| ID-03 C28  | 03   | 1   | 4 | 4 | 200.0 |... |... |
-| ......  | ....    | ..  | .. | ..| ... |... |... |
+| Patient     | group | Protection | Dose | TimePointOrder | feature 1 | ... | feature n |
+|-------------|-------|------------|------|----------------|-----------|-----|-----------|
+| ID-01 III14 | 01    | 1          | 1    | 2              | 300.5     | ... | ...       |
+| ID-01 C1    | 01    | 1          | 1    | 3              | 320.0     | ... | ...       |
+| ID-01 C28   | 01    | 1          | 1    | 4              | 400.0     | ... | ...       |
+| ID-02 III14 | 02    | 0          | 0    | 2              | 1000.5    | ... | ...       |
+| ID-02 C1    | 02    | 0          | 0    | 3              | 1200.0    | ... | ...       |
+| ID-02 C28   | 02    | 0          | 0    | 4              | 1100.5    | ... | ...       |
+| ID-03 III14 | 03    | 1          | 4    | 2              | 600.3     | ... | ...       |
+| ID-03 C1    | 03    | 1          | 4    | 3              | 400.3     | ... | ...       |
+| ID-03 C28   | 03    | 1          | 4    | 4              | 200.0     | ... | ...       |
+| ......      | ....  | ..         | ..   | ..             | ...       | ... | ...       |
 
 
-Column **group** represents the ID of the patient, necessary for the stratified
-k-fold cross-validation. In column **Dose** the int value represents the respective
+Column **group** represents the ID of the patient, necessary for the 10-times nested stratified
+5-fold cross-validation. In column **Dose** the int value represents the respective
 PfSPZ dose: {0 : placebo; 1 : 3.2 * 10^3 PfSPZ; 2 : 1.28 * 10^4 PfSPZ; 4 : 5.12 * 10^4 PfSPZ}
 and the int value of column **TimePointOrder** represents the day of taken blood sera {2 : III14 post-immunization;
 3 : C-1 pre-CHMI; 4 : C+28 post-CHMI}.
@@ -55,9 +51,10 @@ and the int value of column **TimePointOrder** represents the day of taken blood
 You can find the raw data of the underlying Pf-specific proteome
 microarray-based antibody reactivity profile containing all 7,455 Pf-specific
 antigens (features) and the raw data of the pre-selected
-Pf-specific cell surface proteins (m = 1,194) in ./data/proteome_data.
+Pf-specific cell surface proteins (m = 1,194) in 
+[./data/proteome_data](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/data/proteome_data).
 Both files contain the raw data and has to be baseline and log2-fold normalized
-using the Datapreprocessing.py script in ./bin/DataPreprocessing.
+using the Datapreprocessing.py script.
 
 ### Preprocessing of the Data
 Datapreprocessing.py has to be executed in the ./bin folder.
@@ -71,113 +68,43 @@ the preprocessed data is now saved in ./data/proteome_data as:
 preprocessed_whole_data.csv and preprocessed_selective_data.csv
 ```
 
-## Train and evaluate the Multitask-SVM prediction model
+### Prediction performance assesment of the multitask-SVM in comparison to state-of-the-art methods
+Here we give a short introduction how to run the 10-times repeated nested stratisfied 5-fold cross-validation 
+for the multitask-SVM and the two state-of-the-art-methods, namely regularized logistic regression (RLR) and
+single-task-SVM. The Random Forest (RF) approach from Veletta and Recker et. al can be found
+[here](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005812). However, we stronly advise 
+not to run the prediction performance evaluation on a simple machine because it is computationally intensive. 
 ### Arguments
-<span style = "color: orange">Parser_multitask_SVM</span>( --infile = <span style = "color: lightblue">path_to_proteome_array</span>, --kernel_parameter = <span style = "color: lightblue">path_to_kernel_parameter</span>, --output_file_name = <span style = "color: lightblue">name_of_output_file</span>, --k_fold = <span style = "color: lightblue">number_of_folds</span>, --partitions = <span style = "color: lightblue">partition</span>, --iterations = <span style = "color: lightblue">number_of_iteration</span>, --AUC_threshold = <span style = "color: lightblue">threshold_AUC_value</span>,
-  --kernel_for_dosage = <span style = "color: lightblue">kernel_parameter_for_dosage</span>, --kernel_for_ab_signal = <span style = "color: lightblue">kernel_parameter_for_ab_signal</span>)
 
-| Name    | Type    | Description                             | Default   |
-| -----   | -----   | ------------                           | ---  |
-| --infile  | str     | path to pre-processed proteome matrix as n x m matrix (where n = samples in rows, m = features as columns) concatenated with auxallery information: the 'group' of each patient, the 'protection state', the 'dosage' and the 'time point',as .csv file (comma-delimited file) |
-|--kernel_parameter | .csv file | .csv file with kernel parameter ranges  |
-|--output_file_name | str | name of output file name, self-defined| Result_multitask_SVM_|
-|--k_fold| int | number of k folds for stratified cross-validation| 5|
-| --partition  | float | number of partitions for train test split| 0.3
-| --iterations   | int   | number of iterations of prediction on unseen data | 10
-| --kernel_for_dosage  | str   | defines the kernel function for the vector of PfSPZ dose                                        in the kernel combination evaluation. <span style = "color: lightblue">rbf_dosage</span> for rbf kernel for the PfSPZ dose and <span style = "color: lightblue">poly_dosage</span> the polynomial kernel. | poly_dosage
-| --kernel_for_ab_signal | str | defines the kernel function for the antibody signal intensity in the kernel combination evaluation. <span style = "color: lightblue">rbf_ab_signal</span> for rbf kernel for the antibody signal intensity and <span style = "color: lightblue">poly_ab_signal</span> the polynomial kernel. | rbf_ab_signal
+```
+# execute multitask-SVM
+./run_rncv_multitask_r.sh
+
+# execute RLR
+./run_rncv_RLR.sh
+
+#execute single-task SVM
+./run_rncv_SVM.sh
+```
+
+## Apply ESPY
+Here we show how to apply the ESPY method to the artficial data and the proteome data sets. 
+
+### On artificial data 
+To run ESPY on artificial data you have to specify the following parameters:
+
+| Name         | Type | Description                                                                               | 
+|--------------|------|-------------------------------------------------------------------------------------------|
+| --data-dir   | DIR  | Path to the directory where the simulated data is located.                                |     
+| --out-dir    | DIR  | Path to the directory were the results shall be saved.                                    |     
+| --identifier | str  | String to identify the dataset. <br/>Must be one of 'whole', 'selective', or 'simulated'. |    
 
 
-Example: to run the multitask-SVM method the preprocessed proteome data <span style = "color: lightblue">preprocessed_whole_data.csv</span> and <span style = "color: lightblue">preprocessed_selective_data.csv</span> in /Data after applying the Datapreprocessing.py script can be used.
-
-Multitask-SVM on preprocessed proteome data:
 
 ```python
- python Parser_multitask_SVM.py --infile /Users/.../preprocessed_whole_data.csv
-  --kernel_parameter /Users/../kernel_parameter.csv Results_multitask_SVM
-  --output_file_name Result_multitask_SVM_ --k_fold 5 --partition 0.3
-  --iterations 10 --kernel_for_dosage poly_dosage
-  --kernel_abSignals poly_ab_signal
-```
-
-Output:
-```
-  The multitask-SVM approach is initialized with the following parameters:
-  number of k-folds        =  5
-  number of partition      = 0.3
-  number of iteration      = 10
-  kernel function for antibody signal intensities = poly_kernel
-  kernel function for dose = poly_kernel
-  name of output file = Result_multitask_SVM_
-
-  loaded input file:
-      Patient       group    Protection  Dose        ...           
-0    T2-002 C -1      2           1       1          ...                  
-1    T2-002 C 28      2           1       1          ...                   
-2  T2-002 III 14      2           1       1          ...                   
-3    T2-005 C -1      5           0       0          ...                               
-4    T2-005 C 28      5           0       0          ...
-[5 rows x 7460 columns]
-
-  Evaluation of prediction performance starts
-  Computation of multitask-SVM performance is running
-  Prediction performance evaluation stopped after ~ 500 seconds
-
-
-  results saved in: Result_multitask_SVM_at_t2_poly_kernel_ABsignals_poly_kernel_dosage.csv
-  results saved in: Result_multitask_SVM_at_t3_poly_kernel_ABsignals_poly_kernel_dosage.csv
-  results saved in: Result_multitask_SVM_at_t3_poly_kernel_ABsignals_poly_kernel_dosage.csv
-
-```
-
-## Apply the feature selection method
-### Arguments
-<span style = "color: orange">Parser_feature_selection</span>( infile = <span style = "color: lightblue">path_to_proteome_array</span>, results_of_multitask-SVM_approach = <span style = "color: lightblue">path_to_the_evaluated_results_of_the_multitask-SVM_approach</span>, up = <span style = "color: lightblue">value_of_upper_quantile</span>, lq = <span style = "color: lightblue">value_of_lower_quantile</span>)
-
-| Name    | Type    | Description                             | Default   |
-| -----   | -----   | ------------                           | ---  |
-| --infile  | path     | path to pre-processed proteome matrix as n x m matrix (where n = samples in rows, m = features as columns) concatenated with auxiliary information: the 'group' of each patient, the 'protection state', the 'dosage' and the 'time point',as .csv file (comma-delimited file) |
-| --results_of_multitask-SVM_approach | path | path to the evaluated results from the multitask-SVM approach |
-| --up | int | percentage for the upper quantile | 75 |
-| --lq | int | percentage for the lower quantile | 25 |
-| --Normal_Distribution_Fitting | | apply Normal_Distribution_Fitting | if not specified Normal_Distribution_Fitting is False
-
-Example: example data to run the feature selection method can be found here
-
-ESPY measurement on proteome array data:
-
-```python
-  python ESPY.py --infile /Users/../pre_processed_proteome_data.csv
-  --results_of_multitask-SVM_approach /Users/../
-  --up 75 --lq 25
-```
-Output:
-```
-The feature selection approach is initialized with the following parameters:
-value of upper quantile      =  75
-value of lower quantile      =  25
-
-input file:  preprocessed_malaria_minusBS_data.csv
-name of loaded result file from multitask-SVM evaluation: Results_multitask_classification_wholeChip_minusBS_atC-1_ABsignals_rbf_DOSEpoly_10_iterations_paramter_validation
-
-
-ESPY value measurement started on proteome array data:
-
-selected time point to start feature analysis with respect to evaluated prediction performance is  3
-selected kernel for AB signals is rbf kernel with a value of:  1e-06
-selected kernel for dose is polynomial kernel with a value of:  5.0
-Dimension of proteome data at time point 3 is  (40, 7460)
-Length of matrix of feature combination at time point 3 for importance eval:  14911
-Number of columns of evaluated distance matrix
-7455
-end computation
-end of computation after:  xxx seconds
-results are saved in: Result_of_feature_distance_at_timePoint_3.csv
-```
-ESPY measurement on simulated data:
-
-```python
-  python ESPY.py --infile /Users/../simulated_data.csv
+  python ESPY.py --data-dir /Users/.../MalariaVaccineEfficacyPrediction/results/SVM/simulated/ESPY 
+--out-dir /Users/.../MalariaVaccineEfficacyPrediction/results/SVM/simulated/ESPY  
+--identifier "simulated"
 ```
 Output:
 ```
@@ -196,74 +123,40 @@ AUC score on unseen data: 0.879800853485064
 results are saved in: /.../MalariaVaccineEfficacyPrediction/results/simulated_data/Evaluated_features_on_simulated_data.csv
 
 ```
-ESPY measurement on simulated data with Normal_Distribution_Fitting:
 
-```python
-  python ESPY.py --infile /Users/../simulated_data.csv --Normal_Distribution_Fitting
+### On proteome data
+To run ESPY on the proteome data sets you can easily run the shell script runESPY_proteome.sh via 
 ```
-Output:
+./runESPY_proteome.sh
 ```
-The feature selection approach is initialized with the following parameters:
-value of upper quantile      =  75
-value of lower quantile      =  25
+and the output files for the whole and the selective proteome array per 
+time point are generated automatically. The output files are stored 
+[here](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/results/multitaskSVM) in the 
+pre-defined folders for the whole and selective data. <br>
 
 
-input file:  simulated_data.csv
-ESPY value measurement started on simulated data:
-
-The best parameters are {'C': 10.0, 'gamma': 0.001} with a mean AUC score of 0.90
-AUC score on unseen data: 0.879800853485064
-
-
-results are saved in: /.../MalariaVaccineEfficacyPrediction/results/simulated_data/Evaluated_features_on_simulated_data.csv
-
-Normal distribution fitting is running to evaluate informative features with p-value < 0.05 on simulated data:
-
-
-Number of evaluated significant features: 50
-
-results are saved in: /.../MalariaVaccineEfficacyPrediction/results/simulated_data/Evaluated_significant_features_on_simulated_data.csv and Evaluated_significant_features.png
-
+## Apply feature evaluation of RLR 
+To run the feature evaulation of the RLR method yyou can easily run the shell script run_featureEvalRLR.sh via
 ```
-
-## Apply SHAP framework on simulated data
+./run_featureEvalRLR.sh
+```
+and the output files for the whole and selective proteome array data are automatically generated per time point. 
+The output files are stored [here](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/results/RLR)
+in the pre-defined folders for the whole and selective data.
+## Apply SHAP framework on artificial data
 To run the SHAP (SHapley Additive exPlanations) framework from Lundberg et al.
-execute SHAP_evaluation.py in the ./bin folder
+execute SHAP_evaluation.py 
+
+```python
+python SHAP_evaluation.py
+```
 
 Output:
 ```
 The best parameters are {'C': 10.0, 'gamma': 0.001} with a mean AUC score of 0.90
 AUC score on unseen data: 0.879800853485064
+Evaluation of informative features based on SHAP values has started at 10.04.2022_19-21-49.
 
-Evaluation of informative features based on SHAP values started
-
-Evaluation terminated and results are saved in ./results as SHAP_value_simulated_data.png
-
+Evaluation terminated and results are saved in ./results
 ```
 
-
-# Environment activation
-
-```
- conda env create -f environment.yml
- conda activate -n Vaccine_efficacy_prediction
-```
-
-# Help
-
-You can run
-
-$ python Parser_multitask_SVM.py --help
-
-to get the list of the positional and conditional arguments to run the
-prediction model.
-
-$ python Parser_feature_selection.py --help
-
-gives you the list of positional and conditional arguments to run the
-feature selection approach.
-
-$ $ python Parser_normal_distribution_fitting.py --help
-
-gives you the ist of positional and conditional arguments to evaluate the
-significant features fitting to a normal distribution.
