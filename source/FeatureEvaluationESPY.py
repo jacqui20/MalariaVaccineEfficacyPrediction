@@ -167,7 +167,7 @@ def make_feature_combination(
     statistics : pd.Dataframe
         Statistics (median, lower and upper percentile) of features.
     median : np.ndarray
-        The median vector `m`.
+        The median (over the samples) vector `m`.
     combinations : dict
         Dict of feature combinations.
         `combinations["lower_combinations"]` is a list of length n_features,
@@ -182,7 +182,7 @@ def make_feature_combination(
     assert 0 <= upperValue <= 100, "`upperValue` must be in [0, 100]"
     assert 0 <= lowerValue <= upperValue, "`lowerValue` must be in [0, upperValue]"
 
-    statistics = X.median().to_frame(name="Median")
+    statistics = X.median(axis=0).to_frame(name="Median")
     statistics["UpperQuantile"] = X.quantile(float(upperValue) / 100.)
     statistics["LowerQuantile"] = X.quantile(float(lowerValue) / 100.)
     statistics = statistics.T
@@ -227,6 +227,8 @@ def compute_distance_hyper(
 
     Parameter
     ---------
+    median : np.ndarray
+        Median (over the samples) vector.
     combinations : list
         List of combinations of feature values and their upper and lower percentile.
     model : sklearn.svm.SVC
