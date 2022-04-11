@@ -1,19 +1,19 @@
-# Multitask-SVM 
+# Multitask-SVM
 This repository contains the source code for the adapted Multitask-SVM approach,
 a method for classifying and interpreting the immunisation status of PfSPZ-CVac
 vaccinated volunteers based on antibody profiles recovered from protein arrays.
 
 ## Overview of the Multitask-SVM approach
 The multitask-SVM approach is set up into two main parts. The first part is the
-assessment of performance measurement in comparison to state-of-the-art methods. 
-In the second part the ESPY method is used to quantify informative features from 
-the non-linear multitask-SVM model in comparison to the state-of-the art methods. 
-All executable code can be found in the 
+assessment of performance measurement in comparison to state-of-the-art methods.
+In the second part the ESPY method is used to quantify informative features from
+the non-linear multitask-SVM model in comparison to the state-of-the art methods.
+All executable code can be found in the
 [./bin](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/bin) folder.
 
 ## Requirements
 
-This project requires the malaria_environment.yml environment. Please install 
+This project requires the malaria_environment.yml environment. Please install
 and activate the malaria_environment.yml environment before executing any code. <br>
 All code can be executed via the terminal from the ./bin folder.
 
@@ -51,7 +51,7 @@ and the int value of column **TimePointOrder** represents the day of taken blood
 You can find the raw data of the underlying Pf-specific proteome
 microarray-based antibody reactivity profile containing all 7,455 Pf-specific
 antigens (features) and the raw data of the pre-selected
-Pf-specific cell surface proteins (m = 1,194) in 
+Pf-specific cell surface proteins (m = 1,194) in
 [./data/proteome_data](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/data/proteome_data).
 Both files contain the raw data and has to be baseline and log2-fold normalized
 using the Datapreprocessing.py script.
@@ -69,11 +69,11 @@ preprocessed_whole_data.csv and preprocessed_selective_data.csv
 ```
 
 ### Prediction performance assesment of the multitask-SVM in comparison to state-of-the-art methods
-Here we give a short introduction how to run the 10-times repeated nested stratisfied 5-fold cross-validation 
+Here we give a short introduction how to run the 10-times repeated nested stratisfied 5-fold cross-validation
 for the multitask-SVM and the two state-of-the-art-methods, namely regularized logistic regression (RLR) and
 single-task-SVM. The Random Forest (RF) approach from Veletta and Recker et. al can be found
-[here](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005812). However, we stronly advise 
-not to run the prediction performance evaluation on a simple machine because it is computationally intensive. 
+[here](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005812). However, we stronly advise
+not to run the prediction performance evaluation on a simple machine because it is computationally intensive.
 ### Arguments
 
 ```
@@ -88,12 +88,12 @@ not to run the prediction performance evaluation on a simple machine because it 
 ```
 
 ## Apply ESPY
-Here we show how to apply the ESPY method to the artficial data and the proteome data sets. 
+Here we show how to apply the ESPY method to the simulated data and the proteome data sets.
 
-### On artificial data 
-To run ESPY on artificial data you have to specify the following parameters:
+### On simulated data
+To run ESPY on simulated data you have to specify the following parameters:
 
-| Name         | Type | Description                                                                               | 
+| Name         | Type | Description                                                                               |
 |--------------|------|-------------------------------------------------------------------------------------------|
 | --data-dir   | DIR  | Path to the directory where the simulated data is located.                                |     
 | --out-dir    | DIR  | Path to the directory were the results shall be saved.                                    |     
@@ -102,7 +102,7 @@ To run ESPY on artificial data you have to specify the following parameters:
 
 
 ```python
-  python ESPY.py --data-dir /Users/.../MalariaVaccineEfficacyPrediction/results/SVM/simulated/ESPY 
+  python ESPY.py --data-dir /Users/.../MalariaVaccineEfficacyPrediction/results/SVM/simulated/ESPY
 --out-dir /Users/.../MalariaVaccineEfficacyPrediction/results/SVM/simulated/ESPY  
 --identifier "simulated"
 ```
@@ -125,27 +125,27 @@ results are saved in: /.../MalariaVaccineEfficacyPrediction/results/simulated_da
 ```
 
 ### On proteome data
-To run ESPY on the proteome data sets you can easily run the shell script runESPY_proteome.sh via 
+To run ESPY on the proteome data sets you can easily run the shell script runESPY_proteome.sh via
 ```
 ./runESPY_proteome.sh
 ```
-and the output files for the whole and the selective proteome array per 
-time point are generated automatically. The output files are stored 
-[here](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/results/multitaskSVM) in the 
+and the output files for the whole and the selective proteome array per
+time point are generated automatically. The output files are stored
+[here](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/results/multitaskSVM) in the
 pre-defined folders for the whole and selective data. <br>
 
 
-## Apply feature evaluation of RLR 
-To run the feature evaulation of the RLR method yyou can easily run the shell script run_featureEvalRLR.sh via
+## Apply feature evaluation of RLR
+To run the feature evaluation of the RLR method you can easily run the shell script run_featureEvalRLR.sh via
 ```
 ./run_featureEvalRLR.sh
 ```
-and the output files for the whole and selective proteome array data are automatically generated per time point. 
+and the output files for the whole and selective proteome array data are automatically generated per time point.
 The output files are stored [here](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/results/RLR)
 in the pre-defined folders for the whole and selective data.
-## Apply SHAP framework on artificial data
-To run the SHAP (SHapley Additive exPlanations) framework from Lundberg et al.
-execute SHAP_evaluation.py 
+## Apply SHAP framework on simulated data
+To run the [SHAP](https://github.com/slundberg/shap) (SHapley Additive exPlanations) framework from Lundberg et al.
+execute SHAP_evaluation.py
 
 ```python
 python SHAP_evaluation.py
@@ -159,4 +159,3 @@ Evaluation of informative features based on SHAP values has started at 10.04.202
 
 Evaluation terminated and results are saved in ./results
 ```
-
