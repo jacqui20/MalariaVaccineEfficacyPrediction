@@ -1,13 +1,13 @@
-# Multitask-SVM
-This repository contains the source code for the adapted Multitask-SVM approach,
+# multitask SVM
+This repository contains the source code for the adapted multitask SVM approach,
 a method for classifying and interpreting the immunisation status of PfSPZ-CVac
 vaccinated volunteers based on antibody profiles recovered from protein arrays.
 
-## Overview of the Multitask-SVM approach
-The multitask-SVM approach is set up into two main parts. The first part is the
+## Overview of the multitask SVM approach
+The multitask SVM approach is set up into two main parts. The first part is the
 assessment of performance measurement in comparison to state-of-the-art methods.
 In the second part the ESPY method is used to quantify informative features from
-the non-linear multitask-SVM model in comparison to the state-of-the art methods.
+the non-linear multitask SVM model in comparison to the state-of-the art methods.
 All executable code can be found in the
 [./bin](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/bin) folder.
 
@@ -68,16 +68,16 @@ the preprocessed data is now saved in ./data/proteome_data as:
 preprocessed_whole_data.csv and preprocessed_selective_data.csv
 ```
 
-### Prediction performance assesment of the multitask-SVM in comparison to state-of-the-art methods
+### Prediction performance assesment of the multitask SVM in comparison to state-of-the-art methods
 Here we give a short introduction how to run the 10-times repeated nested stratisfied 5-fold cross-validation
-for the multitask-SVM and the two state-of-the-art-methods, namely regularized logistic regression (RLR) and
+for the multitask SVM and the two state-of-the-art-methods, namely regularized logistic regression (RLR) and
 single-task-SVM. The Random Forest (RF) approach from Veletta and Recker et. al can be found
 [here](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005812). However, we stronly advise
 not to run the prediction performance evaluation on a simple machine because it is computationally intensive.
 ### Arguments
 
 ```
-# execute multitask-SVM
+# execute multitask SVM
 ./run_rncv_multitask_r.sh
 
 # execute RLR
