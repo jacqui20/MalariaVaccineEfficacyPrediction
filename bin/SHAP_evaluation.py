@@ -118,13 +118,25 @@ def SHAP_values(
     timestamp = datetime.now().strftime("%d.%m.%Y_%H-%M-%S")
 
     explainer = shap.KernelExplainer(model.predict_proba, X_train)
+    # Shap_values returns a list of two arrays: 
+    # the first for the negative class probabilities and
+    # the second for the positive class probabilties.
     shap_values = explainer.shap_values(X_test, l1_reg='num_features(25)')
 
+    # Plot shap values for the positive class probabilities:
     shap.initjs()
-    shap.summary_plot(shap_values, X_test, show=False)
-    plt.savefig(os.path.join(outputdir, f"SHAP_values_simulated_data_{timestamp}.png"), dpi=600)
-    plt.savefig(os.path.join(outputdir, f"SHAP_values_simulated_data_{timestamp}.pdf"),
+    shap.summary_plot(shap_values[1], X_test, max_display=25, plot_type='dot', show=False)
+    plt.savefig(os.path.join(outputdir, f"SHAP_values_simulated_data_dot_{timestamp}.pdf"),
                 format="pdf", bbox_inches="tight")
+    plt.close()
+    shap.summary_plot(shap_values[1], X_test, max_display=25, plot_type='bar', show=False)
+    plt.savefig(os.path.join(outputdir, f"SHAP_values_simulated_data_bar_{timestamp}.pdf"),
+                format="pdf", bbox_inches="tight")
+    plt.close()
+    shap.summary_plot(shap_values[1], X_test, max_display=25, plot_type='violin', show=False)
+    plt.savefig(os.path.join(outputdir, f"SHAP_values_simulated_data_violin_{timestamp}.pdf"),
+                format="pdf", bbox_inches="tight")
+    plt.close()
 
     if isinstance(shap_values, np.ndarray):
         np.save(os.path.join(outputdir, f"SHAP_values_simulated_data_{timestamp}.npy"),

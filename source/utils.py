@@ -110,7 +110,7 @@ def make_symmetric_matrix_psd(
     The damping value `c` is derived from the spectrum of `X`: If negative eigenvalues exist,
     `c = max([epsilon_factor * np.finfo(X.dtype).eps, np.min(np.linalg.eigvals(X).real)])`,
     else,if complex but non-negative eigenvalues exist,
-    `c = max([epsilon_factor * np.finfo(X.dtype).eps, np.abs(np.max(eigenvalues.imag))])`.
+    `c = max([epsilon_factor * np.finfo(X.dtype).eps, np.max(np.abs(eigenvalues.imag))])`.
 
     Parameters
     ----------
