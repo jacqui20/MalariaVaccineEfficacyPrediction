@@ -72,7 +72,7 @@ preprocessed_whole_data.csv and preprocessed_selective_data.csv
 Here we give a short introduction how to run the 10-times repeated nested stratisfied 5-fold cross-validation
 for the multitask SVM and the two state-of-the-art-methods, namely regularized logistic regression (RLR) and
 single-task-SVM. The Random Forest (RF) approach from Veletta and Recker et. al can be found
-[here](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005812). However, we **strongly** advise
+[here](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005812). However, we <span style="color: orange;">strongly</span> advise
 not to run the prediction performance evaluation on a simple machine because it is computationally intensive.
 ### Arguments
 
