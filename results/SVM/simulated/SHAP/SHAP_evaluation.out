@@ -1,5 +1,0 @@
-The best parameters are {'C': 10.0, 'gamma': 0.001} with a mean AUC score of 0.90
-AUC score on unseen data: 0.879800853485064
-Evaluation of informative features based on SHAP values has started.
-<IPython.core.display.HTML object>
-Evaluation has terminated and results are saved in ../results/SVM/simulated/SHAP as SHAP_value_simulated_data.png.
