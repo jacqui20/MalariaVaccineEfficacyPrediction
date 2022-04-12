@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2022 Jacqueline Wistuba-Hamprecht and Bernhard Reuter.
+# Copyright (c) 2022 Bernhard Reuter and Jacqueline Wistuba-Hamprecht.
 # ------------------------------------------------------------------------------------------------
 # If you use this code or parts of it, cite the following reference:
 # ------------------------------------------------------------------------------------------------
@@ -21,11 +21,22 @@
 
 # @Author: Bernhard Reuter
 
+# Replace the following line by the path of your own conda.sh file:
 source "/home/breuter/anaconda3/etc/profile.d/conda.sh"
+# This is intended to run in the malaria_env conda environment:
 conda activate malaria_env
 
-maindir='/home/breuter/MalariaVaccineEfficacyPrediction/results/RLR'
-data_dir='/home/breuter/MalariaVaccineEfficacyPrediction/data/timepoint-wise'
+# This is intended to run in the bin folder of the MalariaVaccineEfficacyPrediction package.
+# The MalariaVaccineEfficacyPrediction package should be situated in the users home directory.
+topdir="${HOME}/MalariaVaccineEfficacyPrediction"
+if [ ! -d "$topdir" ]; then
+    { echo "${topdir} doesn't exists."; exit 1; }
+fi
+maindir="${topdir}/results/RLR"
+if [ ! -d "$maindir" ]; then
+    mkdir "$maindir"
+fi
+data_dir="${topdir}/data/timepoint-wise"
 
 for dataset in 'whole' 'selective'; do
 
