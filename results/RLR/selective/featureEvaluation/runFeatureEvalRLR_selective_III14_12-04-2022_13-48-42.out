@@ -1,0 +1,17 @@
+sys.path: ['/Users/schmidtj/MalariaVaccineEfficacyPrediction/results/RLR/selective/featureEvaluation', '/Users/schmidtj/opt/anaconda3/envs/malaria_env/lib/python37.zip', '/Users/schmidtj/opt/anaconda3/envs/malaria_env/lib/python3.7', '/Users/schmidtj/opt/anaconda3/envs/malaria_env/lib/python3.7/lib-dynload', '/Users/schmidtj/opt/anaconda3/envs/malaria_env/lib/python3.7/site-packages', '/Users/schmidtj/MalariaVaccineEfficacyPrediction']
+scikit-learn version: 1.0.2
+pandas version: 1.3.5
+numpy version: 1.21.2
+scipy version: 1.7.3
+Parameter combination for best mean AUC at time point III14 :
+Parameters: {'logisticregression__C': 0.1, 'logisticregression__l1_ratio': 0.9}
+
+Start feature evaluation with dose as auxillary feature:
+Pipeline(steps=[('standardscaler', StandardScaler()),
+                ('logisticregression',
+                 LogisticRegression(C=0.1, l1_ratio=0.9, max_iter=10000,
+                                    penalty='elasticnet', solver='saga'))])
+Number of non-zero weights: 1
+  Pf_antigen_ID    weight
+0          Dose  0.593805
+Results are saved in: /Users/schmidtj/MalariaVaccineEfficacyPrediction/results/RLR/selective/featureEvaluation/RLR_informative_features_selective_data_III14.tsv

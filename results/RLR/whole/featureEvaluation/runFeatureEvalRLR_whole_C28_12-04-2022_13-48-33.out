@@ -1,0 +1,62 @@
+sys.path: ['/Users/schmidtj/MalariaVaccineEfficacyPrediction/results/RLR/whole/featureEvaluation', '/Users/schmidtj/opt/anaconda3/envs/malaria_env/lib/python37.zip', '/Users/schmidtj/opt/anaconda3/envs/malaria_env/lib/python3.7', '/Users/schmidtj/opt/anaconda3/envs/malaria_env/lib/python3.7/lib-dynload', '/Users/schmidtj/opt/anaconda3/envs/malaria_env/lib/python3.7/site-packages', '/Users/schmidtj/MalariaVaccineEfficacyPrediction']
+scikit-learn version: 1.0.2
+pandas version: 1.3.5
+numpy version: 1.21.2
+scipy version: 1.7.3
+Parameter combination for best mean AUC at time point C28 :
+Parameters: {'logisticregression__C': 1.0, 'logisticregression__l1_ratio': 1.0}
+
+Start feature evaluation with dose as auxillary feature:
+Pipeline(steps=[('standardscaler', StandardScaler()),
+                ('logisticregression',
+                 LogisticRegression(l1_ratio=1.0, max_iter=10000,
+                                    penalty='elasticnet', solver='saga'))])
+Number of non-zero weights: 46
+                                 Pf_antigen_ID    weight
+3215        PF3D7_1121600.iso1.exon2.amp1_2679 -0.429951
+6908        PF3D7_0223300.iso1.exon2.amp1_3611 -0.329356
+3968                    PF3D7_1002100.2o2_2704 -0.257181
+21                               PFE1590w_2119 -0.229846
+2641                      PF3D7_1213200.1o1_57 -0.220775
+4483        PF3D7_0833300.iso1.exon1.amp1_1870 -0.200750
+3486        PF3D7_1041100.iso1.exon2.amp1_3013 -0.178448
+4797                   PF3D7_0808200.e1s1_5118 -0.176467
+4220                    PF3D7_0920800.e1s1_251 -0.158936
+3541                     PF3D7_1035200.1o1_117 -0.158885
+4503        PF3D7_0831500.iso1.exon2.amp1_2951 -0.139514
+67                               PFB0300c_4064 -0.135178
+2686        PF3D7_1209500.iso2.exon2.amp1_3320 -0.117710
+3348        PF3D7_1111800.iso1.exon1.amp1_2132 -0.094810
+6562        PF3D7_0400400.iso1.exon1.amp1_1294 -0.093599
+6222        PF3D7_0425800.iso1.exon2.amp1_4183 -0.059323
+3482         PF3D7_1041300.iso1.exon2.amp2_787 -0.058212
+5004                   PF3D7_0726400.e5s1_1866 -0.053928
+1088                    PF3D7_1405500.1o1_2703 -0.053332
+6907        PF3D7_0223400.iso1.exon2.amp1_1856 -0.045293
+2074        PF3D7_1300900.iso1.exon1.amp1_4455 -0.040576
+2509  PF3D7_1223800.iso1.exon1.amp1_short_2872 -0.040387
+1144        PF3D7_1401900.iso1.exon4.amp1_3493 -0.038937
+1534        PF3D7_1343800.iso1.exon1.amp4_1088 -0.036142
+4482        PF3D7_0833400.iso1.exon3.amp1_4185 -0.029847
+2264        PF3D7_1240400.iso1.exon2.amp1_1013 -0.027595
+1017                   PF3D7_1410400.e1s1_2878 -0.025524
+7095                   PF3D7_0207600.e2s1_4137 -0.023218
+2836         PF3D7_1150400.iso1.exon2.amp1_714 -0.017306
+3536                     PF3D7_1035800.1o1_452 -0.016571
+6553        PF3D7_0401000.iso1.exon1.amp1_2432 -0.015937
+2080        PF3D7_1300400.iso1.exon2.amp1_1295 -0.007024
+4699        PF3D7_0816700.iso1.exon3.amp1_4095 -0.001649
+368                      PF3D7_1458400.1o1_706  0.013083
+3182        PF3D7_1123200.iso1.exon1.amp1_3335  0.013122
+1124                   PF3D7_1403300.e1s2_3828  0.018005
+174                     PF3D7_1473000.1o1_4886  0.025337
+5972                   PF3D7_0518700.e3s1_3800  0.027838
+7224                     PF3D7_0113300.2o2_759  0.045493
+7276                   PF3D7_0109100.e2s1_2105  0.099153
+2898                   PF3D7_1145400.e1s1_4164  0.123581
+3106                   PF3D7_1129000.e2s1_2830  0.148108
+187                    PF3D7_1472200.e1s3_5059  0.188337
+4850                     PF3D7_0804500.e3_3113  0.196834
+62                               PFC0210c_2763  0.403835
+0                                         Dose  0.562931
+Results are saved in: /Users/schmidtj/MalariaVaccineEfficacyPrediction/results/RLR/whole/featureEvaluation/RLR_informative_features_whole_data_C28.tsv
