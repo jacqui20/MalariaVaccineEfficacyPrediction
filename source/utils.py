@@ -1,4 +1,4 @@
-# Copyright (c) 2022 Jacqueline Wistuba-Hamprecht and Bernhard Reuter.
+# Copyright (c) 2022 Bernhard Reuter and Jacqueline Wistuba-Hamprecht.
 # ------------------------------------------------------------------------------------------------
 # If you use this code or parts of it, cite the following reference:
 # ------------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 # ------------------------------------------------------------------------------------------------
 
 """
-@Author: Jacqueline Wistuba-Hamprecht and Bernhard Reuter
+@Author: Bernhard Reuter and Jacqueline Wistuba-Hamprecht
 
 """
 
