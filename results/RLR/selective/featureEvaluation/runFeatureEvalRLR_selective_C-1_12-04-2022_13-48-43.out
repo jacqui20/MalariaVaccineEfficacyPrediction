@@ -1,0 +1,26 @@
+sys.path: ['/Users/schmidtj/MalariaVaccineEfficacyPrediction/results/RLR/selective/featureEvaluation', '/Users/schmidtj/opt/anaconda3/envs/malaria_env/lib/python37.zip', '/Users/schmidtj/opt/anaconda3/envs/malaria_env/lib/python3.7', '/Users/schmidtj/opt/anaconda3/envs/malaria_env/lib/python3.7/lib-dynload', '/Users/schmidtj/opt/anaconda3/envs/malaria_env/lib/python3.7/site-packages', '/Users/schmidtj/MalariaVaccineEfficacyPrediction']
+scikit-learn version: 1.0.2
+pandas version: 1.3.5
+numpy version: 1.21.2
+scipy version: 1.7.3
+Parameter combination for best mean AUC at time point C-1 :
+Parameters: {'logisticregression__C': 0.1, 'logisticregression__l1_ratio': 0.6}
+
+Start feature evaluation with dose as auxillary feature:
+Pipeline(steps=[('standardscaler', StandardScaler()),
+                ('logisticregression',
+                 LogisticRegression(C=0.1, l1_ratio=0.6, max_iter=10000,
+                                    penalty='elasticnet', solver='saga'))])
+Number of non-zero weights: 10
+                           Pf_antigen_ID    weight
+390   PF3D7_1115900.iso1.exon2.amp1_4360 -0.177228
+260   PF3D7_1229000.iso1.exon1.amp2_2206 -0.168652
+915   PF3D7_0514500.iso1.exon6.amp1_1487 -0.109307
+1026  PF3D7_0400100.iso1.exon2.amp1_4192 -0.074451
+826   PF3D7_0632800.iso1.exon1.amp1_4482 -0.038368
+1130  PF3D7_0200200.iso1.exon1.amp1_1284 -0.022729
+600   PF3D7_0832700.iso1.exon2.amp1_2380 -0.009195
+114   PF3D7_1415500.iso1.exon2.amp1_2259 -0.009101
+731              PF3D7_0726400.e1s1_2503 -0.003115
+0                                   Dose  0.469455
+Results are saved in: /Users/schmidtj/MalariaVaccineEfficacyPrediction/results/RLR/selective/featureEvaluation/RLR_informative_features_selective_data_C-1.tsv
