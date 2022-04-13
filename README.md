@@ -1,14 +1,15 @@
-# multitask SVM
-This repository contains code and data for an adapted multitask SVM approach, a method for classifying and interpreting the immunization status of PfSPZ-CVac vaccinated volunteers based on antibody profiles recovered from protein arrays.
+# Machine Learning for Prediction of Malaria Vaccine Efficacy based on Antibody Profiles
+This repository contains code and data used in the course of our study to predict malaria vaccine efficacy based on antibody profiles.
+Proteome microarrays representing about 91% of the *Plasmodium falciparum* (Pf) proteome have been used to identify Pf-specific antibody profiles of malaria-naive volunteers during immunization with attenuated Pf sporozoites (PfSPZ) under chloroquine chemoprophylaxis, using the PfSPZ Chemoprophylaxis Vaccine (PfSPZ-CVac).
+We used this data and compared three supervised machine learning methods to identify predictive antibody profiles after immunization and before and after controlled human malaria infection (CHMI). We adapted a multitask SVM approach to analyze time-dependent Pf-induced antibody profiles in a single prediction model and developed a new explainabilty method, named ESPY, to interpret the impact of Pf-specific antigens based on this non-linear model.
 
-## Overview of the multitask SVM approach
+## Multitask SVM approach
 The multitask SVM approach is set up into two main parts.
 The first part is a performance assessment in comparison to state-of-the-art methods.
 In the second part, a new ESPY (fEature diStance exPlainabilitY) method is used to quantify informative features from the non-linear multitask SVM model in comparison to state-of-the art methods.
 All executable code can be found in the [./bin](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/bin) folder.
 
 ## Requirements
-
 The code should be run in a customized conda environment.
 Please install the conda environment via
 ```bash
@@ -19,6 +20,20 @@ and activate it with
 conda activate malaria_env
 ```
 before executing any code.
+
+## Installation
+You can install the package using pip (note: you must be inside the repository):
+```bash
+pip install .
+```
+
+### Developer mode
+Instead you can install in "develop" or "editable" mode using pip:
+```bash
+pip install -editable .
+```
+This puts a link into the python installation to the code, such, that your package is installed but any changes to the source code will immediately take effect.
+At the same time, all your client code can import the package the usual way.
 
 ## Structure of proteome data
 The following data table gives an overview of the data structure of the proteome raw data: <br>
@@ -63,6 +78,19 @@ preprocessed_whole_data.csv and preprocessed_selective_data.csv
 Here we give a short introduction how to run the 10-times repeated nested stratified 5-fold cross-validation for the multitask SVM and two state-of-the-art-methods, namely elastic net regularized logistic regression (RLR) and single-task SVM with a RBF kernel.
 However, we <span style="color:orange;">strongly</span> advise to not run the performance assessment, since it is computationally demanding and time-consuming.
 The Random Forest (RF) approach from Veletta and Recker et. al can be found [here](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005812).
+
+### Requirements
+To run the performance assessment you need to install the **NestedCV** package inside of your conda malaria_env environment.
+The NestedCV package implements a method to perform repeated nested stratified cross-validation for any estimator that implements the scikit-learn estimator interface.
+The NestedCV package can be downloaded from [here](https://github.com/msmdev/NestedCV).
+First activate the conda malaria_env environment:
+```bash
+conda activate malaria_env
+```
+Afterwards navigate into the NestedCV repository and install it via pip:
+```bash
+pip install .
+```
 
 ### Arguments
 If you are entirely sure that you want to run the performance assessment (Be sure to know what you are doing!), you can execute it (in ./bin) as follows:
