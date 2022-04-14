@@ -21,10 +21,10 @@
 
 # @Author: Bernhard Reuter
 
-# Replace the following line by the path of your own conda.sh file:
-source "/home/breuter/anaconda3/etc/profile.d/conda.sh"
-# This is intended to run in the malaria_env conda environment:
-conda activate malaria_env
+# # Replace the following line by the path of your own conda.sh file:
+# source "/home/breuter/anaconda3/etc/profile.d/conda.sh"
+# # This is intended to run in the malaria_env conda environment:
+# conda activate malaria_env
 
 # This is intended to run in the bin folder of the MalariaVaccineEfficacyPrediction package.
 # The MalariaVaccineEfficacyPrediction package should be situated in the users home directory.
@@ -50,7 +50,7 @@ for dataset in 'whole' 'selective'; do
     for combination in "${combinations[@]}"; do
         mkdir "${maindir}/${dataset}/${combination}"
 
-        for scaling in 'unscaled' 'scaled'; do
+        for scaling in 'unscaled'; do
 	    timestamp=$(date +%d-%m-%Y_%H-%M-%S)
             err="runRGSCV_${dataset}_${combination}_${scaling}_${timestamp}.err"
             out="runRGSCV_${dataset}_${combination}_${scaling}_${timestamp}.out"

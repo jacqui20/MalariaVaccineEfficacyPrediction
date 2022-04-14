@@ -21,10 +21,10 @@
 
 # @Author: Bernhard Reuter
 
-# Replace the following line by the path of your own conda.sh file:
-source "/Users/schmidtj/opt/anaconda3/etc/profile.d/conda.sh"
-# This is intended to run in the malaria_env conda environment:
-conda activate malaria_env
+# # Replace the following line by the path of your own conda.sh file:
+# source "/Users/schmidtj/opt/anaconda3/etc/profile.d/conda.sh"
+# # This is intended to run in the malaria_env conda environment:
+# conda activate malaria_env
 
 # This is intended to run in the bin folder of the MalariaVaccineEfficacyPrediction package.
 # The MalariaVaccineEfficacyPrediction package should be situated in the users home directory.

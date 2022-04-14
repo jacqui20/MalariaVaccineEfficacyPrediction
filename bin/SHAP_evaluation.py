@@ -118,7 +118,7 @@ def SHAP_values(
     timestamp = datetime.now().strftime("%d.%m.%Y_%H-%M-%S")
 
     explainer = shap.KernelExplainer(model.predict_proba, X_train)
-    # Shap_values returns a list of two arrays: 
+    # Shap_values returns a list of two arrays:
     # the first for the negative class probabilities and
     # the second for the positive class probabilties.
     shap_values = explainer.shap_values(X_test, l1_reg='num_features(25)')
