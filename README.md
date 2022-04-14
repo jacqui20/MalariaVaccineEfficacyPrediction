@@ -1,16 +1,19 @@
 # Machine Learning for Prediction of Malaria Vaccine Efficacy based on Antibody Profiles
+
 This repository contains code and data used in the course of our study to predict malaria vaccine efficacy based on antibody profiles.
 Proteome microarrays representing about 91% of the *Plasmodium falciparum* (Pf) proteome have been used to identify Pf-specific antibody profiles of malaria-naive volunteers during immunization with attenuated Pf sporozoites (PfSPZ) under chloroquine chemoprophylaxis, using the PfSPZ Chemoprophylaxis Vaccine (PfSPZ-CVac).
-We used this data and compared three supervised machine learning methods to identify predictive antibody profiles after immunization and before and after controlled human malaria infection (CHMI). We adapted a multitask SVM approach to analyze time-dependent Pf-induced antibody profiles in a single prediction model and developed a new explainabilty method, named ESPY, to interpret the impact of Pf-specific antigens based on this non-linear model.
+We used this data and compared three supervised machine learning methods to identify predictive antibody profiles after immunization and before and after controlled human malaria infection (CHMI).<br>
+We adapted a multitask SVM approach to analyze time-dependent Pf-induced antibody profiles in a single prediction model and developed a new explainabilty method, named ESPY, to interpret the impact of Pf-specific antigens based on this non-linear model.
 
-## Multitask SVM approach
-The multitask SVM approach is set up into two main parts.
-The first part is a performance assessment in comparison to state-of-the-art methods.
-In the second part, a new ESPY (fEature diStance exPlainabilitY) method is used to quantify informative features from the non-linear multitask SVM model in comparison to state-of-the art methods.
+## Layout of the study
+
+The study is structured in two main parts.
+The first part is a performance assessment of the new **multitask SVM** approach in comparison to state-of-the-art methods.
+In the second part, the new **ESPY (fEature diStance exPlainabilitY)** method is used to quantify informative features from the non-linear multitask SVM model in comparison to state-of-the art methods.
 All executable code can be found in the [./bin](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/bin) folder.
 
 ## Requirements
-The code should be run in a customized conda environment.
+**All code should always be run in a customized conda environment.**
 Please install the conda environment via
 ```bash
 conda env create -f malaria_environment.yml
@@ -74,9 +77,9 @@ the preprocessed data is now saved in ./data/proteome_data as:
 preprocessed_whole_data.csv and preprocessed_selective_data.csv
 ```
 
-### Prediction performance assesment of the multitask SVM in comparison to state-of-the-art methods
+## Prediction performance assesment of the multitask SVM in comparison to state-of-the-art methods
 Here we give a short introduction how to run the 10-times repeated nested stratified 5-fold cross-validation for the multitask SVM and two state-of-the-art-methods, namely elastic net regularized logistic regression (RLR) and single-task SVM with a RBF kernel.
-However, we <span style="color:orange;">strongly</span> advise to not run the performance assessment, since it is computationally demanding and time-consuming.
+However, we <span style="color:orange;">strongly</span> advise to not run the performance assessment, since it is computationally demanding and time-consuming. If you really need to execute it, don't use your laptop but a high performance computing system.<br>
 The Random Forest (RF) approach from Veletta and Recker et. al can be found [here](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005812).
 
 ### Requirements
@@ -161,7 +164,7 @@ and the output files for the whole and selective proteome array data will be aut
 The output files are stored [here](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/results/RLR) in pre-defined folders for the whole and selective data.
 
 ## Apply the SHAP framework on simulated data
-To apply the [SHAP](https://github.com/slundberg/shap) (SHapley Additive exPlanations) framework from Lundberg et al. on simulated data, execute SHAP_evaluation.py
+To apply the [SHAP](https://github.com/slundberg/shap) (SHapley Additive exPlanations) framework from Lundberg et al. on simulated data, execute SHAP_evaluation.py (but beware: the runtime is around 11h on a current Macbook):
 ```python
 python SHAP_evaluation.py
 ```
