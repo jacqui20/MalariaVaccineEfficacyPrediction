@@ -33,7 +33,7 @@ pip install .
 ### Developer mode
 Instead you can install in "develop" or "editable" mode using pip:
 ```bash
-pip install -editable .
+pip install --editable .
 ```
 This puts a link into the python installation to the code, such, that your package is installed but any changes to the source code will immediately take effect.
 At the same time, all your client code can import the package the usual way.
