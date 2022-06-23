@@ -228,7 +228,7 @@ if __name__ == "__main__":
     warnings.simplefilter("default")
 
     parser = argparse.ArgumentParser(
-        description=('Function to run nested cross-validated grid-search for OligoSVM models')
+        description=('Function to run repeated cross-validated grid-search for RLR models')
     )
     parser.add_argument(
         '--analysis-dir', dest='analysis_dir', metavar='DIR', required=True,
@@ -240,8 +240,10 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         '--identifier', dest='identifier', required=True,
-        help=('Prefix to identify the precomputed kernel matrices (stored as .npy files).'
-              'E.g. kernel_matrix_rescale.')
+        help=(
+            "Prefix to identify the proteome data files and name the output files, "
+            "use either 'whole' or 'selective'."
+        )
     )
     args = parser.parse_args()
 

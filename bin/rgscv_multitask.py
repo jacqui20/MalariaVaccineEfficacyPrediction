@@ -207,7 +207,9 @@ if __name__ == "__main__":
     warnings.simplefilter("default")
 
     parser = argparse.ArgumentParser(
-        description=('Function to run nested cross-validated grid-search for OligoSVM models')
+        description=(
+            'Function to run repeated cross-validated grid-search for multitask-SVM models'
+        )
     )
     parser.add_argument(
         '--analysis-dir', dest='analysis_dir', metavar='DIR', required=True,

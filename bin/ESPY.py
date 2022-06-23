@@ -18,7 +18,7 @@
 # ------------------------------------------------------------------------------------------------
 
 """
-Parser for the feature selection approach
+Parser for the feature evaluation approach
 
 This module computes the ESPY value of each single feature.
 The ESPY value is the distances of each single features to the classification boundary in the

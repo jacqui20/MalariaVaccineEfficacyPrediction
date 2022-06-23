@@ -79,14 +79,6 @@ def main(
     pathlib.Path(maindir).mkdir(parents=True, exist_ok=True)
     rfiledir = os.path.join(ANA_PATH, 'RNCV/results/')
     pathlib.Path(rfiledir).mkdir(parents=True, exist_ok=True)
-    # efiledir = os.path.join(ANA_PATH, 'RNCV/estimators/')
-    # pathlib.Path(efiledir).mkdir(parents=True, exist_ok=True)
-    # pfiledir = os.path.join(ANA_PATH, 'GridSearchCV/plots/')
-    # pathlib.Path(pfiledir).mkdir(parents=True, exist_ok=True)
-    # ifiledir = os.path.join(ANA_PATH, 'GridSearchCV/results/RGSCV/')
-    # pathlib.Path(ifiledir).mkdir(parents=True, exist_ok=True)
-    # ofiledir = os.path.join(ANA_PATH, 'GridSearchCV/results/RNCV/')
-    # pathlib.Path(ofiledir).mkdir(parents=True, exist_ok=True)
 
     labels_all = pd.read_table(
         ('/home/breuter/MalariaVaccineEfficacyPrediction/data/'
@@ -174,10 +166,6 @@ def main(
 
         # define identifiers used for naming of output files
         rfile = f'{prefix}_RGSCV'
-        efile = f'{prefix}_RNCV'
-        # pfile = f'{prefix}_RNCV'
-        # ifile = f'{prefix}_RGSCV'
-        # ofile = f'{prefix}_RNCV'
 
         # set options for NestedGridSearchCV
         cv_options = {
@@ -186,11 +174,7 @@ def main(
                         'mcc'],
             'refit': False,
             'tune_threshold': False,
-            # 'threshold_tuning_scoring': ['f1', 'f1', 'f1', 'J', None],
             'save_to': {'directory': rfiledir, 'ID': rfile},
-            # 'save_best_estimator': {'directory': efiledir, 'ID': efile},
-            # 'save_pr_plots': {'directory': pfiledir, 'ID': pfile},
-            # 'save_tt_plots': {'directory': pfiledir, 'ID': pfile},
             'save_pred': None,
             'save_inner_to': None,
             'reproducible': False,
@@ -220,16 +204,6 @@ def main(
             cv_options=cv_options
         )
         clf_grid.fit(X, y, None, groups)
-
-        # save the fitted RNCV instance
-        if cv_options['refit']:
-            if isinstance(cv_options['refit'], str):
-                filename = f"{efile}_{cv_options['refit']}_RepeatedStratifiedNestedCV"
-            else:
-                filename = f"{efile}_{cv_options['scoring']}_RepeatedStratifiedNestedCV"
-            ncv.save_model(
-                clf_grid, efiledir, filename, timestamp=timestamp, compress=False, method='joblib'
-            )
 
         result = clf_grid.repeated_nested_cv_results_
 
@@ -577,7 +551,7 @@ if __name__ == "__main__":
     )
 
     parser = argparse.ArgumentParser(
-        description=('Function to run nested cross-validated grid-search for OligoSVM models')
+        description=('Function to run repeated nested cross-validated grid-search for SVM models')
     )
     parser.add_argument(
         '--analysis-dir', dest='analysis_dir', metavar='DIR', required=True,
@@ -589,8 +563,10 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         '--identifier', dest='identifier', required=True,
-        help=('Prefix to identify the precomputed kernel matrices (stored as .npy files).'
-              'E.g. kernel_matrix_rescale.')
+        help=(
+            "Prefix to identify the proteome data files and name the output files, "
+            "use either 'whole' or 'selective'."
+        )
     )
     args = parser.parse_args()
 
