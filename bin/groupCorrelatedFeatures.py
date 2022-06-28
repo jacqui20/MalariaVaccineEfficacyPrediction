@@ -38,7 +38,7 @@ import matplotlib.pyplot as plt
 
 
 def main(
-    data_path,
+    data_dir,
     identifier,
     out_dir,
     timepoint,
@@ -46,7 +46,9 @@ def main(
     correlation_method,
 ):
 
-    fn = os.path.join(data_path, f'{identifier}_data_{timepoint}.csv')
+    print(f"Grouping features based on {correlation_method} correlation "
+          f"with threshold {correlation_threshold}:\n")
+    fn = os.path.join(data_dir, f'{identifier}_data_{timepoint}.csv')
     data = pd.read_csv(fn, sep=',', index_col=0)
     print(f'Shape of dataframe loaded from {fn}: {data.shape}\n')
 
@@ -54,18 +56,21 @@ def main(
     if data.isna().sum().sum() != 0:
         raise ValueError(f"{fn} contains NaN entries.")
 
+    intensities = data.drop(columns=['group', 'Protection', 'Dose', 'TimePointOrder'])
+    print(f'Shape of intensities dataframe: {intensities.shape}\n')
+
     # check if there are constant features (and drop them):
-    const_features = data.columns[data.std(axis=0) == 0].to_list()
+    const_features = intensities.columns[intensities.std(axis=0) == 0].to_list()
     if const_features:
         warnings.warn(f"{fn} contains constant features.")
-        data.drop(columns=const_features, inplace=True)
+        intensities.drop(columns=const_features, inplace=True)
         print(f"{fn} contains constant features:")
         for i in const_features:
             print(i)
-        print(f'Shape of dataframe after dropping constant features: {data.shape}\n')
+        print(f'Shape of dataframe after dropping constant features: {intensities.shape}\n')
 
     # calculate either pearson or spearman correlation dataframe
-    correlation = data.corr(method=correlation_method)
+    correlation = intensities.corr(method=correlation_method)
     print(f"correlation matrix shape: {correlation.shape}")
     print(
         f"correlation matrix memory usage (kB): {correlation.memory_usage(deep=True).sum()/1000}\n"
@@ -73,19 +78,19 @@ def main(
     assert correlation.index.equals(correlation.columns), \
         "correlation.index != correlation.columns"
 
-    # save correlation dataframe as numpy matrix
-    fn = os.path.join(
-        out_dir,
-        (f'{identifier}_data_{timepoint}_{correlation_method}_'
-         f'correlation_matrix_indices_threshold_{correlation_threshold}.csv'),
-    )
-    np.savetxt(fn, correlation.index.to_list(), delimiter=',', fmt='%s')
-    fn = os.path.join(
-        out_dir,
-        (f'{identifier}_data_{timepoint}_{correlation_method}_'
-         f'correlation_matrix_threshold_{correlation_threshold}.npy'),
-    )
-    np.save(fn, correlation.to_numpy(), allow_pickle=False)
+    # # save correlation dataframe as numpy matrix
+    # fn = os.path.join(
+    #     out_dir,
+    #     (f'{identifier}_data_{timepoint}_{correlation_method}_'
+    #      f'correlation_matrix_indices_threshold_{correlation_threshold}.csv'),
+    # )
+    # np.savetxt(fn, correlation.index.to_list(), delimiter=',', fmt='%s')
+    # fn = os.path.join(
+    #     out_dir,
+    #     (f'{identifier}_data_{timepoint}_{correlation_method}_'
+    #      f'correlation_matrix_threshold_{correlation_threshold}.npy'),
+    # )
+    # np.save(fn, correlation.to_numpy(), allow_pickle=False)
 
     # check for variants with NaN correlation:
     if correlation.isna().sum().sum() != 0:
@@ -96,7 +101,7 @@ def main(
     # construct a dict of correlated features
     all_features = set(correlation.index)
     groups = dict()
-    for i in correlation.index.to_list()[::-1][1:]:
+    for i in correlation.index.to_list():
         group = set(
             correlation.loc[i, ~correlation.loc[i, :].between(
                 -correlation_threshold, correlation_threshold, inclusive='neither'
@@ -132,18 +137,28 @@ def main(
     )
     hist_max = np.amax(hist.to_numpy())
     fig, ax = plt.subplots()
-    ax.hist(hist.to_numpy(), bins=hist_max, log=True)
+    ax.hist(hist.to_numpy(), bins=hist_max, log=True, rwidth=1.0)
     ax.set_xlim(0, hist_max + 1)
+    # ax.set_xticks(np.arange(0, hist_max))
+    # ax.set_xticklabels(np.arange(0, hist_max))
     plt.title(f"Histogram of group sizes S (S_max = #bins = {hist_max})")
     plt.savefig(fn, format='pdf')
     plt.close()
     print(f'# of (key-)variants to keep: {len(keep)}')
     print('')
-    data = data.loc[:, keep]
+    intensities = intensities.loc[:, keep]
+    data = data[['group', 'Protection', 'Dose', 'TimePointOrder']]
+    assert intensities.index.to_list() == data.index.to_list(), "intensities.index != data.index"
+    if set(intensities.columns.to_list()) & set(data.columns.to_list()):
+        raise ValueError(
+            f"Columns overlap when joining intensities dataframe with metadata for {identifier}"
+            f" proteome data at time {timepoint} for threshold {correlation_threshold}."
+        )
+    data = data.join(intensities, how='left', sort=False)
 
     # save reduced DF:
     fn = os.path.join(
-        data_path,
+        data_dir,
         (f'{identifier}_data_{timepoint}_{correlation_method}'
          f'_decorrelated_threshold_{correlation_threshold}.csv'),
     )
@@ -162,7 +177,7 @@ if __name__ == "__main__":
         description=('Function to group strongly covarying features together.')
     )
     parser.add_argument(
-        '--data-path', dest='data_path', metavar='FILE', required=True,
+        '--data-dir', dest='data_dir', metavar='FILE', required=True,
         help='Path to the timepoint-wise proteome data files.'
     )
     parser.add_argument(
@@ -196,7 +211,7 @@ if __name__ == "__main__":
     pathlib.Path(args.out_dir).mkdir(parents=True, exist_ok=True)
 
     main(
-        args.data_path,
+        args.data_dir,
         args.identifier,
         args.out_dir,
         args.timepoint,
