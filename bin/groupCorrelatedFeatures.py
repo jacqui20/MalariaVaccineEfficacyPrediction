@@ -20,7 +20,7 @@
 """
 Function to group strongly covarying features together.
 
-Will save the results to .csv and .npy files
+Will save the results to .csv files
 
 @Author: Bernhard Reuter
 
@@ -46,6 +46,12 @@ def main(
     correlation_method,
 ):
 
+    # some input sanity checks:
+    if not 0.0 <= correlation_threshold <= 1.0:
+        raise ValueError("correlation_threshold is not in [0, 1]")
+    if correlation_method not in ['spearman', 'pearson']:
+        raise ValueError("correlation_method is not in {'spearman', 'pearson'}")
+
     print(f"Grouping features based on {correlation_method} correlation "
           f"with threshold {correlation_threshold}:\n")
     fn = os.path.join(data_dir, f'{identifier}_data_{timepoint}.csv')
@@ -57,10 +63,11 @@ def main(
         raise ValueError(f"{fn} contains NaN entries.")
 
     intensities = data.drop(columns=['group', 'Protection', 'Dose', 'TimePointOrder'])
-    print(f'Shape of intensities dataframe: {intensities.shape}\n')
+    print(f'Shape of intensities dataframe: {intensities.shape}')
+    print(f'# of variants: {intensities.shape[1]}\n')
 
     # check if there are constant features (and drop them):
-    const_features = intensities.columns[intensities.std(axis=0) == 0].to_list()
+    const_features = intensities.columns[intensities.std(axis=0.0) == 0].to_list()
     if const_features:
         warnings.warn(f"{fn} contains constant features.")
         intensities.drop(columns=const_features, inplace=True)
@@ -75,8 +82,8 @@ def main(
     print(
         f"correlation matrix memory usage (kB): {correlation.memory_usage(deep=True).sum()/1000}\n"
     )
-    assert correlation.index.equals(correlation.columns), \
-        "correlation.index != correlation.columns"
+    if not correlation.index.equals(correlation.columns):
+        raise ValueError("correlation.index != correlation.columns")
 
     # # save correlation dataframe as numpy matrix
     # fn = os.path.join(
@@ -99,6 +106,8 @@ def main(
         )
 
     # construct a dict of correlated features
+    if len(correlation.index) != len(set(correlation.index)):
+        raise ValueError("len(correlation.index) != len(set(correlation.index))")
     all_features = set(correlation.index)
     groups = dict()
     for i in correlation.index.to_list():
@@ -109,6 +118,11 @@ def main(
         )
         groups[i] = sorted(group & all_features)
         all_features = all_features - group
+    groups_values_set = set()
+    for i in groups.values():
+        groups_values_set.update(i)
+    if groups_values_set != set(correlation.index):
+        raise ValueError("groups_values_set != set(correlation.index)")
 
     # save dict as json:
     fn = (f'{identifier}_data_{timepoint}_{correlation_method}_correlation_'
@@ -122,6 +136,8 @@ def main(
         if len(groups[key]) > 0:
             keep.append(key)
             count.append(len(groups[key]))
+        else:
+            raise ValueError(f"The {key} group is empty.")
     count, keep_sorted = zip(*sorted(zip(count, keep), reverse=True, key=lambda x: x[0]))
     hist = pd.DataFrame(count, index=keep_sorted, columns=['# correlated features'])
     fn = os.path.join(
@@ -139,22 +155,26 @@ def main(
     fig, ax = plt.subplots()
     ax.hist(hist.to_numpy(), bins=hist_max, log=True, rwidth=1.0)
     ax.set_xlim(0, hist_max + 1)
-    # ax.set_xticks(np.arange(0, hist_max))
-    # ax.set_xticklabels(np.arange(0, hist_max))
     plt.title(f"Histogram of group sizes S (S_max = #bins = {hist_max})")
     plt.savefig(fn, format='pdf')
     plt.close()
-    print(f'# of (key-)variants to keep: {len(keep)}')
-    print('')
+    print(f'# of (key-)variants to keep: {len(keep)}\n')
     intensities = intensities.loc[:, keep]
-    data = data[['group', 'Protection', 'Dose', 'TimePointOrder']]
-    assert intensities.index.to_list() == data.index.to_list(), "intensities.index != data.index"
-    if set(intensities.columns.to_list()) & set(data.columns.to_list()):
+    metadata = data[['group', 'Protection', 'Dose', 'TimePointOrder']]
+    if intensities.index.to_list() != metadata.index.to_list():
+        raise ValueError("intensities.index != data.index")
+    if set(intensities.columns.to_list()) & set(metadata.columns.to_list()):
         raise ValueError(
             f"Columns overlap when joining intensities dataframe with metadata for {identifier}"
             f" proteome data at time {timepoint} for threshold {correlation_threshold}."
         )
-    data = data.join(intensities, how='left', sort=False)
+    data = metadata.join(intensities, how='left', sort=False)
+    if set(data.columns.to_list()) != \
+            set(intensities.columns.to_list()) | set(metadata.columns.to_list()):
+        raise ValueError(
+            "set(data.columns.to_list) != set(intensities.columns.to_list()) "
+            "| set(metadata.columns.to_list())"
+        )
 
     # save reduced DF:
     fn = os.path.join(
