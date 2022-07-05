@@ -136,8 +136,6 @@ def main(
         if len(groups[key]) > 0:
             keep.append(key)
             count.append(len(groups[key]))
-        else:
-            raise ValueError(f"The {key} group is empty.")
     count, keep_sorted = zip(*sorted(zip(count, keep), reverse=True, key=lambda x: x[0]))
     hist = pd.DataFrame(count, index=keep_sorted, columns=['# correlated features'])
     fn = os.path.join(
