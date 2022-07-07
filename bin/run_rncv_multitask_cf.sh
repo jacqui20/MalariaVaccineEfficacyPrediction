@@ -32,12 +32,12 @@ topdir="${HOME}/MalariaVaccineEfficacyPrediction"
 if [ ! -d "$topdir" ]; then
     { echo "${topdir} doesn't exists."; exit 1; }
 fi
-maindir="${topdir}/results/multitaskSVM"
+maindir="${topdir}/results/filtered/multitaskSVM"
 if [ ! -d "$maindir" ]; then
     mkdir "$maindir"
 fi
 data_dir="${topdir}/data/proteome_data"
-kernel_dir="${topdir}/data/precomputed_multitask_kernels"
+kernel_dir="${topdir}/data/precomputed_multitask_kernels/filtered"
 combinations=('RPP' 'RPR' 'RRP' 'RRR' 'SPP' 'SPR' 'SRP' 'SRR')
 
 for dataset in 'whole' 'selective'; do

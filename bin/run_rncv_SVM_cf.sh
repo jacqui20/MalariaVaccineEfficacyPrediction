@@ -32,7 +32,7 @@ topdir="${HOME}/MalariaVaccineEfficacyPrediction"
 if [ ! -d "$topdir" ]; then
     { echo "${topdir} doesn't exists."; exit 1; }
 fi
-maindir="${topdir}/results/SVM"
+maindir="${topdir}/results/filtered/SVM"
 if [ ! -d "$maindir" ]; then
     mkdir "$maindir"
 fi
@@ -48,7 +48,7 @@ for dataset in 'whole' 'selective'; do
 	mkdir "$ana_dir"
     fi
     cd "$ana_dir" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
-    cp "${topdir}/bin/rncv_SVM.py" . || { echo "cp ${topdir}/bin/rncv_SVM.py . failed"; exit 1; }
-    python -u rncv_SVM.py --analysis-dir "${ana_dir}" --data-file "${data_dir}/preprocessed_${dataset}_data.csv" --identifier "${dataset}" 1> "${out}" 2> "${err}"
+    cp "${topdir}/bin/rncv_SVM_cf.py" . || { echo "cp ${topdir}/bin/rncv_SVM_cf.py . failed"; exit 1; }
+    python -u rncv_SVM_cf.py --analysis-dir "${ana_dir}" --data-file "${data_dir}/preprocessed_${dataset}_data.csv" --identifier "${dataset}" 1> "${out}" 2> "${err}"
 
 done

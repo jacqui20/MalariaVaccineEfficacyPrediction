@@ -32,7 +32,7 @@ topdir="${HOME}/MalariaVaccineEfficacyPrediction"
 if [ ! -d "$topdir" ]; then
     { echo "${topdir} doesn't exists."; exit 1; }
 fi
-maindir="${topdir}/results/SVM"
+maindir="${topdir}/results/unfiltered/SVM"
 if [ ! -d "$maindir" ]; then
     mkdir "$maindir"
 fi

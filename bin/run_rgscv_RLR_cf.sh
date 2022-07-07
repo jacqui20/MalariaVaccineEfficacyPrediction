@@ -32,7 +32,7 @@ topdir="${HOME}/MalariaVaccineEfficacyPrediction"
 if [ ! -d "$topdir" ]; then
     { echo "${topdir} doesn't exists."; exit 1; }
 fi
-maindir="${topdir}/results/RLR"
+maindir="${topdir}/results/filtered/RLR"
 if [ ! -d "$maindir" ]; then
     mkdir "$maindir"
 fi
@@ -46,7 +46,7 @@ for dataset in 'whole' 'selective'; do
     ana_dir="${maindir}/${dataset}"
     mkdir "${ana_dir}"
     cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
-    cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_RLR.py . || { echo "cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_RLR.py . failed"; exit 1; }
-    python -u rgscv_RLR.py --analysis-dir "${ana_dir}" --data-file "${data_dir}/preprocessed_${dataset}_data.csv" --identifier "${dataset}" 1> "${out}" 2> "${err}"
+    cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_RLR_cf.py . || { echo "cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_RLR_cf.py . failed"; exit 1; }
+    python -u rgscv_RLR_cf.py --analysis-dir "${ana_dir}" --data-file "${data_dir}/preprocessed_${dataset}_data.csv" --identifier "${dataset}" 1> "${out}" 2> "${err}"
 
 done
