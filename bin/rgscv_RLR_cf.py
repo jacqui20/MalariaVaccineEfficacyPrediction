@@ -39,7 +39,7 @@ import sklearn
 import sys
 import traceback
 import warnings
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 import nestedcv as ncv
@@ -47,19 +47,17 @@ from source.utils import CustomPredefinedSplit, assign_folds
 
 
 def main(
-    ANA_PATH: str,
-    DATA_PATH: str,
+    ana_dir: str,
+    data_file: str,
     identifier: str,
 ) -> None:
 
     # number of repetitions:
     Nexp = 10
 
-    # Set up grid of parameters to optimize over
-    # 3*3=9 points
     param_grid = {
-        'randomforestclassifier__n_estimators': [100, 500, 1000],
-        'randomforestclassifier__max_features': ['sqrt', 0.1, 0.333],
+        'logisticregression__l1_ratio': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+        'logisticregression__C': [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
     }
 
     # Generate a timestamp used for file naming
@@ -74,17 +72,17 @@ def main(
     print('')
 
     # Create directories for the output files
-    maindir = os.path.join(ANA_PATH, 'RGSCV/')
+    maindir = os.path.join(ana_dir, 'RGSCV/')
     pathlib.Path(maindir).mkdir(parents=True, exist_ok=True)
 
-    labels_all = pd.read_table(
-        ('/home/breuter/MalariaVaccineEfficacyPrediction/data/'
-         'precomputed_multitask_kernels/unscaled/target_label_vec.csv'),
-        sep=',',
-        index_col=0
-    )
-    groups_all = labels_all.loc[:, 'group'].to_numpy()
-    y_all = labels_all.loc[:, 'Protection'].to_numpy()
+    data = pd.read_csv(data_file, header=0, index_col=0)
+    # Move dose column to the rightmost metadata columns:
+    dose = data['Dose']
+    data.drop(columns=['Dose'], inplace=True)
+    data.insert(loc=3, column='Dose', value=dose)
+
+    groups_all = data.loc[:, 'group'].to_numpy()
+    y_all = data.loc[:, 'Protection'].to_numpy()
 
     # initialize result dict
     results = dict()
@@ -104,14 +102,19 @@ def main(
         # define prefix for filenames:
         prefix = f'{time}'
 
-        data = pd.read_table(
-            os.path.join(DATA_PATH, f'{identifier}_data_{time}.csv'),
-            sep=',',
-            index_col=0
-        )
-        X = data.iloc[:, 2:].to_numpy()
-        groups = data.loc[:, 'group'].to_numpy()
-        y = data.loc[:, 'Protection'].to_numpy()
+        if time == 'III14':
+            t = 2
+        elif time == 'C-1':
+            t = 3
+        elif time == 'C28':
+            t = 4
+        else:
+            raise ValueError(f"Unknown timepoint {time}.")
+
+        data_at_timePoint = data.loc[data["TimePointOrder"] == t, :]
+        X = data_at_timePoint.iloc[:, 3:].to_numpy()  # including dose
+        groups = data_at_timePoint.loc[:, 'group'].to_numpy()
+        y = data_at_timePoint.loc[:, 'Protection'].to_numpy()
 
         print('shape of binary response array:', y.size)
         print('number of positives:', np.sum(y))
@@ -151,7 +154,11 @@ def main(
                 with_mean=True,
                 with_std=True,
             ),
-            RandomForestClassifier(),
+            LogisticRegression(
+                penalty='elasticnet',
+                solver='saga',
+                max_iter=10000,
+            ),
         )
 
         gs = ncv.RepeatedGridSearchCV(
@@ -159,7 +166,7 @@ def main(
             param_grid,
             scoring=scorings,
             cv=cv,
-            n_jobs=9,
+            n_jobs=8,
             Nexp=Nexp,
             save_to=None,
             reproducible=False,
@@ -226,15 +233,15 @@ if __name__ == "__main__":
     warnings.simplefilter("default")
 
     parser = argparse.ArgumentParser(
-        description=('Function to run repeated cross-validated grid-search for RF models')
+        description=('Function to run repeated cross-validated grid-search for RLR models')
     )
     parser.add_argument(
         '--analysis-dir', dest='analysis_dir', metavar='DIR', required=True,
         help='Path to the directory were the analysis shall be performed and stored.'
     )
     parser.add_argument(
-        '--data-dir', dest='data_dir', metavar='DIR', required=True,
-        help='Path to the directory were the data is located.'
+        '--data-file', dest='data_file', metavar='FILE', required=True,
+        help='Path to the proteome data file.'
     )
     parser.add_argument(
         '--identifier', dest='identifier', required=True,
@@ -248,7 +255,7 @@ if __name__ == "__main__":
     try:
         main(
             args.analysis_dir,
-            args.data_dir,
+            args.data_file,
             args.identifier,
         )
     finally:

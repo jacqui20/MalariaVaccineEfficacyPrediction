@@ -50,8 +50,8 @@ from source.utils import CustomPredefinedSplit, assign_folds
 
 
 def main(
-    ANA_PATH: str,
-    DATA_PATH: str,
+    ana_dir: str,
+    data_file: str,
     identifier: str,
 ) -> None:
 
@@ -77,19 +77,19 @@ def main(
     print('')
 
     # Create directories for the output files
-    maindir = os.path.join(ANA_PATH, 'RNCV/')
+    maindir = os.path.join(ana_dir, 'RNCV/')
     pathlib.Path(maindir).mkdir(parents=True, exist_ok=True)
-    rfiledir = os.path.join(ANA_PATH, 'RNCV/results/')
+    rfiledir = os.path.join(ana_dir, 'RNCV/results/')
     pathlib.Path(rfiledir).mkdir(parents=True, exist_ok=True)
 
-    labels_all = pd.read_table(
-        ('/home/breuter/MalariaVaccineEfficacyPrediction/data/'
-         'precomputed_multitask_kernels/unscaled/target_label_vec.csv'),
-        sep=',',
-        index_col=0
-    )
-    groups_all = labels_all.loc[:, 'group'].to_numpy()
-    y_all = labels_all.loc[:, 'Protection'].to_numpy()
+    data = pd.read_csv(data_file, header=0, index_col=0)
+    # Move dose column to the rightmost metadata columns:
+    dose = data['Dose']
+    data.drop(columns=['Dose'], inplace=True)
+    data.insert(loc=3, column='Dose', value=dose)
+
+    groups_all = data.loc[:, 'group'].to_numpy()
+    y_all = data.loc[:, 'Protection'].to_numpy()
 
     # initialize the key result collector:
     key_results: Dict[str, List[Any]] = {}
@@ -124,14 +124,19 @@ def main(
 
         rng = np.random.RandomState(0)
 
-        data = pd.read_table(
-            os.path.join(DATA_PATH, f'{identifier}_data_{time}.csv'),
-            sep=',',
-            index_col=0
-        )
-        X = data.iloc[:, 2:].to_numpy()
-        groups = data.loc[:, 'group'].to_numpy()
-        y = data.loc[:, 'Protection'].to_numpy()
+        if time == 'III14':
+            t = 2
+        elif time == 'C-1':
+            t = 3
+        elif time == 'C28':
+            t = 4
+        else:
+            raise ValueError(f"Unknown timepoint {time}.")
+
+        data_at_timePoint = data.loc[data["TimePointOrder"] == t, :]
+        X = data_at_timePoint.iloc[:, 3:].to_numpy()  # including dose
+        groups = data_at_timePoint.loc[:, 'group'].to_numpy()
+        y = data_at_timePoint.loc[:, 'Protection'].to_numpy()
 
         print('shape of binary response array:', y.size)
         print('number of positives:', np.sum(y))
@@ -555,8 +560,8 @@ if __name__ == "__main__":
         help='Path to the directory were the analysis shall be performed and stored.'
     )
     parser.add_argument(
-        '--data-dir', dest='data_dir', metavar='DIR', required=True,
-        help='Path to the directory were the data is located.'
+        '--data-file', dest='data_file', metavar='FILE', required=True,
+        help='Path to the proteome data file.'
     )
     parser.add_argument(
         '--identifier', dest='identifier', required=True,
@@ -570,7 +575,7 @@ if __name__ == "__main__":
     try:
         main(
             args.analysis_dir,
-            args.data_dir,
+            args.data_file,
             args.identifier,
         )
     finally:

@@ -32,21 +32,31 @@ topdir="${HOME}/MalariaVaccineEfficacyPrediction"
 if [ ! -d "$topdir" ]; then
     { echo "${topdir} doesn't exists."; exit 1; }
 fi
-maindir="${topdir}/results/RF"
+maindir="${topdir}/results/multitaskSVM"
 if [ ! -d "$maindir" ]; then
     mkdir "$maindir"
 fi
-data_dir="${topdir}/data/timepoint-wise"
+data_dir="${topdir}/data/proteome_data"
+kernel_dir="${topdir}/data/precomputed_multitask_kernels"
+combinations=('RPP' 'RPR' 'RRP' 'RRR' 'SPP' 'SPR' 'SRP' 'SRR')
 
 for dataset in 'whole' 'selective'; do
+    if [ "$dataset" = 'whole' ]; then
+        identifier='kernel_matrix'
+    elif [ "$dataset" = 'selective' ]; then
+        identifier='kernel_matrix_SelectiveSet'
+    fi
+    mkdir "${maindir}/${dataset}"
 
-    timestamp=$(date +%d-%m-%Y_%H-%M-%S)
-    err="runRNCV_${dataset}_${timestamp}.err"
-    out="runRNCV_${dataset}_${timestamp}.out"
-    ana_dir="${maindir}/${dataset}"
-    mkdir "${ana_dir}"
-    cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
-    cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rncv_RF.py . || { echo "cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rncv_RF.py . failed"; exit 1; }
-    python -u rncv_RF.py --analysis-dir "${ana_dir}" --data-dir "${data_dir}" --identifier "${dataset}" 1> "${out}" 2> "${err}"
-
+    for combination in "${combinations[@]}"; do
+        mkdir "${maindir}/${dataset}/${combination}"
+	    timestamp=$(date +%d-%m-%Y_%H-%M-%S)
+        err="runRNCV_${dataset}_${combination}_${timestamp}.err"
+        out="runRNCV_${dataset}_${combination}_${timestamp}.out"
+        ana_dir="${maindir}/${dataset}/${combination}"
+        mkdir "${ana_dir}"
+        cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
+        cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rncv_multitask.py . || { echo "cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rncv_multitask.py . failed"; exit 1; }
+        python -u rncv_multitask.py --analysis-dir "${ana_dir}" --data-file "${data_dir}/preprocessed_${dataset}_data.csv" --kernel-dir "$kernel_dir" --combination "${combination}" --identifier "${identifier}" 1> "${out}" 2> "${err}"
+    done
 done
