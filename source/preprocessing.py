@@ -18,20 +18,14 @@
 # ------------------------------------------------------------------------------------------------
 
 """
-This module contains the preprocessing of the raw proteome array data
+This module contains functions used to preprocess the raw proteome data.
 
 @Author: Jacqueline Wistuba-Hamprecht and Bernhard Reuter
 
 """
 
-# required packages
 import numpy as np
 import pandas as pd
-import os
-
-cwd = os.getcwd()
-datadir = '/'.join(cwd.split('/')[:-1]) + '/data'
-outputdir = '/'.join(cwd.split('/')[:-1]) + '/data/proteome_data'
 
 
 def substract_preimmunization_baseline(
@@ -54,23 +48,23 @@ def substract_preimmunization_baseline(
         Data minus baseline immunity.
     """
     # baseline: preimmunization data I-1
-    data_baseline = data.loc[data["TimePointOrder"] == 1].copy()
-    data_baseline.reset_index(inplace=True)
+    data_baseline = data.loc[data["TimePointOrder"] == 1, :].copy()
+    data_baseline.reset_index(inplace=True, drop=True)
 
     # after immunization III 14
-    data_III14 = data.loc[data["TimePointOrder"] == 2].copy()
-    data_III14.reset_index(inplace=True)
+    data_III14 = data.loc[data["TimePointOrder"] == 2, :].copy()
+    data_III14.reset_index(inplace=True, drop=True)
 
     # before re-infection C-1
-    data_C1 = data.loc[data["TimePointOrder"] == 3].copy()
-    data_C1.reset_index(inplace=True)
+    data_C1 = data.loc[data["TimePointOrder"] == 3, :].copy()
+    data_C1.reset_index(inplace=True, drop=True)
 
     # after re-infection C+ 28
-    data_C28 = data.loc[data["TimePointOrder"] == 4].copy()
-    data_C28.reset_index(inplace=True)
+    data_C28 = data.loc[data["TimePointOrder"] == 4, :].copy()
+    data_C28.reset_index(inplace=True, drop=True)
 
     # substract baseline
-    start_indx = data.columns.get_loc("TimePointOrder") + 2
+    start_indx = data.columns.get_loc("TimePointOrder") + 1
     data_III14.iloc[:, start_indx:] = data_III14.iloc[:, start_indx:].sub(
         data_baseline.iloc[:, start_indx:], fill_value=0
     )
@@ -81,7 +75,6 @@ def substract_preimmunization_baseline(
         data_baseline.iloc[:, start_indx:], fill_value=0
     )
     data_minusBS = pd.concat([data_III14, data_C1, data_C28], ignore_index=True)
-    data_minusBS = data_minusBS.drop(columns=['index'])
     return data_minusBS
 
 
@@ -112,26 +105,26 @@ def normalization(
     return data
 
 
-def sort(
-    data: pd.Dataframe,
+def sort_proteome_data(
+    data: pd.DataFrame,
 ) -> pd.DataFrame:
     """ Sorting
 
-    Input data is sorted by patient IDs to keep same patient over all four time points in order.
+    Input data is sorted by time point and patient ID
+    to keep same patient over all four time points in order.
 
     Parameters
     ----------
     data : pd.DataFrame
-        Raw proteome data, n x m matrix (n = samples as rows, m = features as columns).
+        Raw proteome data, n x m pd.DataFrame (n = samples as rows, m = features as columns)
 
     Returns
     -------
-    data : np.ndarray
-        Sorted proteome data.
+    data : pd.DataFrame
+        Returns sorted DataFrame
     """
-    data.sort_values(by=["Patient"], inplace=True)
-    data.reset_index(inplace=True)
-    data.drop(columns=['index'], inplace=True)
+    data.sort_values(by=["TimePointOrder", "Patient"], inplace=True)
+    data.reset_index(inplace=True, drop=True)
     return data
 
 
@@ -155,31 +148,7 @@ def preprocessing(
     data : pd.DataFrame
         Preprocessed proteome data.
     """
-    data_minusBS = substract_preimmunization_baseline(data)
-    sort(data_minusBS)
-    normalization(data_minusBS)
-    return data_minusBS
-
-
-if __name__ == "__main__":
-    data_path_whole = os.path.join(datadir, 'proteome_data/whole_proteomearray_rawdata.csv')
-    data_path_selective = os.path.join(datadir, 'proteome_data/surface_proteomearray_rawdata.csv')
-
-    proteome_whole_array = pd.read_csv(data_path_whole)
-    proteome_selective_array = pd.read_csv(data_path_selective)
-
-    preprocessed_whole_data = preprocessing(data=proteome_whole_array)
-    preprocessed_whole_data.to_csv(
-        os.path.join(outputdir, r'preprocessed_whole_data.csv'),
-        index=False,
-    )
-
-    preprocessed_selective_data = preprocessing(data=proteome_selective_array)
-    preprocessed_selective_data.to_csv(
-        os.path.join(outputdir, r'preprocessed_selective_data.csv'),
-        index=False,
-    )
-
-    print("\n")
-    print("the preprocessed data is now saved in ./data/proteome_data as:" + "\n")
-    print("preprocessed_whole_data.csv" + ' and ' + "preprocessed_selective_data.csv")
+    data = substract_preimmunization_baseline(data)
+    sort_proteome_data(data)
+    normalization(data)
+    return data
