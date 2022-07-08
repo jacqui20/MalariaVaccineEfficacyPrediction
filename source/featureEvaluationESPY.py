@@ -123,7 +123,7 @@ def multitask_model(
     kernel_parameters : dict,
         parameter combination to initialize multitask-SVM model
     y_label : np.ndarray
-        y labels
+        label vector
 
     Returns
     --------
@@ -156,7 +156,7 @@ def make_feature_combination(
     Parameter
     ---------
     X : pd.DataFrame
-        Data (n_samples x n_features).
+        Data (n_samples x n_features) used to calculate the upper and lower percentile and median.
     upperValue : int
         Upper percentile given as int.
     lowerValue : int
@@ -236,7 +236,7 @@ def compute_distance_hyper(
     labels : list
         List of feature labels.
     data : pd.DataFrame
-        Preprocessed proteome data (n_samples x n_features).
+        Full dataset (n x n_features) combined from all timepoints (n = n_times x n_samples).
     kernel_parameters : dict
         Combination of kernel parameters.
     simulated: bool, default=False
@@ -307,7 +307,10 @@ def compute_distance_hyper(
                 # for lower quantile combination:
                 # add test combination as new sample to data
                 data.loc["eval_feature", :] = combinations["lower_combinations"][m]
-                # calculate gram matrix
+                if data.index.get_loc('eval_feature') != data.shape[0] - 1:
+                    raise ValueError("eval_feature is not at the end of the DataFrame.")
+                # TODO: Implement function to only calculate the single actually needed row of
+                # the kernel matrix instead of calculating the full matrix every single time.
                 gram_matrix = make_kernel_matrix(
                     data=data,
                     model=params,
@@ -316,13 +319,21 @@ def compute_distance_hyper(
                     kernel_abSignals=kernel_abSignals,
                 )
                 single_feature_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
+                # TODO: Consider using SVC(decision_function_shape='ovo') and dividing distance by
+                # |coeff_| to get the exact distances. Currently distance is just proportional to
+                # the actual (exact) distance. This is unproblematic, since the proportions
+                # between the ESPY values aren't impaired (inverted) by this, but in the future
+                # exact distances might be preferable.
                 distance = model.decision_function(single_feature_sample.reshape(1, -1))
                 get_distance_lower.append(distance[0])
 
                 # for upper quantile combination:
                 # add test combination as new sample to data
                 data.loc["eval_feature", :] = combinations["upper_combinations"][m]
-                # calculate gram matrix
+                if data.index.get_loc('eval_feature') != data.shape[0] - 1:
+                    raise ValueError("eval_feature is not at the end of the DataFrame.")
+                # TODO: Implement function to only calculate the single actually needed row of
+                # the kernel matrix instead of calculating the full matrix every single time.
                 gram_matrix = make_kernel_matrix(
                     data=data,
                     model=params,
@@ -331,11 +342,21 @@ def compute_distance_hyper(
                     kernel_abSignals=kernel_abSignals,
                 )
                 single_feature_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
+                # TODO: Consider using SVC(decision_function_shape='ovo') and dividing distance by
+                # |coeff_| to get the exact distances. Currently distance is just proportional to
+                # the actual (exact) distance. This is unproblematic, since the proportions
+                # between the ESPY values aren't impaired (inverted) by this, but in the future
+                # exact distances might be preferable.
                 distance = model.decision_function(single_feature_sample.reshape(1, -1))
                 get_distance_upper.append(distance[0])
 
-                # generate consensus feature
+                # for consensus sample:
+                # add median as new sample to data
                 data.loc["eval_feature", :] = median
+                if data.index.get_loc('eval_feature') != data.shape[0] - 1:
+                    raise ValueError("eval_feature is not at the end of the DataFrame.")
+                # TODO: Implement function to only calculate the single actually needed row of
+                # the kernel matrix instead of calculating the full matrix every single time.
                 gram_matrix = make_kernel_matrix(
                     data=data,
                     model=params,
@@ -344,8 +365,11 @@ def compute_distance_hyper(
                     kernel_abSignals=kernel_abSignals,
                 )
                 feature_consensus_sample = gram_matrix[0][-1, :len(gram_matrix[0])-1]
-
-                # compute distance for consensus sample
+                # TODO: Consider using SVC(decision_function_shape='ovo') and dividing distance by
+                # |coeff_| to get the exact distances. Currently distance is just proportional to
+                # the actual (exact) distance. This is unproblematic, since the proportions
+                # between the ESPY values aren't impaired (inverted) by this, but in the future
+                # exact distances might be preferable.
                 d_cons = model.decision_function(feature_consensus_sample.reshape(1, -1))
 
             else:
@@ -441,7 +465,7 @@ def make_plot(
     opacity = 0.6
 
     values = np.array(data.T.d_norm)
-    clrs = ['red' if (x > 0) else 'blue' for x in values ]
+    clrs = ['red' if (x > 0) else 'blue' for x in values]
 
     index = np.arange(len(labels))
     ax.bar(
@@ -466,11 +490,11 @@ def make_plot(
 def ESPY_measurement(
     *,
     identifier: str,
-    data: pd.DataFrame,
+    single_timepoint_data: pd.DataFrame,
     model: SVC,
     lq: int,
     up: int,
-    proteome_data: Optional[pd.DataFrame] = None,
+    all_timepoints_data: Optional[pd.DataFrame] = None,
     kernel_parameters: Optional[Dict[str, Union[str, float]]] = None,
  ) -> pd.DataFrame:
     """ESPY measurement.
@@ -482,16 +506,17 @@ def ESPY_measurement(
     identifier : str
         A str that defines, if the input data is real ('whole', 'selective')
         proteome data or simulated ('simulated') data.
-    data : pd.Dataframe
-        Dataframe of input data.
+    single_timepoint_data : pd.Dataframe
+        Input data from single timepoint used to calculate
+        the upper and lower percentile and median.
     model : sklearn.svm.SVC
         SVC model.
     lq : int
         Lower percentile value.
     up : int
         Upper percentile value.
-    proteome_data : pd.DataFrame, default=None
-        Full proteome dataset.
+    all_timepoints_data : pd.DataFrame, default=None
+        Full dataset (n x n_features) combined from all timepoints (n = n_times x n_samples).
     kernel_parameters : pd.DataFrame, default=None
         Kernel parameters for real data.
     Returns
@@ -504,7 +529,7 @@ def ESPY_measurement(
     start = time.time()
 
     statistics, median, combinations = make_feature_combination(
-        X=data,
+        X=single_timepoint_data,
         lowerValue=lq,
         upperValue=up
     )
@@ -525,14 +550,14 @@ def ESPY_measurement(
 
     elif identifier in ['whole', 'selective']:
 
-        if isinstance(proteome_data, pd.DataFrame) and isinstance(kernel_parameters, dict):
+        if isinstance(all_timepoints_data, pd.DataFrame) and isinstance(kernel_parameters, dict):
 
             distance_matrix_for_all_feature_comb = compute_distance_hyper(
                 median=median,
                 combinations=combinations,
                 model=model,
                 labels=statistics.columns.to_list(),
-                data=proteome_data.iloc[:, 3:],
+                data=all_timepoints_data,
                 kernel_parameters=kernel_parameters,
             )
 

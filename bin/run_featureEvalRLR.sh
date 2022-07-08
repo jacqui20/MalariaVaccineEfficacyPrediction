@@ -32,32 +32,32 @@ topdir="${HOME}/MalariaVaccineEfficacyPrediction"
 if [ ! -d "$topdir" ]; then
     { echo "${topdir} doesn't exists."; exit 1; }
 fi
-maindir="${topdir}/results/RLR"
+maindir="${topdir}/results/filtered/RLR"
 if [ ! -d "$maindir" ]; then
     mkdir "$maindir"
 fi
-data_dir="${topdir}/data/timepoint-wise"
+data_dir="${topdir}/data/proteome_data"
 
 for dataset in 'whole' 'selective'; do
 
+    # Update the following files, if you have rerun the repeated grid-search CV:
     if [ "$dataset" = 'whole' ]; then
-        rgscv_path="${maindir}/${dataset}/RGSCV/RepeatedGridSearchCV_results_24.03.2022_09-23-48.tsv"
+        rgscv_path="${maindir}/${dataset}/RGSCV/RepeatedGridSearchCV_results.tsv"
     else
-        rgscv_path="${maindir}/${dataset}/RGSCV/RepeatedGridSearchCV_results_24.03.2022_12-47-24.tsv"
+        rgscv_path="${maindir}/${dataset}/RGSCV/RepeatedGridSearchCV_results.tsv"
     fi
 
     for timepoint in 'III14' 'C-1' 'C28'; do
 
-        timestamp=$(date +%d-%m-%Y_%H-%M-%S)
-        err="runFeatureEvalRLR_${dataset}_${timepoint}_${timestamp}.err"
-        out="runFeatureEvalRLR_${dataset}_${timepoint}_${timestamp}.out"
+        err="runFeatureEvalRLR_${dataset}_${timepoint}.err"
+        out="runFeatureEvalRLR_${dataset}_${timepoint}.out"
         ana_dir="${maindir}/${dataset}/featureEvaluation"
         if [ ! -d "$ana_dir" ]; then
             mkdir "$ana_dir"
         fi
         cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
-        cp "${topdir}/bin/featureEvalRLR.py" . || { echo "cp ${topdir}/bin/featureEvalRLR.py . failed"; exit 1; }
-        python -u featureEvalRLR.py --data-path "${data_dir}/${dataset}_data_${timepoint}.csv" --identifier "$dataset" --rgscv-path "$rgscv_path" --out-dir "$ana_dir" --timepoint "$timepoint" 1> "${out}" 2> "${err}"
+        cp "${topdir}/bin/filtered/featureEvalRLR.py" . || { echo "cp ${topdir}/bin/filtered/featureEvalRLR.py . failed"; exit 1; }
+        python -u featureEvalRLR.py --data-path "${data_dir}/preprocessed_${dataset}_data.csv" --identifier "$dataset" --rgscv-path "$rgscv_path" --out-dir "$ana_dir" --timepoint "$timepoint" 1> "${out}" 2> "${err}"
 
     done
 

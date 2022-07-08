@@ -24,10 +24,7 @@ This module computes the ESPY value of each single feature.
 The ESPY value is the distances of each single features to the classification boundary in the
 multitask-SVM model and compares the change of the distance with a consensus sample.
 
-This module requires the output file of the Parser_multitask_SVM.py module
-and the Feature_Evaluation_multitask_SVM.py script.
-
-@Author: Jacqueline Wistuba-Hamprecht and Bernhard Reuter
+@Author: Bernhard Reuter and Jacqueline Wistuba-Hamprecht
 """
 
 import argparse
@@ -37,7 +34,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from typing import Optional
-from source.FeatureEvaluationESPY import ESPY_measurement, svm_model, multitask_model, make_plot
+from source.featureEvaluationESPY import ESPY_measurement, svm_model, multitask_model, make_plot
 from source.utils import DataSelector, get_parameters
 from source.utils import select_timepoint
 
@@ -63,12 +60,10 @@ def main(
     print("at time point                = ", str(timepoint))
     print("\n")
 
-    timestamp = datetime.now().strftime("%d.%m.%Y_%H-%M-%S")
-
     if identifier == 'simulated':
 
         data = pd.read_csv(os.path.join(data_dir, 'simulated_data.csv'))
-        output_filename = f"ESPY_values_on_{identifier}_data_{timestamp}"
+        output_filename = f"ESPY_values_on_{identifier}_data"
 
         X_train, X_test, y_train, y_test = train_test_split(
             data.iloc[:, :1000].to_numpy(),
@@ -128,10 +123,15 @@ def main(
                 "be one of 'III14', 'C-1', or 'C28'."
             )
 
-        data = pd.read_csv(os.path.join(data_dir, f'preprocessed_{identifier}_data_sorted.csv'))
+        input_filename = f'preprocessed_{identifier}_data.csv'
+        data = pd.read_csv(
+            os.path.join(data_dir, input_filename),
+            header=0,
+            index_col=0
+        )
         rgscv_results = pd.read_csv(rgscv_path, delimiter="\t", header=0, index_col=0)
 
-        output_filename = f"ESPY_values_on_{identifier}_data_{timepoint}_{timestamp}"
+        output_filename = f"ESPY_values_on_{identifier}_data_{timepoint}"
 
         timepoint_results = select_timepoint(rgscv_results, timepoint)
         params = get_parameters(timepoint_results, "multitask")
@@ -159,25 +159,25 @@ def main(
         ).fit(X, y).transform(X)
 
         multitask_classifier = multitask_model(
-            kernel_matrix=kernel_matrix,
+            kernel_matrix=kernel_matrix,  # full Gram matrix?
             kernel_parameters=params,
             y_label=y,
         )
 
-        print(
-            "Are all values in proteome data floats: "
-            f"{np.all(np.isin(data.dtypes.to_list()[5:], ['float64']))}\n"
-        )
+        if not np.all(np.isin(data.dtypes.to_list()[4:], ['float64'])):
+            raise ValueError(
+                f"Not all antibody intensities read from {input_filename} are of type float64."
+            )
 
-        data_at_timePoint = data.loc[data["TimePointOrder"] == t]
+        data_at_timePoint = data.loc[data["TimePointOrder"] == t, :]
 
         distance_result = ESPY_measurement(
             identifier=identifier,
-            data=data_at_timePoint.iloc[:, 3:],
+            single_timepoint_data=data_at_timePoint.iloc[:, 2:],  # including dose AND timepoint
             model=multitask_classifier,
             lq=lq,
             up=uq,
-            proteome_data=data,
+            all_timepoints_data=data,
             kernel_parameters=params,
         )
 

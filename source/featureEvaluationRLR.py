@@ -31,32 +31,6 @@ from sklearn.pipeline import make_pipeline
 from source.utils import select_timepoint, get_parameters
 
 
-def rearrange_columns(
-    data: pd.DataFrame
-) -> pd.DataFrame:
-    """ Re-arrange column order of proteome dataframe.
-
-    Move column 'Dose' to the beginning of the feature columns.
-
-    Parameters
-    ----------
-    data : pd.Dataframe
-        Proteome dataframe.
-
-    Returns
-    --------
-    df : pd.Dataframe
-        Proteome dataframe with re-arranged columns.
-
-    """
-
-    df = data.copy()
-    dose = df['Dose']
-    df = df.drop(columns=['Dose'])
-    df.insert(loc=4, column='Dose', value=dose)
-    return df
-
-
 def RLR_model(
         *,
         X: np.ndarray,
@@ -120,7 +94,9 @@ def RLR_model(
 
 
 def featureEvaluationRLR(
-        data: pd.DataFrame,
+        X: np.ndarray,
+        y: np.ndarray,
+        feature_labels: List[str],
         rgscv_results: pd.DataFrame,
         timepoint: str,
 ):
@@ -128,8 +104,12 @@ def featureEvaluationRLR(
 
     Parameter
     ---------
-    data : pd.DataFrame
-        Dataframe containing proteome data.
+    X : np.ndarray
+        Feature matrix.
+    y : np.ndarray
+        Label vector.
+    feature labels : list
+        Feature labels.
     rgscv_results : pd.DataFrame
         DataFrame containing optimal parameters and mean AUROC values
         per time point as found via Repeated Grid-Search CV (RGSCV).
@@ -158,10 +138,6 @@ def featureEvaluationRLR(
     if all(isinstance(x, float) for x in params.values()):
 
         print("Start feature evaluation with dose as auxillary feature:")
-        data = rearrange_columns(data)
-        X = data.iloc[:, 4:].to_numpy()
-        y = data.loc[:, 'Protection'].to_numpy()
-        feature_labels = data.iloc[:, 4:].columns.to_list()
 
         _, coefs = RLR_model(
             X=X,

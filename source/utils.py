@@ -220,7 +220,7 @@ def assign_folds(
     (groups) appearing in the respective test set don't appear in the
     associated train set.
 
-    CAUTION: This routine is only tested for
+    CAUTION: This routine is only tested for the given Malaria data.
 
     Parameters
     ----------
@@ -811,26 +811,3 @@ def make_kernel_matrix(
     print('\n\n')
 
     return multi_AB_signals_time_dose_kernel_matrix, c_list, info_list
-
-
-def sort_proteome_data(
-    data: pd.DataFrame,
-) -> pd.DataFrame:
-    """ Sorting
-
-    Input data is sorted by time point to keep same patient over all four time points in order.
-
-    Parameters
-    ----------
-    data : pd.DataFrame
-        Raw proteome data, n x m pd.DataFrame (n = samples as rows, m = features as columns)
-
-    Returns
-    -------
-    data : pd.DataFrame
-        Returns sorted DataFrame
-    """
-    data.sort_values(by=["TimePointOrder", "Patient"], inplace=True)
-    data.reset_index(inplace=True)
-    data.drop(columns=['index'], inplace=True)
-    return data

@@ -46,13 +46,35 @@ def main(
     """
     Evaluation of informative features from RLR.
     """
-    proteome_data = pd.read_csv(data_path, sep=',', index_col=0)
-    rgscv_results = pd.read_csv(rgscv_path, sep="\t", index_col=0)
+
+    if timepoint == 'III14':
+        t = 2
+    elif timepoint == 'C-1':
+        t = 3
+    elif timepoint == 'C28':
+        t = 4
+    else:
+        raise ValueError(
+            "The string given via the '--timepoint' argument must "
+            "be one of 'III14', 'C-1', or 'C28'."
+        )
+
+    data = pd.read_csv(data_path, sep=',', header=0, index_col=0)
+    # Move dose column to the rightmost metadata columns:
+    dose = data['Dose']
+    data.drop(columns=['Dose'], inplace=True)
+    data.insert(loc=3, column='Dose', value=dose)
+    rgscv_results = pd.read_csv(rgscv_path, sep="\t", header=0, index_col=0)
+
+    data_at_timePoint = data.loc[data["TimePointOrder"] == t, :]
 
     coefs = featureEvaluationRLR(
-        data=proteome_data,
+        X=data_at_timePoint.iloc[:, 3:],  # including dose
+        y=data_at_timePoint.loc[:, 'Protection'].to_numpy(),
+        feature_labels=data_at_timePoint.iloc[:, 3:].columns.to_list(),
         rgscv_results=rgscv_results,
-        timepoint=timepoint)
+        timepoint=timepoint,
+    )
 
     fn = os.path.join(out_dir, f"RLR_informative_features_{identifier}_data_{timepoint}.tsv")
     pd.DataFrame(data=coefs).to_csv(fn, sep='\t', na_rep='nan')

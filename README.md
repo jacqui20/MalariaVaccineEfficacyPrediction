@@ -70,12 +70,7 @@ Datapreprocessing.py has to be executed in the ./bin folder.
 ```python
 python Datapreprocessing.py
 ```
-Output:
-```bash
-the preprocessed data is now saved in ./data/proteome_data as:
-
-preprocessed_whole_data.csv and preprocessed_selective_data.csv
-```
+The processed data is written to [./data/proteome_data](https://github.com/jacqui20/MalariaVaccineEfficacyPrediction/tree/main/data/proteome_data).
 
 ## Prediction performance assesment of the multitask SVM in comparison to state-of-the-art methods
 Here we give a short introduction how to run the 10-times repeated nested stratified 5-fold cross-validation for the multitask SVM and two state-of-the-art-methods, namely elastic net regularized logistic regression (RLR) and single-task SVM with a RBF kernel.

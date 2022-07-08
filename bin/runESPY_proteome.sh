@@ -32,12 +32,12 @@ topdir="${HOME}/MalariaVaccineEfficacyPrediction"
 if [ ! -d "$topdir" ]; then
     { echo "${topdir} doesn't exists."; exit 1; }
 fi
-maindir="${topdir}/results/multitaskSVM"
+maindir="${topdir}/results/filtered/multitaskSVM"
 if [ ! -d "$maindir" ]; then
     mkdir "$maindir"
 fi
 data_dir="${topdir}/data/proteome_data"
-kernel_dir="${topdir}/data/precomputed_multitask_kernels/unscaled"
+kernel_dir="${topdir}/data/precomputed_multitask_kernels"
 
 for dataset in 'whole' 'selective'; do
 
@@ -45,34 +45,33 @@ for dataset in 'whole' 'selective'; do
 
         if [ "$dataset" = 'whole' ]; then
             if [ "$timepoint" = 'III14' ] || [ "$timepoint" = 'C-1' ]; then
-                rgscv_path="${maindir}/${dataset}/RPR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_15-44-43.tsv"
-                ana_dir="${maindir}/${dataset}/RPR/unscaled/featureEvaluation"
+                rgscv_path="${maindir}/${dataset}/RPR/RGSCV/RepeatedGridSearchCV_results.tsv"
+                ana_dir="${maindir}/${dataset}/RPR/featureEvaluation"
                 kernel_identifier='kernel_matrix_RPR'
             else
-                rgscv_path="${maindir}/${dataset}/RRR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_16-16-36.tsv"
-                ana_dir="${maindir}/${dataset}/RRR/unscaled/featureEvaluation"
+                rgscv_path="${maindir}/${dataset}/RRR/RGSCV/RepeatedGridSearchCV_results.tsv"
+                ana_dir="${maindir}/${dataset}/RRR/featureEvaluation"
                 kernel_identifier='kernel_matrix_RRR'
             fi
         else
             if [ "$timepoint" = 'III14' ] || [ "$timepoint" = 'C-1' ]; then
-                rgscv_path="${maindir}/${dataset}/RPR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_18-47-33.tsv"
-                ana_dir="${maindir}/${dataset}/RPR/unscaled/featureEvaluation"
+                rgscv_path="${maindir}/${dataset}/RPR/RGSCV/RepeatedGridSearchCV_results.tsv"
+                ana_dir="${maindir}/${dataset}/RPR/featureEvaluation"
                 kernel_identifier='kernel_matrix_SelectiveSet_RPR'
             else
-                rgscv_path="${maindir}/${dataset}/RRR/unscaled/RGSCV/RepeatedGridSearchCV_results_24.03.2022_19-19-18.tsv"
-                ana_dir="${maindir}/${dataset}/RRR/unscaled/featureEvaluation"
+                rgscv_path="${maindir}/${dataset}/RRR/RGSCV/RepeatedGridSearchCV_results.tsv"
+                ana_dir="${maindir}/${dataset}/RRR/featureEvaluation"
                 kernel_identifier='kernel_matrix_SelectiveSet_RRR'
             fi
         fi
 
-        timestamp=$(date +%d-%m-%Y_%H-%M-%S)
-        err="runESPY_${dataset}_${timepoint}_${timestamp}.err"
-        out="runESPY_${dataset}_${timepoint}_${timestamp}.out"
+        err="runESPY_${dataset}_${timepoint}.err"
+        out="runESPY_${dataset}_${timepoint}.out"
         if [ ! -d "$ana_dir" ]; then
             mkdir "$ana_dir"
         fi
         cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
-        cp "${topdir}/bin/ESPY.py" . || { echo "cp ${topdir}/bin/ESPY.py . failed"; exit 1; }
+        cp "${topdir}/bin/filtered/ESPY.py" . || { echo "cp ${topdir}/bin/filtered/ESPY.py . failed"; exit 1; }
         python -u ESPY.py --data-dir "$data_dir" --out-dir "$ana_dir" --identifier "$dataset" --lower-percentile 25 --upper-percentile 75 --kernel-dir "$kernel_dir" --kernel-identifier "$kernel_identifier" --rgscv-path "$rgscv_path" --timepoint "$timepoint" 1> "${out}" 2> "${err}"
 
     done
