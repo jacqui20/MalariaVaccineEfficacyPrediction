@@ -38,12 +38,12 @@ import matplotlib.pyplot as plt
 
 
 def main(
-    data_dir,
-    identifier,
-    out_dir,
-    timepoint,
-    correlation_threshold,
-    correlation_method,
+    data_dir: str,
+    data_file: str,
+    out_dir: str,
+    timepoint: str,
+    correlation_threshold: str,
+    correlation_method: str,
 ):
 
     # some input sanity checks:
@@ -51,12 +51,32 @@ def main(
         raise ValueError("correlation_threshold is not in [0, 1]")
     if correlation_method not in ['spearman', 'pearson']:
         raise ValueError("correlation_method is not in {'spearman', 'pearson'}")
+    if timepoint not in ['III14', 'C-1', 'C28', 'all']:
+        raise ValueError("timepoint must be one of 'III14', 'C-1', 'C28', or 'all'")
 
     print(f"Grouping features based on {correlation_method} correlation "
           f"with threshold {correlation_threshold}:\n")
-    fn = os.path.join(data_dir, f'{identifier}_data_{timepoint}.csv')
+
+    identifier = '.'.join(data_file.split('.')[:-1])
+
+    if timepoint == 'III14':
+        t = 2
+    elif timepoint == 'C-1':
+        t = 3
+    elif timepoint == 'C28':
+        t = 4
+    elif timepoint == 'all':
+        t = -1
+    else:
+        raise ValueError(f"Unknown timepoint {timepoint}.")
+
+    fn = os.path.join(data_dir, data_file)
     data = pd.read_csv(fn, sep=',', index_col=0)
     print(f'Shape of dataframe loaded from {fn}: {data.shape}\n')
+    if t > 0:
+        data = data.loc[data["TimePointOrder"] == t, :]
+
+    print(f'Shape of dataframe at timepoint={timepoint}: {data.shape}\n')
 
     # check, if there are NaN DF entries:
     if data.isna().sum().sum() != 0:
@@ -85,20 +105,6 @@ def main(
     if not correlation.index.equals(correlation.columns):
         raise ValueError("correlation.index != correlation.columns")
 
-    # # save correlation dataframe as numpy matrix
-    # fn = os.path.join(
-    #     out_dir,
-    #     (f'{identifier}_data_{timepoint}_{correlation_method}_'
-    #      f'correlation_matrix_indices_threshold_{correlation_threshold}.csv'),
-    # )
-    # np.savetxt(fn, correlation.index.to_list(), delimiter=',', fmt='%s')
-    # fn = os.path.join(
-    #     out_dir,
-    #     (f'{identifier}_data_{timepoint}_{correlation_method}_'
-    #      f'correlation_matrix_threshold_{correlation_threshold}.npy'),
-    # )
-    # np.save(fn, correlation.to_numpy(), allow_pickle=False)
-
     # check for variants with NaN correlation:
     if correlation.isna().sum().sum() != 0:
         raise ValueError(
@@ -125,8 +131,10 @@ def main(
         raise ValueError("groups_values_set != set(correlation.index)")
 
     # save dict as json:
-    fn = (f'{identifier}_data_{timepoint}_{correlation_method}_correlation_'
-          f'grouped_features_threshold_{correlation_threshold}')
+    fn = (
+        f"{identifier}_{timepoint}_{correlation_method}_correlation_"
+        f"grouped_features_threshold_{correlation_threshold}"
+    )
     ncv.save_json(groups, out_dir, fn, timestamp=False)
 
     # keep only the key(-variant)s
@@ -140,13 +148,13 @@ def main(
     hist = pd.DataFrame(count, index=keep_sorted, columns=['# correlated features'])
     fn = os.path.join(
         out_dir,
-        (f'{identifier}_data_{timepoint}_{correlation_method}'
+        (f'{identifier}_{timepoint}_{correlation_method}'
          f'_correlated_group_sizes_threshold_{correlation_threshold}.csv'),
     )
     hist.to_csv(fn, sep=',')
     fn = os.path.join(
         out_dir,
-        (f'{identifier}_data_{timepoint}_{correlation_method}'
+        (f'{identifier}_{timepoint}_{correlation_method}'
          f'_correlated_group_sizes_threshold_{correlation_threshold}.pdf'),
     )
     hist_max = np.amax(hist.to_numpy())
@@ -158,7 +166,7 @@ def main(
     plt.close()
     print(f'# of (key-)variants to keep: {len(keep)}\n')
     intensities = intensities.loc[:, keep]
-    metadata = data[['group', 'Protection', 'Dose', 'TimePointOrder']]
+    metadata = data[['group', 'Protection', 'TimePointOrder', 'Dose']]
     if intensities.index.to_list() != metadata.index.to_list():
         raise ValueError("intensities.index != data.index")
     if set(intensities.columns.to_list()) & set(metadata.columns.to_list()):
@@ -177,7 +185,7 @@ def main(
     # save reduced DF:
     fn = os.path.join(
         data_dir,
-        (f'{identifier}_data_{timepoint}_{correlation_method}'
+        (f'{identifier}_{timepoint}_{correlation_method}'
          f'_decorrelated_threshold_{correlation_threshold}.csv'),
     )
     data.to_csv(fn, sep=',')
@@ -195,12 +203,12 @@ if __name__ == "__main__":
         description=('Function to group strongly covarying features together.')
     )
     parser.add_argument(
-        '--data-dir', dest='data_dir', metavar='FILE', required=True,
-        help='Path to the timepoint-wise proteome data files.'
+        '--data-dir', dest='data_dir', metavar='DIR', required=True,
+        help='Path to the directory were the data is located.'
     )
     parser.add_argument(
-        '--identifier', dest='identifier', required=True,
-        help=('Prefix to identify the proteome dataset.')
+        '--data-file', dest='data_file', metavar='FILE', required=True,
+        help='Name of the data file (located in the directory given via --data-dir).'
     )
     parser.add_argument(
         '--out-dir', dest='out_dir', metavar='DIR', required=True,
@@ -208,7 +216,10 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         '--timepoint', dest='timepoint', required=True, type=str,
-        help='Time point for which the analysis shall be performed.'
+        help=(
+            "Time point for which the analysis shall be performed. "
+            "Either 'III14', 'C-1', 'C28', or 'all'." 
+        )
     )
     parser.add_argument(
         '--correlation_threshold', dest='correlation_threshold', required=True, type=float,
@@ -230,7 +241,7 @@ if __name__ == "__main__":
 
     main(
         args.data_dir,
-        args.identifier,
+        args.data_file,
         args.out_dir,
         args.timepoint,
         args.correlation_threshold,

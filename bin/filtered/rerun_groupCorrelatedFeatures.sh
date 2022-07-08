@@ -32,15 +32,15 @@ topdir="${HOME}/MalariaVaccineEfficacyPrediction"
 if [ ! -d "$topdir" ]; then
     { echo "${topdir} doesn't exists."; exit 1; }
 fi
-ana_dir="${topdir}/results/correlationAnalysis"
+ana_dir="${topdir}/results/filtered/correlationAnalysis"
 if [ ! -d "$ana_dir" ]; then
     mkdir "$ana_dir"
 fi
-data_dir="${topdir}/data/timepoint-wise"
+data_dir="${topdir}/data/proteome_data"
 method='spearman'
 
 cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
-cp "${topdir}/bin/groupCorrelatedFeatures.py" . || { echo "cp ${topdir}/bin/groupCorrelatedFeatures.py . failed"; exit 1; }
+cp "${topdir}/bin/filtered/groupCorrelatedFeatures.py" . || { echo "cp ${topdir}/bin/filtered/groupCorrelatedFeatures.py . failed"; exit 1; }
 
 for dataset in 'whole' 'selective'; do
 
@@ -49,9 +49,9 @@ for dataset in 'whole' 'selective'; do
         for threshold in '0.95' '0.98' '0.99'; do
 
             timestamp=$(date +%d-%m-%Y_%H-%M-%S)
-            err="run_groupCorrelatedFeatures_${dataset}_${timepoint}_${method}_threshold${threshold}_${timestamp}.err"
-            out="run_groupCorrelatedFeatures_${dataset}_${timepoint}_${method}_threshold${threshold}_${timestamp}.out"
-            python -u groupCorrelatedFeatures.py --data-dir "${data_dir}" --identifier "$dataset" --out-dir "$ana_dir" --timepoint "$timepoint" --correlation_threshold "$threshold" --correlation_method "$method" 1> "${out}" 2> "${err}"
+            err="rerun_groupCorrelatedFeatures_${dataset}_${timepoint}_${method}_threshold${threshold}_${timestamp}.err"
+            out="rerun_groupCorrelatedFeatures_${dataset}_${timepoint}_${method}_threshold${threshold}_${timestamp}.out"
+            python -u groupCorrelatedFeatures.py --data-dir "${data_dir}" --data-file "preprocessed_${dataset}_data_all_spearman_decorrelated_threshold_0.95.csv" --out-dir "$ana_dir" --timepoint "$timepoint" --correlation_threshold "$threshold" --correlation_method "$method" 1> "${out}" 2> "${err}"
 
         done
 
