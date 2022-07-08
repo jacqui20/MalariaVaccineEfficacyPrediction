@@ -63,7 +63,7 @@ def main(
         'logisticregression__C': [1.e-4, 1.e-3, 1.e-2, 1.e-1, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4],
     }
 
-    # Generate a timestamp used for file naming
+    # Generate a timestamp
     timestamp = ncv.generate_timestamp()
 
     print('')
@@ -216,7 +216,7 @@ def main(
                 {key: dict(sorted(value.items())) for key, value in result.items()},
                 rfiledir,
                 f'{prefix}_repeated_nested_cv_results',
-                timestamp=timestamp
+                timestamp=False
             )
         except TypeError:
             warnings.warn('Saving the results as JSON file failed due to a TypeError.')
@@ -278,7 +278,7 @@ def main(
             f'{prefix}_train_test_performance_scores',
             extension=".xlsx",
             directory=rfiledir,
-            timestamp=timestamp
+            timestamp=False
         )
         if not os.path.exists(fn):
             with pd.ExcelWriter(fn) as writer:
@@ -295,7 +295,7 @@ def main(
             f'{prefix}_ncv_performance_scores',
             extension=".xlsx",
             directory=rfiledir,
-            timestamp=timestamp
+            timestamp=False
         )
         if not os.path.exists(fn):
             with pd.ExcelWriter(fn) as writer:
@@ -411,14 +411,14 @@ def main(
                 )
 
         filename = f"{prefix}_collected_mean_train_test_performance_scores"
-        fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
+        fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=False)
         performance_mean_df.to_csv(fn, sep='\t', na_rep='nan')
-        fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)
+        fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=False)
         performance_mean_df.to_excel(fn, na_rep='nan')
         filename = f"{prefix}_collected_formatted_min_max_train_test_performance_scores"
-        fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
+        fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=False)
         performance_min_max_nice_df.to_csv(fn, sep='\t', na_rep='nan')
-        fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)
+        fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=False)
         performance_min_max_nice_df.to_excel(fn, na_rep='nan')
         del performance_mean, performance_mean_df
         del performance_min_max_nice, performance_min_max_nice_df
@@ -487,14 +487,14 @@ def main(
                 )
 
         filename = f"{prefix}_collected_mean_ncv_performance_scores"
-        fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
+        fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=False)
         performance_mean_df.to_csv(fn, sep='\t', na_rep='nan')
-        fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)
+        fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=False)
         performance_mean_df.to_excel(fn, na_rep='nan')
         filename = f"{prefix}_collected_formatted_min_max_ncv_performance_scores"
-        fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
+        fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=False)
         performance_min_max_nice_df.to_csv(fn, sep='\t', na_rep='nan')
-        fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)
+        fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=False)
         performance_min_max_nice_df.to_excel(fn, na_rep='nan')
         del performance_mean, performance_mean_df
         del performance_min_max_nice, performance_min_max_nice_df
@@ -503,9 +503,9 @@ def main(
         print('')
 
     filename = "collected_key_results"
-    fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
+    fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=False)
     pd.DataFrame(key_results).to_csv(fn, sep='\t', na_rep='nan')
-    fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)
+    fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=False)
     pd.DataFrame(key_results).to_excel(fn, na_rep='nan')
 
     print('End:', ncv.generate_timestamp())
@@ -517,10 +517,8 @@ if __name__ == "__main__":
     print('pandas version:', pd.__version__)
     print('numpy version:', np.__version__)
     print('scipy version:', scipy.__version__)
-    print('Start:', ncv.generate_timestamp())
 
-    timestamp = ncv.generate_timestamp()
-    warning_file = open(f"warnings_{timestamp}.log", "w")
+    warning_file = open("warnings.log", "w")
 
     def warn_with_traceback(
         message, category, filename, lineno, file=None, line=None

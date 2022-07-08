@@ -50,13 +50,12 @@ for dataset in 'whole' 'selective'; do
 
     for combination in "${combinations[@]}"; do
         mkdir "${maindir}/${dataset}/${combination}"
-	    timestamp=$(date +%d-%m-%Y_%H-%M-%S)
-        err="runRGSCV_${dataset}_${combination}_${timestamp}.err"
-        out="runRGSCV_${dataset}_${combination}_${timestamp}.out"
+        err="runRGSCV_${dataset}_${combination}.err"
+        out="runRGSCV_${dataset}_${combination}.out"
         ana_dir="${maindir}/${dataset}/${combination}"
         mkdir "${ana_dir}"
         cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
-        cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_multitask.py . || { echo "cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_multitask.py . failed"; exit 1; }
+        cp "${topdir}/bin/rgscv_multitask.py" . || { echo "cp ${topdir}/bin/rgscv_multitask.py . failed"; exit 1; }
         python -u rgscv_multitask.py --analysis-dir "${ana_dir}" --data-file "${data_dir}/preprocessed_${dataset}_data.csv" --kernel-dir "$kernel_dir" --combination "${combination}" --identifier "${identifier}" 1> "${out}" 2> "${err}"
     done
 done

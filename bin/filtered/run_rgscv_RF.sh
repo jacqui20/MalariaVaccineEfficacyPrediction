@@ -40,13 +40,12 @@ data_dir="${topdir}/data/proteome_data"
 
 for dataset in 'whole' 'selective'; do
 
-    timestamp=$(date +%d-%m-%Y_%H-%M-%S)
-    err="runRGSCV_${dataset}_${timestamp}.err"
-    out="runRGSCV_${dataset}_${timestamp}.out"
+    err="runRGSCV_${dataset}.err"
+    out="runRGSCV_${dataset}.out"
     ana_dir="${maindir}/${dataset}"
     mkdir "${ana_dir}"
     cd "${ana_dir}" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
-    cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_RF_cf.py . || { echo "cp /home/breuter/MalariaVaccineEfficacyPrediction/bin/rgscv_RF_cf.py . failed"; exit 1; }
-    python -u rgscv_RF_cf.py --analysis-dir "${ana_dir}" --data-file "${data_dir}/preprocessed_${dataset}_data.csv" --identifier "${dataset}" 1> "${out}" 2> "${err}"
+    cp "${topdir}/bin/filtered/rgscv_RF.py" . || { echo "cp ${topdir}/bin/filtered/rgscv_RF.py . failed"; exit 1; }
+    python -u rgscv_RF.py --analysis-dir "${ana_dir}" --data-file "${data_dir}/preprocessed_${dataset}_data.csv" --identifier "${dataset}" 1> "${out}" 2> "${err}"
 
 done

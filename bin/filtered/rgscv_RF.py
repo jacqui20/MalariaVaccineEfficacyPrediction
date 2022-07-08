@@ -62,7 +62,7 @@ def main(
         'randomforestclassifier__max_features': ['sqrt', 0.1, 0.333],
     }
 
-    # Generate a timestamp used for file naming
+    # Generate a timestamp
     timestamp = ncv.generate_timestamp()
 
     print('')
@@ -172,9 +172,9 @@ def main(
         gs.fit(X, y, groups)
 
         filename = f"{prefix}_RepeatedGridSearchCV_cv_results"
-        fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
+        fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=False)
         pd.DataFrame(data=gs.cv_results_).to_csv(fn, sep='\t', na_rep='nan')
-        fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)
+        fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=False)
         pd.DataFrame(data=gs.cv_results_).to_excel(fn, na_rep='nan')
 
         opt_params = gs.opt_params_
@@ -198,9 +198,9 @@ def main(
     print('')
 
     filename = "RepeatedGridSearchCV_results"
-    fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=timestamp)
+    fn = ncv.filename_generator(filename, '.tsv', directory=maindir, timestamp=False)
     pd.DataFrame(data=results).to_csv(fn, sep='\t', na_rep='nan')
-    fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=timestamp)
+    fn = ncv.filename_generator(filename, '.xlsx', directory=maindir, timestamp=False)
     pd.DataFrame(data=results).to_excel(fn, na_rep='nan')
 
     print('End:', ncv.generate_timestamp())
@@ -212,10 +212,8 @@ if __name__ == "__main__":
     print('pandas version:', pd.__version__)
     print('numpy version:', np.__version__)
     print('scipy version:', scipy.__version__)
-    print('Start:', ncv.generate_timestamp())
 
-    timestamp = ncv.generate_timestamp()
-    warning_file = open(f"warnings_{timestamp}.log", "w")
+    warning_file = open("warnings.log", "w")
 
     def warn_with_traceback(
         message, category, filename, lineno, file=None, line=None

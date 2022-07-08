@@ -40,15 +40,14 @@ data_dir="${topdir}/data/proteome_data"
 
 for dataset in 'whole' 'selective'; do
 
-    timestamp=$(date +%d-%m-%Y_%H-%M-%S)
-    err="runRNCV_${dataset}_${timestamp}.err"
-    out="runRNCV_${dataset}_${timestamp}.out"
+    err="runRNCV_${dataset}.err"
+    out="runRNCV_${dataset}.out"
     ana_dir="${maindir}/${dataset}"
     if [ ! -d "$ana_dir" ]; then
 	mkdir "$ana_dir"
     fi
     cd "$ana_dir" || { echo "Couldn't cd into ${ana_dir}"; exit 1; }
-    cp "${topdir}/bin/rncv_SVM_cf.py" . || { echo "cp ${topdir}/bin/rncv_SVM_cf.py . failed"; exit 1; }
-    python -u rncv_SVM_cf.py --analysis-dir "${ana_dir}" --data-file "${data_dir}/preprocessed_${dataset}_data.csv" --identifier "${dataset}" 1> "${out}" 2> "${err}"
+    cp "${topdir}/bin/filtered/rncv_SVM.py" . || { echo "cp ${topdir}/bin/filtered/rncv_SVM.py . failed"; exit 1; }
+    python -u rncv_SVM.py --analysis-dir "${ana_dir}" --data-file "${data_dir}/preprocessed_${dataset}_data.csv" --identifier "${dataset}" 1> "${out}" 2> "${err}"
 
 done
